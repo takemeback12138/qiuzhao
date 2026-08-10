@@ -426,6 +426,9 @@ body{
           导入恢复
         </button>
         <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+        <button class="btn btn-outline btn-sm" onclick="exportStatus()" title="导出投递状态">导出状态</button>
+        <button class="btn btn-outline btn-sm" onclick="document.getElementById('importStatusFile').click()" title="导入投递状态">导入状态</button>
+        <input type="file" id="importStatusFile" accept=".json" style="display:none" onchange="importStatus(event)">
         <button class="btn btn-outline btn-sm" onclick="clearSampleData()">清空示例</button>
         <button class="btn btn-outline btn-sm" onclick="openCompanyAdder()">+ 添加企业</button>
         <button class="btn btn-primary btn-sm" id="refreshBtn" onclick="fetchLatestCompanies()">🔄 拉取最新数据</button>
@@ -2282,6 +2285,34 @@ function importData(e) {
       if (d.companies && Array.isArray(d.companies)) companies = d.companies;
       if (d.notes && Array.isArray(d.notes)) notes = d.notes;
       persistAll(); renderAll(); showToast('已恢复 ' + (d.notes?d.notes.length:0) + '条笔记');
+    } catch(err) { showToast('文件格式错误'); }
+  };
+  r.readAsText(f); e.target.value = '';
+}
+
+// ★ 导出投递状态（轻量版，只含id+name+statusIdx）
+function exportStatus() {
+  const statusData = companies.map(c => ({ id: c.id, name: c.name, statusIdx: c.statusIdx || 0 }));
+  const blob = new Blob([JSON.stringify(statusData, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = '秋招工作台_投递状态_' + todayStr + '.json'; a.click();
+  showToast('投递状态已导出');
+}
+
+// ★ 导入投递状态（按id匹配恢复statusIdx）
+function importStatus(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = function(ev) {
+    try {
+      const statusList = JSON.parse(ev.target.result);
+      let updated = 0;
+      statusList.forEach(s => {
+        const c = companies.find(x => x.id === s.id);
+        if (c) { c.statusIdx = s.statusIdx || 0; updated++; }
+      });
+      persistAll(); renderAll();
+      showToast('已恢复 ' + updated + ' 家企业的投递状态');
     } catch(err) { showToast('文件格式错误'); }
   };
   r.readAsText(f); e.target.value = '';
