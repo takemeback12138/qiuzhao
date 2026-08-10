@@ -1,0 +1,2465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>秋招工作台 - 李振宇</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:#f0f4f8;color:#1e293b;min-height:100vh;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+
+/* Layout */
+.app{max-width:1440px;margin:0 auto;padding:16px;display:flex;gap:16px;min-height:100vh;}
+.sidebar{width:340px;flex-shrink:0;display:flex;flex-direction:column;gap:14px;}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;}
+
+/* Top Bar */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  background:#fff;border-radius:14px;padding:14px 20px;box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+.topbar h1{font-size:20px;font-weight:700;color:#1e40af;}
+.topbar .hint{font-size:12px;color:#94a3b8;}
+.topbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:none;border-radius:8px;
+  font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;
+  min-height:44px;white-space:nowrap;
+}
+.btn-primary{background:#2563eb;color:#fff;}
+.btn-primary:hover{background:#1d4ed8;}
+.btn-outline{background:#fff;color:#475569;border:1px solid #cbd5e1;}
+.btn-outline:hover{background:#f1f5f9;border-color:#94a3b8;}
+.btn-danger{background:#fff;color:#ef4444;border:1px solid #fca5a5;}
+.btn-danger:hover{background:#fef2f2;}
+.btn-success{background:#22c55e;color:#fff;}
+.btn-success:hover{background:#16a34a;}
+.btn-sm{padding:6px 10px;font-size:12px;min-height:36px;}
+.btn-xs{padding:4px 8px;font-size:11px;min-height:30px;}
+
+/* Cards */
+.card{background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.card-title{font-size:14px;font-weight:700;display:flex;align-items:center;gap:7px;color:#1e293b;}
+
+/* Today Panel */
+.today-panel{
+  background:linear-gradient(135deg,#fff5f5 0%,#fffbeb 100%);
+  border:1px solid #fecaca;border-radius:12px;padding:12px 16px;
+}
+.today-panel .tp-header{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;
+}
+.tp-title{font-size:13px;font-weight:700;color:#991b1b;display:flex;align-items:center;gap:5px;}
+.tp-count{font-size:11px;color:#b91c1c;background:#fee2e2;padding:2px 8px;border-radius:10px;}
+.today-items{display:flex;flex-direction:column;gap:5px;max-height:150px;overflow-y:auto;}
+.today-item{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:6px 10px;background:#fff;border-radius:8px;border:1px solid #fecaca;font-size:12px;
+}
+.today-item.overdue{border-color:#ef4444;background:#fff5f5;}
+.today-item.overdue .ti-text{color:#b91c1c;font-weight:600;}
+.ti-left{display:flex;align-items:center;gap:6px;min-width:0;flex:1;}
+.ti-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.ti-dot.overdue{background:#ef4444;}
+.ti-dot.today{background:#f59e0b;}
+.ti-dot.upcoming{background:#3b82f6;}
+.ti-tag{font-size:10px;padding:1px 5px;border-radius:3px;white-space:nowrap;}
+.ti-tag.deadline{background:#fef2f2;color:#dc2626;}
+.ti-tag.interview{background:#fef3c7;color:#d97706;}
+.ti-tag.apply{background:#dbeafe;color:#2563eb;}
+.ti-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
+.today-empty{color:#9ca3af;font-size:12px;text-align:center;padding:6px;}
+
+/* Basic Info Card */
+.info-grid{display:flex;flex-direction:column;gap:6px;}
+.info-row{display:flex;align-items:baseline;gap:8px;}
+.info-label{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;width:42px;flex-shrink:0;}
+.info-value{font-size:13px;color:#1e293b;font-weight:500;word-break:break-all;line-height:1.4;}
+.info-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.info-tag{
+  font-size:10px;padding:2px 8px;border-radius:10px;
+  background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;
+}
+
+/* Calendar Compact */
+.cal-compact{}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.cal-nav button{
+  width:30px;height:30px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:#475569;
+}
+.cal-nav button:hover{background:#f1f5f9;}
+.cal-month{font-size:13px;font-weight:700;color:#1e293b;cursor:pointer;}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:4px;}
+.cal-weekdays span{font-size:10px;color:#94a3b8;padding:2px 0;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-day{
+  aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-radius:6px;font-size:11px;cursor:pointer;transition:all .1s;position:relative;
+  border:1px solid transparent;min-width:30px;min-height:30px;color:#475569;
+}
+.cal-day:hover{background:#eff6ff;border-color:#bfdbfe;}
+.cal-day.today{background:#2563eb;color:#fff;font-weight:700;}
+.cal-day.selected{background:#dbeafe;border-color:#93c5fd;font-weight:600;color:#1e40af;}
+.cal-day.other-month{color:#cbd5e1;cursor:default;}
+.cal-day.other-month:hover{background:transparent;border-color:transparent;}
+.cal-day .day-dot{width:4px;height:4px;border-radius:50%;position:absolute;bottom:2px;}
+.cal-day .day-dot.has-notes{background:#f59e0b;}
+.cal-day.today .day-dot.has-notes{background:#fde68a;}
+
+/* Notes Compact */
+.notes-compact{}
+.note-form-c{display:flex;flex-direction:column;gap:6px;}
+.note-form-c input,.note-form-c textarea,.note-form-c select{
+  width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:7px;
+  font-size:13px;font-family:inherit;color:#1e293b;
+}
+.note-form-c input{font-size:16px;}
+.note-form-c input:focus,.note-form-c textarea:focus,.note-form-c select:focus{
+  outline:none;border-color:#2563eb;box-shadow:0 0 0 2px rgba(37,99,235,.08);
+}
+.note-form-c textarea{resize:vertical;min-height:50px;max-height:100px;}
+.note-form-row{display:flex;gap:6px;}
+.note-form-row>*{flex:1;}
+.note-list-c{max-height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;margin-top:6px;}
+.note-item-c{
+  padding:7px 9px;border-radius:7px;border:1px solid #e2e8f0;cursor:pointer;transition:all .1s;
+  display:flex;align-items:flex-start;gap:6px;font-size:12px;
+}
+.note-item-c:hover{background:#f8fafc;}
+.note-item-c.active{background:#eff6ff;border-color:#93c5fd;}
+.note-item-c .nic-check{width:16px;height:16px;border-radius:50%;border:2px solid #cbd5e1;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.note-item-c .nic-check.done{background:#22c55e;border-color:#22c55e;}
+.note-item-c .nic-body{flex:1;min-width:0;}
+.note-item-c .nic-title{font-weight:600;color:#1e293b;margin-bottom:1px;}
+.note-item-c .nic-title.done-text{text-decoration:line-through;color:#94a3b8;}
+.note-item-c .nic-meta{display:flex;align-items:center;gap:5px;}
+.note-item-c .nic-tag{font-size:10px;padding:1px 5px;border-radius:6px;}
+.note-item-c .nic-date{font-size:10px;color:#94a3b8;}
+.note-item-c .nic-del{
+  width:22px;height:22px;border-radius:5px;border:none;background:transparent;
+  color:#94a3b8;cursor:pointer;font-size:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+}
+.note-item-c .nic-del:hover{background:#fef2f2;color:#ef4444;}
+.nic-tag.sq{background:#dbeafe;color:#2563eb;}
+.nic-tag.ms{background:#fef3c7;color:#d97706;}
+.nic-tag.bs{background:#ede9fe;color:#7c3aed;}
+.nic-tag.jz{background:#fef2f2;color:#dc2626;}
+.nic-tag.qt{background:#f1f5f9;color:#64748b;}
+
+/* ★★★ COMPANY CARDS — THE MAIN ATTRACTION ★★★ */
+.company-list{display:flex;flex-direction:column;gap:10px;}
+.company-card{
+  background:#fff;border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);
+  overflow:hidden;transition:all .2s;border:1px solid #e2e8f0;
+}
+.company-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);border-color:#cbd5e1;}
+.company-card.expanded{box-shadow:0 6px 24px rgba(37,99,235,.1);border-color:#93c5fd;}
+
+/* Card header row */
+.cc-header{
+  padding:16px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;
+  transition:background .15s;user-select:none;
+}
+.cc-header:hover{background:#fafbfd;}
+.cc-status-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.cc-status-dot.open{background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,.4);}
+.cc-status-dot.soon{background:#f59e0b;box-shadow:0 0 8px rgba(245,158,11,.4);}
+.cc-status-dot.ongoing{background:#3b82f6;box-shadow:0 0 8px rgba(59,130,246,.4);}
+.cc-status-dot.closed{background:#94a3b8;}
+.cc-main{flex:1;min-width:0;}
+.cc-top-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
+.cc-name{font-size:17px;font-weight:700;color:#0f172a;}
+.cc-status-badge{
+  font-size:11px;padding:2px 10px;border-radius:10px;font-weight:500;white-space:nowrap;
+}
+.cc-status-badge.open{background:#dcfce7;color:#15803d;}
+.cc-status-badge.soon{background:#fef3c7;color:#b45309;}
+.cc-status-badge.ongoing{background:#dbeafe;color:#1d4ed8;}
+.cc-status-badge.closed{background:#f1f5f9;color:#64748b;}
+.cc-meta-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.cc-position{font-size:13px;color:#475569;}
+.cc-meta-sep{color:#cbd5e1;}
+.cc-deadline{font-size:12px;color:#64748b;}
+.cc-deadline.urgent{color:#dc2626;font-weight:600;}
+.cc-countdown{font-size:12px;color:#64748b;margin-left:auto;}
+.cc-countdown.urgent{color:#dc2626;font-weight:600;}
+.cc-actions{display:flex;gap:6px;flex-shrink:0;align-items:center;}
+/* Status cycle button */
+.cc-status-btn{
+  padding:5px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;
+  transition:all .15s;white-space:nowrap;border:1px solid transparent;
+}
+.cc-status-btn.s0{background:#fef3c7;color:#92400e;border-color:#fcd34d;} /* 未投递 - 黄色 */
+.cc-status-btn.s1{background:#dcfce7;color:#15803d;border-color:#86efac;} /* 已投递 - 绿色 */
+.cc-status-btn.s2{background:#fef2f2;color:#dc2626;border-color:#fca5a5;} /* 待面试 - 红色 */
+.cc-status-btn.s3{background:#f1f5f9;color:#94a3b8;border-color:#e2e8f0;} /* 已结束 - 灰色 */
+.cc-expand-icon{
+  width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  color:#94a3b8;transition:all .2s;flex-shrink:0;
+}
+.company-card.expanded .cc-expand-icon{background:#eff6ff;color:#2563eb;transform:rotate(180deg);}
+
+/* Card detail body */
+.cc-detail{
+  display:none;padding:0 20px 20px;border-top:1px solid #f1f5f9;
+  animation:detailIn .2s ease;
+}
+.company-card.expanded .cc-detail{display:block;}
+@keyframes detailIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+
+.cc-section{margin-top:14px;}
+.cc-section-title{
+  font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:6px;display:flex;align-items:center;gap:5px;
+}
+.cc-jd{font-size:13px;color:#334155;line-height:1.7;white-space:pre-wrap;}
+.cc-tags-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.cc-tag{
+  font-size:11px;padding:4px 10px;border-radius:12px;background:#f1f5f9;color:#475569;
+  border:1px solid #e2e8f0;
+}
+.cc-link-row{display:flex;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.cc-link{
+  display:inline-flex;align-items:center;gap:5px;padding:8px 16px;
+  background:#2563eb;color:#fff;border-radius:8px;font-size:13px;font-weight:500;
+  text-decoration:none;transition:background .15s;
+}
+.cc-link:hover{background:#1d4ed8;}
+.cc-link-outline{
+  display:inline-flex;align-items:center;gap:5px;padding:8px 16px;
+  background:#fff;color:#2563eb;border:1px solid #2563eb;border-radius:8px;
+  font-size:13px;font-weight:500;text-decoration:none;transition:all .15s;
+}
+.cc-link-outline:hover{background:#eff6ff;}
+
+/* Match score badge */
+.match-badge{
+  display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;
+  font-size:11px;font-weight:600;white-space:nowrap;
+}
+.match-badge.high{background:#dcfce7;color:#15803d;}
+.match-badge.mid{background:#fef3c7;color:#b45309;}
+.match-badge.low{background:#f1f5f9;color:#64748b;}
+.match-sort-bar{
+  display:flex;align-items:center;gap:8px;padding:8px 0;margin-bottom:4px;
+  font-size:12px;color:#64748b;
+}
+.match-sort-bar .sort-btn{
+  padding:4px 10px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;
+  cursor:pointer;font-size:11px;color:#475569;transition:all .12s;
+}
+.match-sort-bar .sort-btn:hover{background:#f1f5f9;}
+.match-sort-bar .sort-btn.active{background:#2563eb;color:#fff;border-color:#2563eb;}
+
+/* Resume analysis modal */
+.resume-textarea{
+  width:100%;min-height:200px;padding:12px;border:1px solid #e2e8f0;border-radius:8px;
+  font-size:13px;font-family:inherit;line-height:1.6;resize:vertical;
+}
+.resume-textarea:focus{outline:none;border-color:#2563eb;}
+.analysis-result{
+  background:#f8fafc;border-radius:8px;padding:12px;margin-top:10px;
+  font-size:12px;color:#475569;line-height:1.8;
+}
+.analysis-result strong{color:#1e293b;}
+
+/* Add company bar */
+.add-company-bar{
+  display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;padding:12px 16px;
+  background:#fff;border-radius:12px;border:1px dashed #cbd5e1;
+}
+.add-company-bar input,.add-company-bar select,.add-company-bar textarea{
+  padding:8px 10px;border:1px solid #e2e8f0;border-radius:7px;font-size:13px;font-family:inherit;
+}
+.add-company-bar input:focus,.add-company-bar textarea:focus,.add-company-bar select:focus{
+  outline:none;border-color:#2563eb;
+}
+
+/* Modals */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);
+  z-index:100;display:flex;align-items:center;justify-content:center;
+}
+.modal{
+  background:#fff;border-radius:14px;padding:24px;max-width:480px;width:90%;
+  max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15);
+}
+.modal h3{font-size:17px;margin-bottom:16px;}
+.modal .form-group{margin-bottom:12px;}
+.modal .form-group label{display:block;font-size:12px;color:#64748b;margin-bottom:4px;font-weight:500;}
+.modal .form-group input,.modal .form-group textarea{
+  width:100%;padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:inherit;
+}
+.modal .form-group textarea{min-height:80px;resize:vertical;}
+.modal .form-group input:focus,.modal .form-group textarea:focus{outline:none;border-color:#2563eb;}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;}
+
+/* Toast */
+.toast{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:200;
+  background:#1e293b;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.toast.show{opacity:1;}
+
+/* Scrollbar */
+.company-list::-webkit-scrollbar,.note-list-c::-webkit-scrollbar{width:4px;}
+.company-list::-webkit-scrollbar-thumb,.note-list-c::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px;}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .app{flex-direction:column;padding:10px;}
+  .sidebar{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .main{width:100%;}
+}
+@media(max-width:768px){
+  .app{padding:8px;gap:10px;}
+  .sidebar{grid-template-columns:1fr;width:100%;}
+  .cc-header{padding:12px 14px;gap:10px;}
+  .cc-name{font-size:15px;}
+  .cc-detail{padding:0 14px 14px;}
+  .cc-position{font-size:12px;}
+  .topbar{padding:10px 14px;}
+  .topbar h1{font-size:17px;}
+  .add-company-bar{flex-direction:column;align-items:stretch;}
+  .add-company-bar input,.add-company-bar select,.add-company-bar textarea{width:100%;}
+  .company-list{max-height:none;}
+}
+@media(max-width:480px){
+  .cal-day{min-width:26px;min-height:26px;font-size:10px;}
+  .cc-actions .btn{font-size:11px;padding:5px 8px;}
+  .card{padding:12px;}
+  .info-value{font-size:12px;}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <!-- Basic Info -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 00-16 0"/></svg>
+          我的信息
+        </span>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-outline btn-xs" onclick="openInfoEditor()">编辑</button>
+          <button class="btn btn-primary btn-xs" onclick="openResumeAnalyzer()">简历分析</button>
+        </div>
+      </div>
+      <div class="info-grid" id="infoGrid"></div>
+      <div class="info-tags" id="infoTags"></div>
+    </div>
+
+    <!-- Calendar -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          日历
+        </span>
+        <button class="btn btn-outline btn-xs" onclick="goToToday()">今天</button>
+      </div>
+      <div class="cal-nav">
+        <button onclick="changeMonth(-1)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <span class="cal-month" id="calMonth"></span>
+        <button onclick="changeMonth(1)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+      <div class="cal-weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div style="margin-top:6px;font-size:11px;color:#94a3b8;min-height:16px;" id="calNoteInfo"></div>
+    </div>
+
+    <!-- Notes -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          记事本
+        </span>
+        <span style="font-size:11px;color:#94a3b8" id="noteFilterInfo"></span>
+      </div>
+      <div class="note-form-c">
+        <input type="text" id="noteTitle" placeholder="标题" maxlength="50">
+        <textarea id="noteContent" placeholder="内容..." rows="2"></textarea>
+        <div class="note-form-row">
+          <input type="date" id="noteDate">
+          <select id="noteTag">
+            <option value="网申">网申</option><option value="面试">面试</option>
+            <option value="笔试">笔试</option><option value="截止">截止</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="addNote()" style="width:100%">保存笔记</button>
+      </div>
+      <div class="note-list-c" id="noteList"></div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN AREA ===== -->
+  <main class="main">
+    <!-- Top bar -->
+    <div class="topbar">
+      <div>
+        <h1>秋招工作台 · 2027届</h1>
+        <span class="hint" style="display:block;margin-top:2px">李振宇 | 2026年11月毕业 | 匹配2027届秋招</span>
+        <span class="hint" id="backupHint"></span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-outline btn-sm" onclick="exportData()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          导出备份
+        </button>
+        <button class="btn btn-outline btn-sm" onclick="document.getElementById('importFile').click()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          导入恢复
+        </button>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+        <button class="btn btn-outline btn-sm" onclick="clearSampleData()">清空示例</button>
+        <button class="btn btn-outline btn-sm" onclick="openCompanyAdder()">+ 添加企业</button>
+        <button class="btn btn-primary btn-sm" id="refreshBtn" onclick="fetchLatestCompanies()">🔄 拉取最新数据</button>
+        <button class="btn btn-outline btn-sm" id="scanBtn" onclick="runSmartScan()">🔍 智能扫描</button>
+        <button class="btn btn-outline btn-sm" onclick="refreshCompanies()">打乱排序</button>
+        <span id="connStatus" style="font-size:12px;color:#94a3b8;margin-left:4px"></span>
+      </div>
+    </div>
+
+    <!-- Today Panel -->
+    <div class="today-panel">
+      <div class="tp-header">
+        <span class="tp-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          今天要处理
+        </span>
+        <span class="tp-count" id="todayCount">0条</span>
+      </div>
+      <div class="today-items" id="todayItems"></div>
+      <div class="today-empty" id="todayEmpty" style="display:none">今天暂无待处理，继续保持！</div>
+    </div>
+
+    <!-- Add company form (hidden by default) -->
+    <div class="add-company-bar" id="addCompanyBar" style="display:none">
+      <input type="text" id="caName" placeholder="企业名称 *" style="width:130px">
+      <input type="text" id="caPosition" placeholder="岗位名称" style="width:140px">
+      <select id="caStatus"><option value="已开启">已开启</option><option value="即将开启">即将开启</option><option value="进行中">进行中</option><option value="已截止">已截止</option></select>
+      <input type="date" id="caDeadline">
+      <input type="url" id="caLink" placeholder="投递链接" style="width:180px">
+      <input type="text" id="caIndustry" placeholder="行业(互联网/电商)" style="width:140px">
+      <textarea id="caJD" placeholder="JD/招聘详情..." rows="2" style="width:100%;min-width:200px"></textarea>
+      <button class="btn btn-success btn-sm" onclick="addCompany()">确认添加</button>
+      <button class="btn btn-outline btn-sm" onclick="document.getElementById('addCompanyBar').style.display='none'">取消</button>
+    </div>
+
+    <!-- ★ COMPANY LIST — THE STAR ★ -->
+    <!-- Sort bar -->
+    <div class="match-sort-bar" id="sortBar">
+      <span>排序：</span>
+      <button class="sort-btn active" onclick="sortCompanies('match')">按匹配度</button>
+      <button class="sort-btn" onclick="sortCompanies('deadline')">按截止日期</button>
+      <button class="sort-btn" onclick="sortCompanies('name')">按企业名</button>
+    </div>
+    <div class="company-list" id="companyList"></div>
+  </main>
+</div>
+
+<!-- Resume Analysis Modal -->
+<div class="modal-overlay" id="resumeModal" style="display:none">
+  <div class="modal" style="max-width:600px">
+    <h3>简历分析 — 智能匹配秋招岗位</h3>
+    <p style="font-size:12px;color:#94a3b8;margin-bottom:12px">粘贴简历全文，系统自动提取求职意向、技能关键词，并对企业列表进行匹配度评分</p>
+    <textarea class="resume-textarea" id="resumeText" placeholder="在此粘贴你的简历全文...&#10;&#10;例如：&#10;张三&#10;电话：138xxxx&#10;求职意向：海外销售经理&#10;教育背景：XX大学 国际商务 硕士&#10;技能：英语工作语言、跨境商务、B2B销售..."></textarea>
+    <div class="analysis-result" id="analysisResult" style="display:none"></div>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="document.getElementById('resumeModal').style.display='none'">取消</button>
+      <button class="btn btn-primary" onclick="analyzeResume()">开始分析</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Info Modal -->
+<div class="modal-overlay" id="infoModal" style="display:none">
+  <div class="modal">
+    <h3>编辑基本信息</h3>
+    <div class="form-group"><label>姓名</label><input type="text" id="eName"></div>
+    <div class="form-group"><label>电话</label><input type="text" id="ePhone"></div>
+    <div class="form-group"><label>邮箱</label><input type="email" id="eEmail"></div>
+    <div class="form-group"><label>所在地</label><input type="text" id="eLocation"></div>
+    <div class="form-group"><label>求职意向</label><input type="text" id="eTarget"></div>
+    <div class="form-group"><label>教育背景</label><input type="text" id="eEducation"></div>
+    <div class="form-group"><label>核心技能（,分隔）</label><input type="text" id="eSkills"></div>
+    <div class="form-group"><label>行业偏好（,分隔）</label><input type="text" id="eIndustryPref" placeholder="互联网/电商,智能硬件,新能源汽车..."></div>
+    <div class="form-group"><label>期望城市（,分隔）</label><input type="text" id="eCities" placeholder="上海,深圳,海外..."></div>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="document.getElementById('infoModal').style.display='none'">取消</button>
+      <button class="btn btn-primary" onclick="saveInfo()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal-overlay" id="confirmModal" style="display:none">
+  <div class="modal" style="max-width:500px">
+    <h3 id="confirmTitle" class="modal-title">确认操作</h3>
+    <div id="confirmMsg" class="modal-body" style="color:#64748b;font-size:14px;margin-bottom:16px;text-align:left;max-height:60vh;overflow-y:auto"></div>
+    <div class="modal-btns" style="justify-content:center">
+      <button class="btn btn-outline" onclick="closeConfirm()">取消</button>
+      <button class="btn btn-danger" id="confirmBtn">确认</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== DATA LAYER =====
+const STORAGE_KEY = 'wb_qiuzhao_v2_';
+
+function loadData(key, fallback) {
+  try { const raw = localStorage.getItem(STORAGE_KEY + key); return raw ? JSON.parse(raw) : fallback; }
+  catch(e) { return fallback; }
+}
+function saveData(key, data) { localStorage.setItem(STORAGE_KEY + key, JSON.stringify(data)); }
+
+// ===== DEFAULT DATA =====
+const now = new Date();
+const todayStr = formatDate(now);
+const yesterdayStr = formatDate(new Date(now - 86400000));
+const tomorrowStr = formatDate(new Date(now.getTime() + 86400000));
+
+const DEFAULT_INFO = {
+  name: '李振宇', phone: '+86 188 0456 3092', email: 'zhenyu.li.resume@outlook.com',
+  location: '浙江温州', target: '海外销售代表 / 国际业务拓展(BD) / 跨境商务',
+  education: '悉尼大学 商法硕士 | 2025.03 - 2026.11',
+  skills: '英语工作语言,跨境商务,B2B销售,财务分析,招投标',
+  industryPref: '互联网/电商,智能硬件/消费电子,新能源汽车/能源',
+  preferredCities: '上海,深圳,杭州,海外'
+};
+
+const DEFAULT_COMPANIES = [
+  {id:'c1',name:'字节跳动',position:'国际商业化BD/国际化运营',status:'已开启',deadline:'2026-10-31',link:'https://jobs.bytedance.com/campus',jd:`【官宣时间】2026年8月3日正式启动2027届校招！
+
+【岗位职责】
+1. 负责TikTok等产品在海外的商业化拓展与客户引入
+2. 挖掘品牌客户需求，设计广告/电商整合营销方案
+3. 协同产品、运营团队推动产品本地化适配
+4. 跟踪分析海外各区域商业化数据
+
+【任职要求】
+- 2027届海内外应届毕业生，本科及以上学历
+- 英语流利，对东南亚/拉美/中东等新兴市场有了解者优先
+- 数据敏感度高，有广告/电商/跨境行业背景优先
+
+【招聘流程】
+网申 → 笔试 → 3轮业务面 → HR面 → Offer
+【备注】超大AI岗位招录，但国际化业务线同样大量招人，海外留学生优势明显`,tags:'互联网,国际化,TikTok,8月3日官宣,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户关系,跨境电商,内容运营,平台运营,英语',cities:'海外',majors:'市场营销,外语类'},
+  {id:'c2',name:'OPPO',position:'海外营销/海外销售/品牌市场',status:'已开启',deadline:'2026-09-16',link:'https://careers.oppo.com/university/oppo/campus/post',jd:`【官宣时间】2027届秋招正式启动！7月15日起可投递。
+
+【岗位方向 - 海外相关】
+- 品牌策划类：品牌营销、媒介、新媒体、市场推广
+- 销售服务类：国内渠道、海外营销、客户运营
+- 11大类百余个岗位，依托OPPO全球业务布局
+
+【任职要求】
+- 2027届本科/硕士/博士海内外毕业生
+- 英语流利，有海外学习/生活经历优先
+- 市场营销/传播学/国际贸易/外语类优先
+
+【招聘流程】
+8月6日发放笔试测评 → 8月10日面试 → 8月底发Offer
+【内推码】X6538748
+【注意】岗位招满即关，越早投递机会越多`,tags:'手机出海,海外营销,8月面试,2027届,内推码X6538748',industry:'智能硬件/消费电子',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,内容运营,市场推广,英语,商务谈判',cities:'海外',majors:'国际贸易,市场营销,外语类'},
+  {id:'c3',name:'中兴通讯',position:'国际客户经理/MKT经理-技术',status:'已开启',deadline:'2026-08-29',link:'https://job.zte.com.cn',jd:`【项目名称】2027届未来领军人才招聘（蓝剑SSP）
+
+【岗位职责】
+1. 负责通信设备在海外运营商客户的销售与关系维护
+2. 主导海外项目投标、商务谈判与合同签订
+3. MKT方向：海外市场洞察、技术方案推广
+
+【任职要求】
+- 2027届应届毕业生
+- 境内：2027.1.1-2027.12.31 | 境外：2026.1.1-2027.12.31
+- 本科及以上学历，通信/电子/商科背景
+- 英语流利，法语/西语/葡语优先
+- 营销类岗位：客户经理、MKT经理-技术、项目交付经理
+
+【招聘流程】
+6月29日启动投递 → 7月面试 → 8月29日截止
+【专属优势】资深专家+高管面对面指导，定制起薪+专项人才津贴
+【注意】网申窗口仅剩约20天，抓紧投递！`,tags:'通信设备,海外驻外,B2B招投标,2027届,蓝剑SSP,即将截止',industry:'通信/ICT',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,技术方案,客户开发,招投标,内容运营,Python',cities:'海外',majors:'外语类,理工科'},
+  {id:'c4',name:'海康威视',position:'海外营销/海外技术支持/海外市场推广',status:'已开启',deadline:'2026-10-31',link:'https://campushr.hikvision.com',jd:`【项目名称】2027超新星实习生招聘（可转正）→ 等同于秋招提前批
+
+【岗位方向 - 国际营销类】
+- 海外营销、海外技术支持、海外产品市场、海外市场推广
+- 语言方向：英语、俄语、葡萄牙语、西班牙语、德语、法语、意大利语、韩语、泰语、印尼语、越南语等
+
+【企业实力】
+- 2025年营收925.17亿，连续9年蝉联全球安防50强第一位
+- 全球业务覆盖180+国家/地区，全球员工超59000人
+
+【任职要求】
+- 以2027届毕业生为主（毕业时间在2026年9月及之后）
+- 可连续实习2个月及以上，表现优秀可转正
+- 本科及以上学历，工科背景优先
+- 英语流利，小语种加分
+
+【招聘流程】
+网申 → 测评 → 笔试(部分) → 面试 → Offer
+【福利】五险一金+补充商业险、免息住房借款、核心员工跟投创新业务`,tags:'智能物联,安防出海,多语种,可转正实习,2027届',industry:'物联网/安防',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,技术方案,Python,英语,市场推广,客户支持',cities:'海外',majors:'外语类,理工科'},
+  {id:'c5',name:'货拉拉（Lalamove）',position:'全球拓展管培生（GMT）',status:'已开启',deadline:'2026-09-30',link:'https://careers.lalamove.com',jd:`【项目名称】货拉拉全球拓展管培生(GMT) 2027秋招
+
+【岗位职责】
+1. 参与货拉拉海外市场的业务拓展与运营管理
+2. 对接海外本地化团队，推动市场进入策略落地
+3. 轮岗学习跨境物流、用户增长、本地化运营等模块
+4. 作为未来国际化管理人才重点培养
+
+【任职要求】
+- 2027届海内外高校应届毕业生
+- 留学生优先！海外视野+语言优势直接对口核心海外业务
+- 本科及以上学历，英语流利
+- 有国际化思维和创业精神
+
+【薪资】年薪50w（留学生专属快车道）
+
+【企业实力】
+覆盖中国大陆、香港、东南亚、拉美、欧洲上百个城市
+国内少有的真正实现规模化海外落地的互联网独角兽
+
+【招聘流程】
+网申 → 简历筛选 → 面试 → Offer
+【备注】全球化高速扩张期，业务增量大、人才缺口足、晋升通道透明`,tags:'互联网独角兽,全球拓展,管培生,年薪50w,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,领导力,项目管理,内容运营,英语,市场推广',cities:'海外',majors:'外语类'},
+  {id:'c6',name:'宇通集团',position:'海外营销管培生/海外销售',status:'已开启',deadline:'2026-09-21',link:'https://www.yutong.com/recruit',jd:`【项目名称】宇通2027届海外营销专场
+
+【企业实力】
+客车+卡车大型商用车集团，旗下宇通客车(SH.600066)、宇通重工(SH.600817)两家上市公司。产品已销售至全球100+国家和地区。
+
+【招聘岗位】
+- 海外营销管培生（销售方向）
+- 海外营销管培生（售后方向）
+- 海外销售、海外售后
+- 海外营销职能、海外人力资源管理
+
+【任职要求】
+- 2027届全球高校本科、硕士毕业生
+- 英语流利，有小语种能力优先
+- 愿意深耕海外市场
+
+【培养体系】
+线下面授课程、线上精彩微课、外语学习工具
+全球互动课程、定制线上沙龙、等级测试
+
+【招聘流程】
+简历投递 → 简历筛选 → 面试/测试(2-3轮，线上视频为主) → Offer
+【截止时间】2026年9月21日`,tags:'商用车出海,海外营销,管培生,全球100+国家,2027届',industry:'工程机械/商用车',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,客户开发,领导力,项目管理,市场推广,英语',cities:'海外',majors:'外语类'},
+  {id:'c7',name:'固胜科技（MOZA）',position:'海外销售支持/海外渠道营销/海外市场推广',status:'已开启',deadline:'2026-08-24',link:'https://www.mozaracing.cn',jd:`【项目名称】固胜科技2027届校园招聘
+
+【企业实力】
+全球赛车模拟和飞行模拟行业领导者，国家级专精特新"小巨人"，硬件科技独角兽。与保时捷、兰博基尼等顶级车企深度合作。
+
+【招聘岗位 - 海外相关】
+- 海外销售支持
+- 海外渠道营销/海外渠道销售
+- 海外市场推广专员
+- 海外售后专员/IP运营专员
+
+【任职要求】
+- 2027届国内外应届毕业生（毕业时间：2026年9月-2027年8月）
+- 本科及以上学历
+- 英语流利，有海外市场推广经验优先
+
+【工作地点】深圳/武汉/美国/欧洲
+
+【薪酬福利】
+匹配一线大厂薪资、"关键人才奖"、优秀员工期权激励
+MOZA培养计划：资深导师+系统化培训
+专属福利：顶级赛事观摩、模拟赛车与飞行培训
+
+【招聘流程】
+简历投递 → HR初试 → 专业复试 → 综合终试 → 签约
+网申截止：2026-08-24（仅剩14天！）
+QQ群：676919454`,tags:'硬件科技,独角兽,赛车模拟,海外渠道,2027届,即将截止',industry:'智能硬件/消费电子',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,内容运营,市场推广,英语,商务谈判',cities:'深圳,武汉,海外',majors:'外语类'},
+  {id:'c8',name:'三一集团',position:'国际营销经理',status:'已开启',deadline:'2026-09-15',link:'https://campus.sany.com.cn',jd:`【项目名称】三一集团2027届秋招提前批
+
+【岗位职责】
+1. 负责工程机械产品在海外市场的销售与客户开发
+2. 管理海外经销商网络
+3. 参与海外项目投标与商务谈判
+4. 收集海外市场信息与竞品分析
+
+【任职要求】
+- 2027届海内外应届毕业生
+- 本科及以上学历，机械/市场营销/外语类优先
+- 英语流利，有小语种能力优先
+- 接受海外出差或驻外
+
+【工作地点】北京/长沙/上海/西安/沈阳/杭州/成都/珠海/韩国/莫斯科等
+
+【企业实力】
+全球工程机械行业龙头企业之一，业务遍及180+国家
+
+【招聘流程】
+网申 → 测评 → 面试 → Offer`,tags:'工程机械,海外营销,全球180+国家,2027届',industry:'工程机械/商用车',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,客户开发,招投标,市场推广,英语,商务谈判',cities:'上海,北京,杭州,成都,海外',majors:'市场营销,外语类,理工科'},
+  {id:'c9',name:'拼多多/Temu',position:'跨境电商运营/市场管培生（TEMU）',status:'已开启',deadline:'2026-09-15',link:'https://careers.pddglobalhr.com/campus/grad',jd:`【项目名称】拼多多2027届秋招提前批
+
+【企业动态】
+- 2026年上海陆家嘴全球总部启用（33亿购置），承接Temu全球运营核心业务
+- 雄安新区新办公楼已投入使用
+- Temu已进入全球90+国家，全球霸榜中
+
+【招聘岗位 - 跨境方向】
+- Temu跨境电商：产品类、设计类、市场/运营类、仓储类
+- 市场部：广告投放、用户增长、优惠券、商品推荐、营销活动、AIGC
+
+【任职要求】
+- 2027届海内外应届毕业生
+- 本科及以上学历，英语流利
+- 数据敏感度高，热爱跨境电商
+- 有海外留学/生活经历加分
+
+【招聘流程】
+网申 → 笔试 → 面试 → Offer
+【关键福利】提前批结果不影响正式批投递，免费多一次机会！
+
+【投递方式】
+官网：https://careers.pddglobalhr.com/campus/grad
+内推码：Y4E9FBUfAY
+【薪资】极具竞争力的薪酬，免费餐食，打车报销`,tags:'跨境电商,Temu,全球霸榜,2027届提前批,多一次机会',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,领导力,项目管理,跨境电商,内容运营,平台运营',cities:'上海,海外',majors:'市场营销,外语类'},
+  {id:'c10',name:'SHEIN（希音）',position:'全球运营/国际物流管培生',status:'即将开启',deadline:'2026-10-31',link:'https://app.mokahr.com/campus_apply/shein/2932',jd:`【关于SHEIN】
+全球领先的时尚和生活方式在线零售商，为全球150+国家和地区提供时尚产品。全球top5独角兽企业，正式雇员18000+。全球运营类：电商平台治理、平台商家管理。国际物流与仓储类：国际物流管培生、质量管理。
+
+【招聘对象（预计）】
+预计2026年8-9月开启2027届秋招，面向2026年9月-2027年8月毕业生。宣讲会已排期（10月24日江南大学等），建议提前关注。
+
+【任职要求】
+- 本科及以上学历
+- 英语流利，海外留学/生活经历优先
+- 热爱电商与时尚行业
+
+【招聘流程（参考往届）】
+投递 → 简历初筛 → 笔试(部分) → 面试(2-4轮) → Offer
+每人可投递3个不同岗位
+
+【投递渠道】
+官网：https://app.mokahr.com/campus_apply/shein/2932
+公众号：SHEIN招聘
+【备注】2027届秋招预计8-9月官宣，宣讲会已排期至10月。2027届暑期实习（3月已启动）可转正`,tags:'跨境电商,快时尚,全球运营,独角兽,即将开启',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'领导力,项目管理,跨境电商,内容运营,英语,平台运营',cities:'海外',majors:'外语类'},
+  {id:'c11',name:'传音控股',position:'海外市场营销/海外运营',status:'即将开启',deadline:'2026-10-31',link:'https://transsion.zhiye.com/Campus',jd:`【关于传音】
+"非洲手机之王"，科创板上市（688036），专注于新兴市场智能终端和移动互联服务。产品覆盖70+国家和地区。中国企业500强、中国民营企业500强。
+
+【已有进展】
+- TAIG-AI顶尖人才计划8月3日启动（AI方向，面向2026/2027届本硕博）
+- 海东青计划同步热招（零售/营销/产品方向，全国+海外岗位）
+- 2027届正式批（含海外市场营销岗位）预计8月中下旬全面启动
+
+【预计岗位 - 海外方向】
+- 市场营销类：海外市场推广、品牌营销
+- 运营类：海外产品运营
+- 海东青计划：零售/营销/产品方向，全国+海外岗位
+
+【任职要求（预计）】
+- 2027届国内外高校毕业生
+- 本科及以上学历
+- 英语流利，有法语/阿拉伯语/印地语等能力优先
+- 对新兴市场有兴趣
+
+【工作地点】上海/重庆/深圳/海外
+
+【投递方式】
+官网：https://transsion.zhiye.com/Campus
+公众号：传音控股招聘
+【备注】TAIG-AI+海东青计划已率先启动，正式批预计8月中下旬全面官宣`,tags:'手机出海,新兴市场,非洲,科创板,即将开启,TAIG-AI已启动',industry:'智能硬件/消费电子',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,内容运营,英语,市场推广,数据分析,用户运营',cities:'深圳,上海,海外',majors:'市场营销,外语类'},
+  {id:'c12',name:'华为技术有限公司',position:'海外客户经理',status:'即将开启',deadline:'2026-12-15',link:'https://career.huawei.com',jd:`【预计时间】华为2027届正式校园招聘预计2026年8月18日前后启动。根据往年规律：2026届8月15日启动，2025届8月14日启动，2026届8月18日官宣。当前提前批+顶尖AI人才专项+天才少年招聘进行中。
+
+【已有进展】
+- 2027届实习生招聘已于2026年3月15日启动（含客户经理/客户经理小语种/产品行销经理/合同商务经理实习岗位）
+- 2027届顶尖AI人才专项行动火热进行中
+- 正式校招对象已公布：国内本硕2027.1.1-12.31，海外本硕博2026.1.1-2027.12.31
+
+【岗位职责（参考）】
+1. 负责制定并执行海外区域市场销售策略
+2. 维护并拓展海外运营商/政企客户关系
+3. 组织跨国技术交流与商务谈判
+4. 分析区域市场趋势与竞争格局
+
+【任职要求（参考）】
+- 2027届应届毕业生
+- 硕士及以上学历，通信/电子/商科背景优先
+- 英语流利可作为工作语言，小语种加分
+- 华为设有专门留学生招聘通道，提供远程面试
+
+【招聘流程（参考）】
+网申 → 测评 → 群面 → 专业面 → HR面 → Offer
+
+【注意】建议提前注册账号、完善简历，关注"华为招聘"公众号`,tags:'通信,海外销售,B2B,全球派遣,即将开启,8月中旬官宣',industry:'通信/ICT',degreeReq:'硕士及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,客户开发,招投标,内容运营,Python,市场推广',cities:'海外',majors:'外语类,理工科'},
+  {id:'c13',name:'阿里巴巴集团（阿里国际）',position:'海外业务拓展/国际销售',status:'已开启',deadline:'2026-10-31',link:'https://campus-talent.alibaba.com/?lang=zh',jd:`【官宣时间】2026年8月5日，阿里巴巴2027届应届生招聘全球启动！网申截止2026-10-31。
+
+【招聘对象】
+2026.11-2027.10毕业的海内外应届毕业生
+
+【岗位类型】
+算法类、研发类、芯片类、产品类、游戏类、运营类、商务拓展类、其他类
+商务拓展类是海外销售/BD的直接对口方向！
+
+【阿里国际数字商业集团 - 海外相关】
+- 阿里国际站(Alibaba.com)卖家/买家拓展
+- 全球速卖通运营
+- 跨境贸易解决方案（支付/物流/金融）
+- 市场营销、客户体验、物流等方向
+- Bravo Star顶尖人才计划持续热招（薪酬不设上限）
+
+【招聘流程】
+网申/内推 8月5日开始 → 测评/笔试 8月中旬 → 面试 8月中旬 → Offer 9月下旬
+亮点：AI Coding新题型，多业务并行投递不冲突，人才库机制无限面试机会
+
+【投递渠道】
+官网：https://campus-talent.alibaba.com/?lang=zh
+热线：0571-28285927`,tags:'电商,跨境,B2B平台,8月5日官宣,商务拓展,阿里国际',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,招投标,跨境电商,内容运营,市场推广',cities:'海外',majors:'市场营销,财务/会计'},
+  {id:'c14',name:'腾讯',position:'国际商务经理',status:'即将开启',deadline:'2026-11-15',link:'https://careers.tencent.com',jd:`【已有进展】
+- 2026年7月15日，腾讯"青云计划"2027校园招聘全球启动（面向AI/前沿技术方向）
+- 青云计划聚焦大语言模型、多模态、智能体等六大技术领域
+- 7月29日CDG青云计划全面启动
+- 实习生招聘（含市场类）已于2026年3月启动
+
+【预计时间】腾讯2027届正式秋招（含国际商务/市场类岗位）预计2026年8月上旬启动。根据往年规律：2026届正式批8月6-7日官宣。当前青云计划(技术方向)已启动，官网仍为实习生入口。2026届校招提供10000+实习Offer，技术类扩招36%，产品类扩招39%。
+
+【岗位方向（参考）】
+- 游戏/社交/云产品海外商务拓展
+- 技术产品商务培训生
+- 广告营销管培生（商业增长方向/行业操盘方向）
+- 海外合作伙伴生态搭建
+
+【任职要求（参考）】
+- 本科及以上学历，MBA或海外留学经验优先
+- 英语流利，精通第二外语优先
+- 出色的逻辑分析与跨文化沟通能力
+
+【亮点】腾讯支持修改意向事业群和部门，复试通过后可并行面试，"无限复活"机制
+
+【备注】国际化业务线岗位预计在正式批中放量，建议关注"腾讯招聘"公众号`,tags:'互联网巨头,游戏出海,战略合作,即将开启,青云计划已启动',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,领导力,项目管理,招投标,客户关系,Python',cities:'海外',majors:'国际贸易,市场营销,外语类'},
+  {id:'c15',name:'比亚迪',position:'海外销售工程师/海外市场专员',status:'即将开启',deadline:'2026-11-30',link:'https://job.byd.com',jd:`【已有进展】
+- 2027届博士秋季校园招聘专项已全面启动（面向2026年9月-2027年8月毕业博士）
+- 含专业销售、销售支持等岗位，外国语类（英语/法语/德语/西语/葡语/阿拉伯语等）大量需求
+
+【预计时间】比亚迪2027届本科/硕士秋招正式批预计2026年8-9月启动。
+
+【企业动态】
+全球新能源汽车销量冠军，2025年营收首次突破8000亿。全球研发人员超12万名，新能源车运营足迹遍及100+国家和地区。
+
+【预计岗位 - 海外方向】
+- 海外销售工程师
+- 海外市场专员
+- 销售支持（含外国语类：德语/法语/西语/葡语/阿拉伯语等）
+
+【预计要求】
+- 2027届全球高校本科/硕士/博士
+- 境内：2026年9月-2027年8月 | 境外：2026年7月-2027年12月
+- 英语流利，接受海外出差/驻外（巴西/匈牙利/墨西哥/泰国等）
+
+【投递渠道】
+PC：job.byd.com → 校园招聘
+公众号：比亚迪招聘
+【备注】2026届招收5000+，海外市场类约300个名额。2027届规模预计更大`,tags:'新能源汽车,海外市场,大客户销售,2027届,即将开启,博士专项已启动',industry:'新能源汽车/能源',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,客户开发,内容运营,市场推广,英语,商务谈判',cities:'海外',majors:'外语类'},
+  {id:'c16',name:'大疆创新',position:'海外渠道销售/海外市场/电商',status:'已开启',deadline:'2026-10-15',link:'https://we.dji.com',jd:`【官宣时间】2026年6月25日，DJI大疆2027"拓疆者"校园招聘正式开启！
+
+【招聘对象】
+2027届高校毕业生（优秀的2026届毕业生可适当放宽）
+招满即止，不设网申截止时间
+
+【岗位类别（含海外方向）】
+- 市场类：海外市场推广
+- 销售类：海外渠道销售
+- 电商类：跨境电商运营
+- 产品运营、供应链管理、项目管理等
+共138+岗位，覆盖技术/产品/市场海外/职能多条赛道
+
+【任职要求】
+- 2027届海内外应届毕业生
+- 本科及以上学历，理工科/国际商务/市场营销/外语等专业
+- 英语流利，出色的商务谈判能力
+- 每位同学限投递一个职位
+
+【招聘流程】
+6月25日起投递 → 7-9月简历筛选+测评 → 8-10月笔试+面试 → 10-11月结果反馈
+
+【内推码】DSGz7tGD
+【投递方式】
+官网：https://app.mokahr.com/m/campus_apply/dji/143359?recommendCode=DSGz7tGD#/jobs
+【注意】招满即止，建议尽早投递！`,tags:'无人机,智能硬件,全球品牌,6月25日官宣,招满即止,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,招投标,跨境电商,内容运营,Python',cities:'海外',majors:'国际贸易,市场营销,外语类,理工科'},
+  {id:'c17',name:'TCL实业',position:'海外销售管培生/海外销售校招生',status:'已开启',deadline:'2026-09-04',link:'https://campus.tcl.com',jd:`【官宣状态】TCL实业2027届校招已可投递！猎聘与官网均有海外销售岗位放出。
+
+【企业实力】
+全球化智能科技企业，业务遍及160+国家和地区。42个研发中心、32个制造基地。TCL智屏销量全球前三。
+
+【招聘岗位 - 海外方向】
+- 海外销售校招生（深圳，8-12K·15薪）：负责全球客户产品解决方案与供应链方案、商务谈判、订单管理、行业信息收集
+- 海外销售管培生（深圳，10-15K·13薪）：市场洞察、订单管理、销售经营分析、市场营销规划
+- 海外客户服务管培生
+- 小语种方向：葡萄语/西班牙语/韩语/日语/越南语优先
+
+【任职要求】
+- 本科及以上学历，专业不限
+- 英语听说读写流利，可作为工作语言
+- 小语种优先，具备跨文化沟通能力
+- 可接受海外出差或外派
+
+【工作地点】深圳/惠州/中山/合肥/上海及海外
+
+【投递渠道】
+官网：campus.tcl.com
+公众号：TCL招聘`,tags:'智能科技,海外销售,管培生,全球布局,8月可投,2027届',industry:'家电/智能家居',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,客户开发,领导力,项目管理,招投标,市场推广',cities:'深圳,上海,合肥,海外',majors:'不限'},
+  {id:'c18',name:'小米集团',position:'国际销售代表/海外渠道运营',status:'已开启',deadline:'2026-11-30',link:'https://campus.hr.xiaomi.com',jd:`【官宣状态】小米2027届全球校园招聘计划已上线！官网显示包括海外岗位入口。
+
+【企业实力】
+全球消费电子与智能制造龙头，世界500强。手机出货量全球前三，AIoT平台连接设备超10.79亿台。2021年进军智能电动汽车，SU7系列上市。全球员工超4万人，产品覆盖100+国家和地区。
+
+【招聘项目】
+- 2027届全球校园招聘计划：覆盖AI大模型、软硬件、汽车、供应链、产品、设计、新零售等全方向
+- 2027届新零售招聘计划：线下门店、全域零售、用户经营
+- 实习生招聘计划（可转正）
+
+【与海外相关方向】
+- 国际销售代表：海外渠道管理、经销商开发
+- 海外市场推广：品牌营销、用户增长
+- 供应链管理（全球方向）
+- 新零售（海外门店运营）
+
+【任职要求】
+- 2027届海内外应届毕业生（毕业时间：2026年9月1日-2027年8月31日）
+- 本科及以上学历
+- 英语流利，小语种加分（印地语/西语/阿拉伯语等）
+- 有海外留学/生活经历优先
+
+【工作地点】北京/上海/深圳/南京/武汉及海外
+
+【招聘流程】
+在线投递 → 线上测评 → 技术笔试(部分) → 简历评估 → 业务面试(2轮+) → Offer
+
+【投递渠道】
+官网：campus.hr.xiaomi.com
+公众号：小米招聘
+【备注】6月5日顶尖人才专项率先启动（雷军官宣），当前2027届全球校园招聘计划已全面上线。海外岗位丰富，留学生优势明显。正式批岗位预计9月大规模释放`,tags:'消费电子,IoT,海外渠道,全球前三,世界500强,2027届,已全面上线',industry:'智能硬件/消费电子',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,客户开发,内容运营,Python,市场推广,英语',cities:'深圳,上海,北京,南京,武汉,海外',majors:'外语类,理工科'},
+  {id:'c19',name:'宝洁(中国)',position:'销售管培生(CBD)',status:'即将开启',deadline:'2026-10-31',link:'https://careers.pg.com.cn',jd:`【预计时间】宝洁2027届秋招预计2026年8月末-9月启动。2026届秋招于2025年9月1日启动（网申至9月26日），春招于2026年2月截止。6月10日已开展求职赋能快闪活动预热。
+
+【项目亮点】
+- 快消行业"黄埔军校"，入职即为经理
+- 2-3年轮岗：KA大客户→区域分销→电商→经销商管理
+- 市场认可度极高，CEO摇篮
+
+【任职要求（参考）】
+- 2025年1月-2027年12月期间毕业（范围宽）
+- 本科及以上学历，专业不限
+- 英语可作为工作语言
+- 重点考察领导力/解决问题能力/商业洞察力
+
+【薪资】总包约28-35万，入职即享18天带薪年假
+【招聘流程】网申&网测 → 两轮单面（无群面） → Offer
+
+【投递渠道】
+官网：careers.pg.com.cn
+公众号：宝洁招聘
+【备注】一年冷冻期：过去一年投递未通过需等一年再投`,tags:'快消巨头,管培生,黄埔军校,28-35万,即将开启,8-9月预计',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,领导力,项目管理,跨境电商,平台运营',cities:'全国/多地',majors:'不限'},
+  {id:'c20',name:'宁德时代',position:'国际销售代表/海外市场',status:'即将开启',deadline:'2026-12-31',link:'https://Talent.CATL.com',jd:`【预计时间】宁德时代2027届秋招预计2026年9月启动。目前官网仍为2026届招聘信息。已有"2027届暑期Offer加速营"和产学班预热。
+
+【企业实力】
+全球动力电池&储能电池双第一。2024年研发投入186亿，专利超43000项。六大研发中心+十三大生产基地。
+
+【预计岗位 - 海外方向】
+- 销售代表（面向海外OEM客户）
+- 项目管理（海外）
+- 投标商务工程师
+
+【任职要求（参考）】
+- 硕士及以上学历优先（部分岗位接受本科）
+- 车辆工程/电化学/国际贸易/市场营销/外语等专业
+- 英语听说读写优秀
+
+【薪资参考】
+本科15-35W/年，硕士20-50W/年，博士30-70W/年起
+
+【招聘流程】
+网申(Talent.CATL.com) → 筛选 → 测评 → 面试 → 签约
+【工作地点】宁德/厦门/溧阳/洛阳/济宁/宜宾/香港/日本/德国/匈牙利`,tags:'新能源,动力电池,全球双第一,2027届,即将开启,高薪',industry:'新能源汽车/能源',degreeReq:'硕士及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,招投标,市场推广,英语,商务谈判',cities:'厦门,海外',majors:'国际贸易,市场营销,外语类,理工科'},
+  {id:'c21',name:'美的集团',position:'海外营销管培生/海外销售',status:'已开启',deadline:'2026-11-30',link:'https://careers.midea.com',jd:`【官宣状态】美的集团2027届"美少年计划"（实习生可转正）已全面启动！这是美的2027届校招的核心通道。
+
+【招聘对象】
+2027届海内外高校毕业生（毕业时间：2026年9月-2027年12月）
+
+【招聘岗位 - 8大职类】
+- 海外营销类：海外销售、海外市场推广、海外电商运营（核心！）
+- 国内营销类：国内销售、市场推广
+- 研发技术类、制造技术类、信息技术类、供应链物流类、财务金融类、管理类
+
+【任职要求】
+- 本科及以上学历，理学/工学/外语/国际贸易/市场营销等相关专业
+- 英语六级及以上，口语流利
+- 有学生干部经历加分
+
+【招聘流程】
+网申投递 → 人才测评/AI面试 → 面试评估(线上) → Offer发放 → 带薪实习 → 答辩转正
+
+【企业实力】
+《财富》世界500强第246位，2024年营收4091亿元
+全球超400家子公司、38个研发中心、65个制造基地
+业务覆盖200+国家和地区
+
+【投递渠道】
+官网：careers.midea.com
+公众号：美的集团招聘`,tags:'家电出海,管培生,全球轮岗,500强,美少年计划,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语六级',skillKeywords:'财务分析,品牌营销,客户开发,领导力,项目管理,跨境电商',cities:'海外',majors:'国际贸易,市场营销,外语类,财务/会计,工商管理'},
+  {id:'c22',name:'海尔智家',position:'海外市场领航者(GMTP)',status:'已开启',deadline:'2026-11-30',link:'https://maker.haier.net',jd:`【官宣状态】海尔智家2027届顶尖人才项目/提前批已正式启动！
+
+【企业实力】
+世界500强，全球第一家"A+D+H"三地上市企业。深入全球200+国家和地区，服务10亿+用户家庭。35个工业园、163个制造中心、126个营销中心、23万个销售网络。2024年营收2859.81亿元。
+
+【核心项目 - GMTP海外市场领航者计划】
+- 打造未来全球市场操盘手
+- 国际化视野、市场开拓能力、跨文化沟通能力
+- 通过专属定制培养、导师带教、跨部门轮岗历练
+- 加速培养具有业务力、经营力、领导力的海外年轻高潜力量
+
+【其他方向】
+- LTDP智领计划（复合型全球领军人才）
+- GEDP全球工程师发展计划
+- DMAP中国区数智市场精英计划
+
+【任职要求】
+- 海内外硕士及以上应届毕业生
+- 国内2027届 | 海外2026年1月-2027年12月毕业
+- 理工类、国际贸易、市场营销、工商管理类优先
+- 英语可作为工作语言
+
+【投递方式】
+官网：maker.haier.net
+内推码：GHJ237
+公众号：海尔智家招聘`,tags:'家电出海,全球市场,领航者计划,世界500强,提前批,2027届',industry:'家电/智能家居',degreeReq:'硕士及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,市场推广,英语,商务谈判,跨文化沟通',cities:'海外',majors:'国际贸易,市场营销,外语类,工商管理'},
+  {id:'c23',name:'京东集团',position:'市场商务/采销运营（国际业务方向）',status:'已开启',deadline:'2026-11-30',link:'https://campus.jd.com',jd:`【官宣时间】2026年8月3日正式启动2027届校招！首次引入AI面试！
+
+【企业实力】
+2026财年Q1营收3156.9亿元，盈利能力处于历史最高水平。业务覆盖零售、物流、科技、健康、国际等多个板块。
+
+【招聘方向 - 共十大方向】
+- 市场商务：品牌营销、市场推广、商务拓展（含国际业务）
+- 采销：供应链采购、品类运营
+- 物流、技术、产品、运营、设计、健康、工程、职能、保险金融
+
+【任职要求】
+- 2027届本科、硕博研究生
+- 英语流利，有海外背景优先
+
+【招聘流程（全新！）】
+网申(8.3-11.30) → 简历筛选(1天内通知) → 在线测评 → AI面试/在线笔试 → 远程/线下面试(8月中旬-12月) → Offer
+9月起全国高校宣讲
+
+【投递方式】
+官网：campus.jd.com
+公众号：京东招聘`,tags:'电商巨头,市场商务,国际业务,AI面试,8月3日官宣,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,招投标,客户关系,跨境电商,内容运营,Python',cities:'海外',majors:'外语类,财务/会计'},
+  {id:'c24',name:'影石Insta360',position:'海外销售/海外市场/跨境电商',status:'已开启',deadline:'2026-10-15',link:'https://www.insta360.com/cn/campus',jd:`【官宣时间】2027届秋招已开启！
+
+【关于影石】
+全景相机全球领导者，消费电子+智能硬件出海标杆企业。香港、洛杉矶、东京、柏林均设立海外办公室，海外营收占比高，对留学生非常友好。
+
+【招聘岗位 - 海外相关】
+- 营销/市场/业务类：销售、市场、电商、用户满意
+- 留学生重点优势赛道：大量海外市场、跨境电商、海外销售方向
+- 偏好具备海外背景、外语能力强的同学
+- 产品运营类、技术研发类等同步招聘
+
+【任职要求】
+- 2027届海内外应届毕业生（2026年9月-2027年8月毕业）
+- 本科及以上学历
+- 英语流利，有海外背景优先
+- 国际商务/市场营销/传播学/经管类专业优先
+
+【招聘流程】
+网申 → 简历筛选 → 测评/笔试 → 面试 → Offer
+
+【企业亮点】
+- 智能硬件+全球化消费电子赛道，高速上升期
+- 完整的全球化履历，出海行业高含金量
+- 对海归留学生非常友好`,tags:'智能硬件,出海标杆,海外销售,留学生友好,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,招投标,跨境电商,内容运营,Python',cities:'海外',majors:'国际贸易,市场营销,外语类,理工科'},
+  {id:'c25',name:'哔哩哔哩（B站）',position:'海外运营/内容运营',status:'已开启',deadline:'2026-10-31',link:'https://jobs.bilibili.com',jd:`【官宣时间】2026年8月3日正式开启2027届秋季校园招聘！
+
+【关于B站】
+中国年轻世代高度聚集的文化社区和视频平台，月活用户超3亿。海外业务持续拓展中（东南亚等市场）。
+
+【招聘对象】
+2026年9月1日-2027年8月31日期间毕业的海内外2027届应届生
+
+【招聘方向】
+- 全序列岗位开放
+- B-UP顶尖技术人才项目：面向本硕博全学段招募AI领域顶尖青年人才
+
+【与海外业务相关的岗位方向】
+- 海外运营（东南亚市场）
+- 内容运营（国际化）
+- 市场推广
+
+【任职要求】
+- 2027届应届生
+- 本科及以上学历
+- 英语流利，有内容/社区运营经验优先
+
+【招聘流程】
+网申 → 测评 → 笔试(部分) → 面试 → Offer
+
+【投递方式】
+官网：jobs.bilibili.com
+公众号：哔哩哔哩招聘`,tags:'视频社区,海外运营,内容出海,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,内容运营,Python,英语,市场推广,数据分析',cities:'海外',majors:'外语类'},
+  {id:'c26',name:'CVTE视源股份',position:'海外销售工程师/销售订单管理（海外方向）',status:'已开启',deadline:'2026-09-29',link:'https://campus.cvte.com',jd:`【官宣状态】CVTE 2027届海外留学生招聘专项已启动！
+
+【关于CVTE】
+视源股份(002841.SZ)，以交互显示、人工智能为核心的全球化高科技企业。液晶显示主控板卡、交互智能平板等领域国内市占率领先。2025年营收243.5亿元，中国制造业500强，福布斯中国出海系列Top 30。
+
+【企业实力】
+- 累计服务140+国家和地区
+- 全球10个国家设立海外子公司（美国、荷兰、印度、泰国、印尼、阿联酋等）
+- 29个国家拥有本地团队
+- 11个产业园、6类国家级科研平台
+
+【招聘对象】
+2026年7月-2027年10月期间毕业的海外留学生（含本科、硕士、博士）
+
+【招聘岗位 - 商务职能类】
+- 销售工程师（海外方向）
+- 销售订单管理（海外方向）
+- 人力资源、供应链管理
+
+【任职要求】
+- 海外留学生，本科及以上学历
+- 英语流利，有海外学习和生活经历
+- 国际商务/市场营销/理工科专业均可
+
+【招聘流程】
+网申初筛 → 专业面试 → 综合面试 → 体验实习 → Offer
+
+【专项福利】
+- 前置实习+转正机会，留学&offer双线并进
+- 专属导师带教，定制培养方案
+- 免费星级自助三餐、园区班车、代租公寓
+- 能力定薪+年度服务奖+季度绩效奖金
+
+【投递方式】
+官网：campus.cvte.com → 选择【海外留学生招聘】专区`,tags:'交互显示,出海Top30,海外留学生专项,海外销售,2027届',industry:'人工智能/软件',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,招投标,市场推广,英语,供应链管理',cities:'海外',majors:'国际贸易,市场营销,外语类,理工科'},
+  {id:'c27',name:'杰瑞集团',position:'海外技术销售工程师/海外销售经理（多语种）',status:'已开启',deadline:'2026-11-30',link:'https://jereh.zhiye.com/campus',jd:`【官宣状态】杰瑞集团2027届校园招聘（提前批）已正式启动！
+
+【关于杰瑞】
+创立于1999年，大国重器·上市公司，市值超1500亿。业务涵盖全球70+国家和地区，全球员工9500+名，技术研发人员2000+名。11大制造基地，29家一级子公司。国家制造业单项冠军企业。
+
+【招聘岗位 - 海外销售类】
+- 海外技术销售工程师：负责海外区域市场开发、客户挖掘和销售，英语可作为工作语言，CET-6
+- 海外销售经理（多语种）：西语/俄语/法语/葡语/阿拉伯语方向，专业四级
+- 国内销售工程师、技术服务工程师等
+
+【任职要求】
+- 2027届本科/硕士毕业生（2026年9月-2027年7月毕业）
+- 市场营销、机械、能动、化工、石油、材料、环境工程等理工类专业优先
+- 海外销售岗需英语流利，小语种方向需对应语种专业四级
+- 可接受全年累计出差6-9个月，单次2-3个月
+
+【工作地点】
+国内：北京/天津/上海/深圳/烟台/成都/青岛等
+海外：阿联酋/科威特/沙特/俄罗斯/美国/加拿大/澳大利亚/泰国/阿根廷等50+国家
+
+【薪酬福利】
+40多项激励制度：应届专属无息购房贷款、股权激励、金钥匙轿车激励
+硕士≥1500元/月奖学金、首年10万元人才补贴
+
+【招聘流程】
+网申 → 简历筛选 → 现场/远程面试 → 综合评估 → 薪资沟通+Offer → 签约
+
+【投递方式】
+PC端：jereh.zhiye.com/campus
+公众号：杰瑞绿洲`,tags:'大国重器,能源装备,海外销售,多语种,全球70+国家,2027届',industry:'能源装备',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,技术方案,客户开发,Python,市场推广,英语',cities:'深圳,上海,北京,成都,海外',majors:'市场营销,外语类,理工科'},
+  {id:'c28',name:'联想集团',position:'市场与销售方向（含海外市场）',status:'已开启',deadline:'2026-11-13',link:'https://talent.lenovo.com.cn',jd:`【官宣时间】2026年8月5日，联想2027届校园招聘正式启动！
+
+【企业实力】
+年收入超4100亿人民币，业务覆盖全球180个市场。源自中国的全球化科技企业，PC全球第一。
+
+【招聘方向 - 六大职位方向】
+- 市场与销售方向：含海外市场、国际销售、渠道管理等（核心！）
+- 技术方向、产品与项目方向、供应链方向、设计方向、职能方向
+- 管培生FUTURE LEADERS项目：面向高潜力人才，轮岗历练+高管一对一指导
+- AI专项同步开放
+
+【任职要求】
+- 2027届海内外毕业生（毕业时间：2026年9月-2027年8月）
+- 本科及以上学历
+- 英语流利，有海外背景优先
+
+【工作地点】
+北京/天津/深圳/上海/武汉/成都/合肥/苏州/重庆/杭州/济南/哈尔滨/广州/南京/厦门/长沙等20+城市
+
+【招聘流程】
+8月5日网申开启 → 简历筛选+测评 → 8月中旬面试 → 9月起Offer发放 → 11月13日网申关闭
+
+【内推码】2027XZLMYSX
+【投递渠道】
+官网：https://talent.lenovo.com.cn
+公众号：联想招聘
+【备注】管培生项目与其他项目可各投一个，内推简历优先筛选`,tags:'全球化科技,PC全球第一,管培生,8月5日官宣,市场销售,2027届',industry:'人工智能/软件',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,领导力,项目管理,Python,市场推广',cities:'深圳,上海,北京,广州,杭州,合肥,厦门,成都,南京,武汉,苏州,海外',majors:'外语类'},
+  {id:'c29',name:'星纵物联（Milesight）',position:'国际业务专员/海外技术支持工程师/海外售前工程师',status:'已开启',deadline:'2026-08-23',link:'https://milesight.zhiye.com/campus',jd:`【官宣时间】2026年7月26日，星纵物联2027届校园招聘全面开启！
+
+【企业实力】
+成立于2011年，专注物联网与AI技术，Milesight品牌享誉全球。业务遍布120+国家，2000+全球合作伙伴。连续3年营收增速超30%，海外业务复合增长率达50%。1300+员工，研发占比超50%。
+
+【招聘岗位 - 业务营销序列（海外核心）】
+- 国际业务专员（英语/俄语/西班牙语方向）
+- 海外技术支持工程师
+- 海外售前工程师
+- 另外：研发技术序列、专业序列同步招聘
+
+【任职要求】
+- 2027届全日制应届毕业生及海外留学生
+- 本科及以上学历
+- 国际业务专员需英语/俄语/西班牙语流利
+- 拿到Offer即可提前实习
+
+【工作地点】厦门/杭州
+
+【薪酬福利】
+五险一金、人才补贴+生活补贴+落户厦门支持
+员工商业公寓+五折租房补贴+安居计划
+半年奖+年终奖+营销奖金+团队奖金
+年轻扁平团队文化，反对无效加班
+
+【招聘流程】
+网申 → 笔试（仅1次机会！）→ 测评 → 面试 → Offer
+
+【投递方式】
+官网：milesight.zhiye.com/campus
+公众号：星纵招聘
+【注意】网申8月23日截止，仅剩13天！抓紧投递！`,tags:'物联网,AI技术,120+国家,国际业务,高增长,2027届,即将截止',industry:'物联网/安防',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'技术方案,Python,英语,客户支持,数据分析,跨文化沟通',cities:'杭州,厦门,海外',majors:'外语类'},
+  {id:'c30',name:'先临三维',position:'海外销售工程师/海外营销管培生/海外技术支持',status:'已开启',deadline:'2026-08-31',link:'https://shining3d.zhiye.com/campus',jd:`【官宣状态】先临三维2026秋季校招补录通道开启！含2027届实习可转正通道。
+
+【企业实力】
+三维视觉领域国家级制造业单项冠军、国家专精特新重点"小巨人"企业。2024年营收超12亿元。总部杭州，在成都/天津/香港/德国/美国/日本设有子公司。新三板挂牌（830978），独角兽企业。
+
+【招聘岗位 - 海外相关】
+- 海外销售工程师（齿科/计量方向）：负责海外代理商渠道开发与维护
+- 海外营销管培生：品牌推广、市场活动
+- 海外技术支持工程师：海外客户技术方案支持
+- 涉外法务管培生、海外财务管培生
+
+【任职要求】
+- 面向海内外2027、2028届应届毕业生（实习可转正）
+- 本科及以上学历
+- 海外销售工程师：齿科方向侧重口腔医学/临床医学；计量方向侧重机械/自动化/仪器仪表
+- 英语听说读写流利，有法语/阿拉伯语/俄语/西语/葡语/日语等小语种能力者优先
+- 适应海外出差或外派
+
+【工作地点】杭州（总部）、北京、香港、海外（德国/美国/日本等）
+
+【薪酬福利】
+竞争力薪酬+年终奖金+员工持股计划
+五险一金+周末双休+年度体检+带薪年假
+自建园区+自有食堂+员工宿舍+免费班车+健身房
+
+【招聘流程】
+简历投递 → 简历筛选 → 笔试测评(研发岗) → 面试(专业/HR面) → Offer
+
+【投递方式】
+官网：shining3d.zhiye.com
+邮箱：campus@shining3d.com
+微信：shining3d_HR
+【备注】补录机会有限，满额即止！建议同时关注2027届正式批（预计8-9月启动）`,tags:'3D视觉,制造业单项冠军,独角兽,海外销售,多语种,2027届',industry:'智能硬件/消费电子',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'财务分析,品牌营销,技术方案,客户开发,领导力,项目管理',cities:'北京,杭州,成都,海外',majors:'外语类,理工科,财务/会计,法律'},
+  {id:'c31',name:'北汽国际',position:'全球营销管培生（海外国家经理/海外渠道管理）',status:'即将开启',deadline:'2026-11-30',link:'https://baic.feishu.cn/share/base/form/shrcn7QS6cDfHww1ys4daknpPqd',jd:`【预计时间】北汽国际2027届秋招预计2026年8-9月启动。目前2026届招聘已收尾，2027届通道即将开放。
+
+【企业实力】
+隶属北汽集团（世界500强第192位），集团自主乘用车品牌国际化发展主平台。运营BAIC、ARCFOX（高端新能源）、STELATO（华为联合豪华品牌）三大品牌，覆盖SUV/轿车/越野车，纯电/混动/燃油全品类。
+
+【全球布局】
+覆盖50+国家，290+海外销售服务网络，9大海外KD工厂。业务覆盖亚洲、欧洲、非洲、美洲等中国汽车出口主要市场。
+
+【招聘岗位 - 海外方向（参考2026届）】
+- 全球营销管培生（海外国家经理方向）：空白市场开发、现有渠道维护、销量与回款KPI
+- 全球营销管培生（海外渠道管理方向）：渠道开发、经销授权、首批订单监控
+- 海外品牌战略、海外售后服务、出口商务等
+
+【任职要求（参考）】
+- 2027届应届毕业生，统招本科及以上学历
+- 英语四级及以上（或同等水平），小语种人才可适当放宽
+- 机械类/语言文学类/经贸类/管理类等相关专业
+- 能适应短/中长期海外出差或派驻
+
+【薪酬福利（参考）】
+基本工资+绩效+国内补贴+海外补贴
+落户支持+六险一金+餐补+过节费+住房补贴+班车服务
+
+【投递渠道】
+网申：https://baic.feishu.cn/share/base/form/shrcn7QS6cDfHww1ys4daknpPqd
+官网：www.baicglobal.com
+公众号：北汽国际招聘
+【备注】汽车出海是当下最热赛道之一，北汽国际作为集团出海主平台，海外岗位需求量大、发展空间广阔`,tags:'汽车出海,世界500强,全球营销,海外派驻,即将开启,2027届',industry:'新能源汽车/能源',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,客户开发,领导力,项目管理,招投标,内容运营',cities:'海外',majors:'外语类,理工科,工商管理'},
+  {id:'c32',name:'蔚来（NIO）',position:'用户服务/全球市场运营（海外方向）',status:'已开启',deadline:'2026-11-30',link:'https://campus.nio.com',jd:`【官宣状态】蔚来2027届秋季校园招聘已正式上线！正式批滚动进行中（技术提前批8月14日截止）。
+
+【企业实力】
+全球化智能电动汽车公司，2014年成立，覆盖全球超300个城市。已进入挪威、德国、荷兰、瑞典、丹麦等欧洲市场。坚持核心技术自研，申请中及已授权专利超9000件。
+
+【招聘项目（三大通道）】
+- 2027届秋季校园招聘（正式批）：产品、数字技术、智能制造、用户服务、职能支持等
+- 蔚来区域公司2027届校园招聘：用户触点第一线
+- 乐道区域公司2027届校园招聘：家庭用户市场
+
+【与海外业务相关方向】
+- 用户与服务类：全球用户社区运营、用户体验管理
+- 产品类：海外产品本地化
+- 职能与支持类：国际业务拓展、供应链管理（全球）
+- 项目管理类：海外市场项目
+
+【任职要求】
+- 2027届海内外应届毕业生（含2025-2026届往届生）
+- 毕业时间：2024年9月-2027年8月（范围宽！）
+- 本科及以上学历
+- 英语流利，有欧洲市场经验/小语种优先
+
+【工作地点】
+上海/合肥/北京/南京/深圳/杭州/圣何塞/慕尼黑/牛津/柏林/布达佩斯/新加坡等
+
+【招聘流程】
+技术提前批：7月15日-8月14日投递 → 7月20日笔试 → 7月下旬面试 → 8月Offer
+正式批：滚动进行中
+每人最多可同时投递3个岗位
+
+【投递方式】
+官网：campus.nio.com
+内推码：2EY1XZX
+公众号：蔚来招聘
+【备注】新能源车企出海标杆，欧洲市场高速扩张，海外岗位需求持续增长。用户服务类岗位与销售/客户管理直接相关`,tags:'新能源,智能电动汽车,全球化,欧洲市场,用户服务,2027届',industry:'新能源汽车/能源',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,客户开发,内容运营,Python,市场推广,英语',cities:'深圳,上海,北京,杭州,合肥,南京,海外',majors:'外语类,工商管理'},
+  {id:'c33',name:'MOVA（智能清洁）',position:'全球营销/海外市场/跨境电商运营',status:'已开启',deadline:'2026-11-30',link:'https://www.mova.com',jd:`【官宣状态】MOVA 2027届全球校招正式开启！（6月12日起投递，截止11月30日）
+
+【企业实力】
+智能清洁/家电出海新锐品牌，依托中国供应链优势快速拓展全球市场。产品覆盖扫地机器人、洗地机、吸尘器等智能清洁品类，海外营收占比高，处于高速扩张期。
+
+【招聘岗位 - 四大类】
+- 全球营销类：海外市场推广、品牌营销、渠道销售（核心！）
+- 研产类：算法、硬件、结构等研发岗
+- 设计类：工业设计、CMF设计
+- 职能类/制造供应类
+
+【任职要求】
+- 2026/2027届海内外本科及以上毕业生
+- 全球营销类：国际商务/市场营销/外语类专业优先
+- 英语流利，有小语种能力优先
+- 有跨境电商运营或海外市场实习经验加分
+
+【工作地点】苏州/全国其他
+
+【薪酬福利】
+- 行业竞争力薪资+绩效奖金
+- 五险一金+补充商业保险
+- 海外出差/驻外补贴
+- 年轻化团队，扁平管理
+
+【招聘流程】
+网申 → 测评 → 面试(2-3轮) → Offer
+
+【投递方式】
+官网/公众号：MOVA招聘
+【备注】出海智能硬件新锐，海外市场为核心赛道。相比大厂竞争较小，成长空间大。适合想要深耕出海赛道的应届生`,tags:'智能清洁,家电出海,全球营销,新兴品牌,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,客户开发,招投标,跨境电商,内容运营,市场推广',cities:'苏州,海外',majors:'国际贸易,市场营销,外语类'},
+  {id:'c34',name:'石头科技（Roborock）',position:'海外市场营销/海外渠道经理',status:'已开启',deadline:'2026-11-15',link:'https://roborock.zhiye.com/campus',jd:`【官宣状态】石头科技2026全球校园招聘已开启！
+
+【企业实力】科创板上市（688169），全球智能清洁机器人龙头。产品遍布170+国家和地区，2023年营收86.53亿（+30.55%）。获福布斯中国出海全球化TOP30。研发团队来自微软、华为等科技企业。
+
+【招聘对象】2025年9月至2026年8月毕业的海内外应届毕业生
+
+【营销类岗位 - 海外方向】
+- 海外市场营销：品牌推广、本地化营销策划、市场洞察
+- 海外渠道经理：海外经销商/渠道开发与管理、区域销售策略
+- 亚马逊运营、官网运营、广告投放（电商方向）
+- 销售数据分析师、售后运营、GTM
+
+【工作地点】北京/深圳
+
+【任职要求】
+- 本科及以上学历，市场营销/国际贸易/电子商务等专业
+- 英语流利，有海外背景优先
+- 对消费电子/智能硬件行业有热情
+
+【福利】七险一金、落户指标、公租房、免费晚餐+零食饮料、内购优惠、年度体检
+
+【招聘流程】网申 → 简历筛选 → 面试 → Offer → 录用签约
+
+【投递方式】PC端：roborock.zhiye.com/campus  公众号：石头科技招聘`,tags:'智能硬件,扫地机器人,海外渠道,科创板,全球品牌',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,招投标,跨境电商,内容运营,市场推广',cities:'深圳,北京,海外',majors:'国际贸易,市场营销,外语类,理工科'},
+  {id:'c35',name:'科大讯飞',position:'客户经理（全国）/AI数据专家（多语种）',status:'已开启',deadline:'2026-12-31',link:'https://campus.iflytek.com',jd:`【官宣状态】科大讯飞2026届秋季校园招聘已全面上线！网申7月21日起。
+
+【企业实力】亚太领先的智能语音与AI上市企业（002230）。国家科技进步奖一等奖（多语种智能语音）。讯飞星火大模型开发者，与华为联合发布全国产算力平台。
+
+【招聘对象】2024年6月-2026年8月毕业的同学
+
+【相关岗位】
+- 营销类：客户经理（全国30+城市）、市场经理、售前咨询、零售经理、渠道经理
+- 资源类：AI数据专家-葡萄牙语/马来语/印尼语/阿拉伯语/英语/法语/俄语/西班牙语方向
+- 职能类：品牌经理、公关经理
+
+【任职要求】
+- 本科及以上学历
+- 营销类：沟通能力强，有销售热情
+- 多语种岗：对应语种流利
+
+【工作地点】合肥（总部）/北京/上海/深圳/广州/南京/济南/成都/武汉/杭州/郑州/石家庄/长沙/西安等
+
+【福利】五险一金+补充商业保险、花式食堂、酒店式公寓、交通补贴、市内班车、飞飞育儿园
+
+【招聘流程】网申(7月21日起) → 测评 → 笔试(部分岗位) → 面试(8月起) → Offer(9月起)
+
+【投递方式】PC端：campus.iflytek.com  公众号：科大讯飞招聘
+
+【注意】海外销售岗暂未在校招页单独列出，建议投递「客户经理」岗后在面试中表达海外意向；AI数据多语种岗是切入国际业务的好入口`,tags:'AI龙头,智能语音,多语种,全国岗位,星火大模型',industry:'通信/ICT',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,客户开发,市场推广,英语,商务谈判,跨文化沟通',cities:'深圳,上海,北京,广州,杭州,合肥,成都,南京,武汉,海外',majors:'外语类'},
+  {id:'c36',name:'基恩士（Keyence）🇯🇵',position:'销售工程师/销售（B2B顾问式）',status:'已开启',deadline:'2026-11-30',link:'https://keyence.zhiye.com/campus',jd:`【官宣状态】基恩士2027秋季校园招聘已全面开启！
+
+【企业实力】🇯🇵 日本上市公司市值TOP10，连续8年入选福布斯"全球最具创新力企业"100强。连续10年平均成长率超15%，利润率超50%。全球46个国家和地区设有250个办事处。主营传感器、测量仪器、工业自动化产品。
+
+【招聘对象】2027届本科及以上应届毕业生（毕业时间：2026年9月-2027年8月）
+
+【招聘岗位】销售工程师/销售（专业不限！）
+- 顾问式销售，在所负责区域推广、销售基恩士产品
+- 直接对应最终用户，了解客户显在和潜在需求（B2B销售）
+- 分析行业动态，制定战略计划，实现区域销售业绩最大化
+
+【薪资福利】月薪：12,000~15,000元/月（视工作地点）。第一年约18-22万元，第二年23-31万元。每半年调薪&升职机会，1年2次半年奖金。五险一金+补充商业保险，周末双休，带薪年假10天起。1年2次现金福利补贴（总计8,000-15,000元）。外出专车与司机接送，带薪培训期间包酒店住宿。划重点：无酒桌文化！
+
+【工作地点】24个城市：北京、天津、大连、济南、青岛、南京、无锡、苏州、昆山、上海、杭州、合肥、宁波、武汉、长沙、西安、成都、重庆、厦门、广州、东莞、深圳、中山、长春
+
+【招聘流程】网申 → AI面试 → 线上面试2轮 → 测评 → 线下终面(上海总部，包差旅) → Offer
+
+【内推码】EVKP89
+投递：keyence.zhiye.com/campus  公众号：基恩士招聘`,tags:'外企,日本上市,B2B销售,高薪,专业不限,无酒桌文化,2027届',industry:'物联网/安防',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'商务谈判,客户开发',cities:'深圳,上海,北京,广州',majors:'不限'},
+  {id:'c37',name:'特斯拉（Tesla）🇺🇸',position:'特斯拉顾问实习生（可转正）/服务专家',status:'已开启',deadline:'2027-07-02',link:'https://app.mokahr.com/campus-recruitment/tesla/41460',jd:`【官宣状态】特斯拉中国2027届T-STAR实习生项目+校园招聘已全面启动！
+
+【企业实力】🇺🇸 全球领先的电动汽车与清洁能源公司。上海超级工厂是中国首个外商独资整车制造项目。产品覆盖Model 3/Y/S/X及Cybertruck等。
+
+【招聘对象】2027届全日制本科及以上学历，专业不限
+
+【招聘岗位 - 销售/服务方向】
+- 特斯拉顾问实习生（可转正！）：客户邀约、现场接待、试乘试驾体验、促成订单
+- 服务专家：售后技术支持、客户服务
+
+【岗位亮点】专属定制培养方案，高效快速成长路径。实习期表现优异可毕业转正，获得正式员工编制。转正后授予特斯拉股票，立即成为股东！销售部门纵向发展→店长等管理岗位，有跨部门横向发展机会。
+
+【任职要求】2027届应届毕业，本科及以上学历，专业不限。出色的沟通能力和客户服务意识。持有有效中国驾照，熟练驾驶（销售顾问岗）。能接受零售业工作时间（含晚上和周末）。在校期间需提供至少3-6个月实习时长。
+
+【工作地点】上海、北京、深圳、广州、杭州、南京、苏州、三亚等全国主要城市
+
+【投递方式】官网：https://app.mokahr.com/campus-recruitment/tesla/41460  公众号：特斯拉招聘`,tags:'外企,新能源,电动汽车,可转正,股票激励,2027届',industry:'智能硬件/消费电子',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'商务谈判,Python,客户开发,数据分析',cities:'深圳,上海,北京,广州',majors:'不限'},
+  {id:'c38',name:'罗技（Logitech）🇨🇭',position:'管理培训生（销售/市场/电商轮岗）',status:'已开启',deadline:'2026-11-30',link:'https://www.yingjiesheng.com/job-007-974-208.html',jd:`【官宣状态】罗技中国2027届管理培训生项目已正式启动！7月6日起网申。
+
+【企业实力】🇨🇭 瑞士3C外设专家，超40年创新历史。以设计为驱动、软件赋能硬件。产品涵盖键盘、鼠标、游戏设备、视频会议系统、智能家居等，全球消费电子标杆品牌。
+
+【项目名称】Logitech China Management Trainee Program
+
+【招聘对象】学士学位或以上，不限专业（欢迎25-27届同学）
+
+【项目内容】多部门轮岗：销售(Sales)、市场(Marketing)、电商(E-commerce)、产品与品类管理(Product & Category)。参与核心业务运营，通过市场洞察和数据分析挖掘消费者需求。面试通过后直接签合同开始实习，毕业后成为正式员工。最终工作部门根据绩效评估决定。
+
+【任职要求】本科及以上学历，专业不限。好奇心强，渴望成为市场/销售领域专家。英语听说读写良好（Good written and oral English）。熟练使用Office办公软件。优先：IT/科技行业或市场相关实习/工作经验。
+
+【公司福利】带薪年假&病假+惊喜假期。五险一金+商业医疗保险。混合工作制度（Hybrid）。丰富员工福利和社团活动。
+
+【发展路线】管培生 → 助理经理 → 经理 → 高级经理 → 职能主管
+
+【工作地点】上海
+
+【招聘流程】网申(简历初筛/测试) → 面试 → Offer
+
+【投递方式】关注公众号「罗技招聘」获取网申入口`,tags:'外企,瑞士,3C消费电子,管培生,轮岗,英语工作环境,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,领导力,项目管理,跨境电商,内容运营',cities:'上海',majors:'不限'},
+  {id:'c39',name:'戴尔（Dell）🇺🇸',position:'内部销售暑期实习生（可转正）/渠道销售/电商运营',status:'已开启',deadline:'2026-11-30',link:'https://chinajobs.dell.com/students',jd:`【官宣状态】戴尔科技集团2027届实习生招聘已启动！面向2026年12月-2027年7月之间毕业的同学。
+
+【企业实力】🇺🇸 全球领先的IT整体解决方案及服务供应商，世界500强。在中国深耕20余年，在厦门、成都和昆山拥有3个生产基地。
+
+【招聘岗位 - 市场销售类】
+- 大客户内部销售暑期实习生（厦门）
+- 国际商用客户内部销售暑期实习生（厦门）
+- 中小企业客户内部销售实习生（厦门/大连/成都）
+- 渠道销售实习生（北京）
+- 电商运营实习生
+- 售前技术支持工程师实习生（厦门）
+
+【任职要求】
+- 2027届毕业生（2026年12月-2027年7月毕业）
+- 本科及以上学历，专业不限
+- 具备良好的沟通能力和销售意识
+- 英语良好优先
+
+【实习亮点】
+- 实习表现优异可转正，获得正式员工编制
+- 系统化培训+一对一导师带教
+- 深入了解PC及企业级IT解决方案
+
+【工作地点】北京、厦门、成都、大连
+
+【招聘流程】网申(3月起) → HR电话面试 → 视频/线下面试(1-3轮) → Offer
+
+【投递方式】
+官网：https://chinajobs.dell.com/students
+公众号：戴尔中国招聘`,tags:'外企,IT科技,销售实习,可转正,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,跨境电商,内容运营,Python,市场推广',cities:'北京,厦门,成都',majors:'不限'},
+  {id:'c40',name:'创维集团',position:'海外营销管培生/海外项目管培生（光伏方向）',status:'已开启',deadline:'2026-10-02',link:'https://skyworth.hotjob.cn',jd:`【官宣时间】2026年8月3日，创维集团2027届全球校园招聘正式启动！
+
+【企业实力】
+中国知名智能家电与新能源科技集团，成立于1988年。业务覆盖智能家电（电视/冰洗/空调等）、智能系统技术、新能源（光伏/储能）、现代服务业四大板块。全球布局，产品远销100+国家和地区。
+
+【招聘岗位 - 海外方向】
+- 海外营销管培生
+- 海外项目管培生（光伏方向）
+- 海外财务管培生（光伏方向）
+- 营销类：国内营销管培生（全国）
+
+【岗位大类】
+技术研发类、智能制造类、管理类、供应链类（81人）、营销类
+
+【任职要求】
+- 2027届应届毕业生，本科及以上学历
+- 专业不限，有营销相关履历优先
+- 沟通能力强，逻辑分析能力较强
+- 英语四级及以上，海外岗需英语流利
+
+【工作地点】
+深圳（总部）、全国、海外
+
+【招聘流程】
+网申 → 测评 → 面试 → Offer
+
+【投递方式】
+官网：https://skyworth.hotjob.cn
+公众号：创维集团招聘
+【备注】创维光伏业务高速增长，海外新能源市场是重要战略方向。海外项目管培生可接触光伏出海的完整链路，成长空间大`,tags:'智能家电,新能源光伏,海外营销,管培生,2027届',industry:'新能源汽车/能源',degreeReq:'本科及以上',langReq:'英语四级',skillKeywords:'财务分析,品牌营销,领导力,项目管理,Python,英语',cities:'深圳,海外',majors:'不限'},
+  {id:'c41',name:'菲亚兰德（Fairland）',position:'海外销售（英语/法语/西语）/亚马逊运营/海外品牌运营',status:'已开启',deadline:'2026-10-31',link:'https://www.fairland.com.cn',jd:`【官宣状态】菲亚兰德2027届校园大使已启动（8月2日），正式校招同步推进中。
+
+【企业实力】
+庭院机器人科技公司，中国最大的智能泳池设备供应商。服务全球120+国家，全球产销研人才1000+，7座现代化标准工厂、23个国际标准实验室。打造"户外机器人+户外新能源+智能水处理"三大产业20多个品类的iGarden生态。
+
+【招聘岗位 - 销售方向】
+- 海外销售（英语方向，To B）：社媒渠道客户开发、外贸客户管理
+- 海外销售（法语/西班牙语方向）
+- 亚马逊运营专员
+- 海外品牌运营专员
+- 海外客服专员
+
+【任职要求】
+- 2027届本科及以上学历
+- 海外销售岗需英语/法语/西语流利
+- 有较强的面对面谈判能力
+- 国际贸易/市场营销/外语类专业优先
+
+【工作地点】广州、深圳
+
+【薪酬福利】
+- 应届生入职首年年薪至高可达35w
+- 入职首年最多可获两次晋级调薪机会
+- 五险一金、周末双休、下午茶、住房补贴
+- 专业+管理双通道晋升，导师一对一带教
+
+【招聘流程】
+网申 → 简历筛选 → 面试 → Offer
+
+【投递方式】
+官网：www.fairland.com.cn → 加入我们 → 校园招聘
+邮箱直投：campus@fairlandgroup.com
+公众号：菲亚兰德招聘
+QQ群：1050660964
+【备注】小而美的出海科技企业，海外销售岗位直面全球客户，适合想要快速成长的应届生。相比大厂竞争压力小，出海赛道前景好`,tags:'庭院机器人,智能设备出海,海外销售,多语种,120+国家,2027届',industry:'智能硬件/消费电子',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'品牌营销,客户开发,内容运营,市场推广,英语,数据分析',cities:'深圳,广州,海外',majors:'国际贸易,市场营销,外语类'}
+];
+
+const DEFAULT_NOTES = [
+  { id: 'n1', title: '字节跳动2027届校招网申', content: '8月3日刚官宣！登录jobs.bytedance.com/campus，填写个人信息，上传中英文简历。国际化BD/运营岗优先投。', date: todayStr, tag: '网申', done: false, createdAt: new Date().toISOString() },
+  { id: 'n3', title: 'OPPO海外营销岗投递+准备面试', content: '内推码X3448036，8月6日发测评，8月10日开始面试。速度准备英文自我介绍和品牌案例。', date: tomorrowStr, tag: '面试', done: false, createdAt: new Date().toISOString() },
+  { id: 'n4', title: '固胜科技投递（8月24日截止）', content: 'MOZA赛车模拟，海外销售支持/渠道营销岗。官网www.mozaracing.cn，QQ群676919454。', date: new Date(now.getTime()+2*86400000).toISOString().slice(0,10), tag: '网申', done: false, createdAt: new Date().toISOString() },
+  { id: 'n5', title: '关注华为/比亚迪2027届官宣', content: '华为预计8月中下旬官宣，比亚迪预计8-9月。提前在官网注册账号、完善简历，关注招聘公众号。', date: new Date(now.getTime()+5*86400000).toISOString().slice(0,10), tag: '其他', done: false, createdAt: new Date().toISOString() },
+];
+
+// ===== STATE =====
+let info = loadData('info', DEFAULT_INFO);
+let companies = loadData('companies', DEFAULT_COMPANIES);
+let notes = loadData('notes', DEFAULT_NOTES);
+let calYear = now.getFullYear();
+let calMonth = now.getMonth() + 1;
+let selectedDate = todayStr;
+let noteFilterDate = null;
+let expandedCompany = null;
+
+// ★ 投递状态
+const STATUS_LABELS = ['未投递','已投递','待面试','已结束'];
+const STATUS_COLORS = ['s0','s1','s2','s3'];
+
+function cycleStatus(id) {
+  const c = companies.find(x => x.id === id);
+  if (!c) return;
+  c.statusIdx = ((c.statusIdx || 0) + 1) % 4;
+  persistAll();
+  renderCompanyList();
+  showToast('已更新：' + STATUS_LABELS[c.statusIdx]);
+}
+
+// ===== HELPERS =====
+function formatDate(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function daysUntil(dateStr) {
+  if (!dateStr) return null;
+  const target = new Date(dateStr);
+  const today = new Date(todayStr);
+  return Math.ceil((target - today) / 86400000);
+}
+
+// ===== PERSIST =====
+function persistAll() {
+  saveData('info', info);
+  saveData('companies', companies);
+  saveData('notes', notes);
+}
+
+// ===== TODAY PANEL =====
+function renderTodayPanel() {
+  const items = document.getElementById('todayItems');
+  const empty = document.getElementById('todayEmpty');
+  const overdue = notes.filter(n => !n.done && n.date && n.date < todayStr);
+  const todayN = notes.filter(n => !n.done && n.date === todayStr);
+  const upcoming = notes.filter(n => !n.done && n.date === tomorrowStr);
+  const all = [
+    ...overdue.map(n=>({...n,type:'overdue'})),
+    ...todayN.map(n=>({...n,type:'today'})),
+    ...upcoming.map(n=>({...n,type:'upcoming'}))
+  ];
+  
+  document.getElementById('todayCount').textContent = all.length + '条';
+  if (all.length === 0) { items.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  
+  const tagMap = {'网申':'apply','面试':'interview','笔试':'apply','截止':'deadline','其他':'apply'};
+  items.innerHTML = all.map(n => {
+    const prefix = n.type==='overdue'?'⚠️ 逾期：':n.type==='today'?'📌 今天：':'🔜 明天：';
+    return `<div class="today-item${n.type==='overdue'?' overdue':''}">
+      <div class="ti-left"><span class="ti-dot ${n.type}"></span><span class="ti-tag ${tagMap[n.tag]||'apply'}">${n.tag}</span><span class="ti-text" title="${n.title}">${prefix}${n.title}</span></div>
+      <button class="btn btn-success btn-xs" onclick="markNoteDone('${n.id}')">完成</button>
+    </div>`;
+  }).join('');
+}
+
+// ===== BASIC INFO =====
+function renderBasicInfo() {
+  document.getElementById('infoGrid').innerHTML = [
+    ['姓名',info.name],['电话',info.phone],['邮箱',info.email],['所在地',info.location],
+    ['意向',info.target],['学历',info.education],
+    ['行业',info.industryPref||'不限'],['城市',info.preferredCities||'不限']
+  ].map(([k,v]) => `<div class="info-row"><span class="info-label">${k}</span><span class="info-value">${v}</span></div>`).join('');
+  
+  document.getElementById('infoTags').innerHTML = (info.skills||'').split(',').filter(Boolean).map(s=>`<span class="info-tag">${s.trim()}</span>`).join('');
+}
+
+function openInfoEditor() {
+  document.getElementById('eName').value = info.name || '';
+  document.getElementById('ePhone').value = info.phone || '';
+  document.getElementById('eEmail').value = info.email || '';
+  document.getElementById('eLocation').value = info.location || '';
+  document.getElementById('eTarget').value = info.target || '';
+  document.getElementById('eEducation').value = info.education || '';
+  document.getElementById('eSkills').value = info.skills || '';
+  document.getElementById('eIndustryPref').value = info.industryPref || '';
+  document.getElementById('eCities').value = info.preferredCities || '';
+  document.getElementById('infoModal').style.display = 'flex';
+}
+
+function saveInfo() {
+  info.name = document.getElementById('eName').value;
+  info.phone = document.getElementById('ePhone').value;
+  info.email = document.getElementById('eEmail').value;
+  info.location = document.getElementById('eLocation').value;
+  info.target = document.getElementById('eTarget').value;
+  info.education = document.getElementById('eEducation').value;
+  info.skills = document.getElementById('eSkills').value;
+  info.industryPref = document.getElementById('eIndustryPref').value;
+  info.preferredCities = document.getElementById('eCities').value;
+  persistAll(); renderAll();
+  document.getElementById('infoModal').style.display = 'none';
+  showToast('信息已更新，已重新匹配企业');
+}
+
+// ===== COMPANY CARDS =====
+function renderCompanyList() {
+  const list = document.getElementById('companyList');
+  if (companies.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:60px 0;color:#94a3b8"><div style="font-size:40px;margin-bottom:12px">🏢</div><div>暂无企业数据</div><div style="font-size:12px;margin-top:4px">点击顶部「+ 添加企业」录入秋招信息</div></div>';
+    return;
+  }
+  
+  const statusMap = {'已开启':'open','即将开启':'soon','进行中':'ongoing','已截止':'closed'};
+  
+  // Apply current sort mode
+  const sorted = [...companies];
+  if (sortMode === 'match') sorted.sort((a, b) => calcMatchScore(b) - calcMatchScore(a));
+  else if (sortMode === 'deadline') sorted.sort((a, b) => (a.deadline||'9999').localeCompare(b.deadline||'9999'));
+  else if (sortMode === 'name') sorted.sort((a, b) => a.name.localeCompare(b.name, 'zh'));
+  
+  list.innerHTML = sorted.map(c => {
+    const sc = statusMap[c.status] || 'closed';
+    const days = daysUntil(c.deadline);
+    const isExpanded = expandedCompany === c.id;
+    let countdownHtml = '';
+    if (days !== null && days > 0) {
+      countdownHtml = `<span class="cc-countdown${days <= 7 ? ' urgent' : ''}">距截止 ${days} 天</span>`;
+    } else if (days !== null && days <= 0) {
+      countdownHtml = `<span class="cc-countdown urgent">已截止</span>`;
+    }
+    
+    const tagsHtml = (c.tags || '').split(',').filter(Boolean).map(t => `<span class="cc-tag">${t.trim()}</span>`).join('');
+    const matchScore = calcMatchScore(c);
+    const matchLabel = matchScore >= 70 ? 'high' : matchScore >= 50 ? 'mid' : 'low';
+    
+    return `<div class="company-card${isExpanded ? ' expanded' : ''}" id="card-${c.id}">
+      <div class="cc-header" onclick="toggleCompany('${c.id}')">
+        <span class="cc-status-dot ${sc}"></span>
+        <div class="cc-main">
+          <div class="cc-top-row">
+            <span class="cc-name">${c.name}</span>
+            <span class="cc-status-badge ${sc}">${c.status}</span>
+            <span class="match-badge ${matchLabel}" title="与你简历的匹配度">匹配 ${matchScore}%</span>
+          </div>
+          <div class="cc-meta-row">
+            <span class="cc-position">${c.position || ''}</span>
+            ${c.deadline ? `<span class="cc-meta-sep">|</span><span class="cc-deadline${days !== null && days <= 7 && days > 0 ? ' urgent' : ''}">截止：${c.deadline}</span>` : ''}
+            ${countdownHtml}
+          </div>
+        </div>
+        <div class="cc-actions" onclick="event.stopPropagation()">
+          <button class="cc-status-btn s${c.statusIdx||0}" onclick="cycleStatus('${c.id}')" title="点击切换：未投递→已投递→待面试→已结束">${STATUS_LABELS[c.statusIdx||0]}</button>
+          ${c.link ? `<a href="${c.link}" target="_blank" rel="noopener" class="btn btn-primary btn-xs" title="打开投递链接">投递入口</a>` : ''}
+          <button class="btn btn-outline btn-xs" onclick="editCompany('${c.id}')">编辑</button>
+          <button class="btn btn-outline btn-xs" onclick="deleteCompany('${c.id}')" style="color:#ef4444;border-color:#fca5a5">删除</button>
+        </div>
+        <div class="cc-expand-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="cc-detail">
+        ${c.jd ? `<div class="cc-section"><div class="cc-section-title">📋 招聘详情</div><div class="cc-jd">${c.jd.replace(/\n/g,'<br>')}</div></div>` : ''}
+        ${tagsHtml ? `<div class="cc-tags-row">${tagsHtml}</div>` : ''}
+        <div class="cc-link-row">
+          ${c.link ? `<a href="${c.link}" target="_blank" rel="noopener" class="cc-link">前往投递</a>` : ''}
+          <button class="cc-link-outline" onclick="editCompany('${c.id}')">编辑信息</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCompany(id) {
+  expandedCompany = expandedCompany === id ? null : id;
+  renderCompanyList();
+}
+
+// ★★★ 简历分析与岗位匹配 ★★★
+let sortMode = 'match'; // match | deadline | name
+
+function sortCompanies(mode) {
+  sortMode = mode;
+  document.querySelectorAll('#sortBar .sort-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  if (mode === 'match') companies.sort((a, b) => calcMatchScore(b) - calcMatchScore(a));
+  else if (mode === 'deadline') companies.sort((a, b) => (a.deadline||'9999').localeCompare(b.deadline||'9999'));
+  else if (mode === 'name') companies.sort((a, b) => a.name.localeCompare(b.name, 'zh'));
+  renderCompanyList();
+}
+
+// ★★★ 六维加权匹配引擎 ★★★
+function calcMatchScore(company) {
+  const scores = [
+    scorePosition(company),   // 岗位匹配 30%
+    scoreIndustry(company),   // 行业匹配 20%
+    scoreSkills(company),     // 技能匹配 25%
+    scoreEducation(company),  // 学历匹配 10%
+    scoreLanguage(company),   // 语言匹配 10%
+    scoreLocation(company)    // 地点匹配 5%
+  ];
+  const weights = [30, 20, 25, 10, 10, 5];
+  let total = 0;
+  for (let i = 0; i < 6; i++) total += scores[i] * weights[i] / 100;
+  return Math.min(Math.round(total), 99);
+}
+
+function scorePosition(c) {
+  if (!info.target) return 50;
+  const target = info.target.toLowerCase();
+  const pos = (c.position || '').toLowerCase();
+  const jd = (c.jd || '').toLowerCase();
+  let score = 0;
+  const kws = target.replace(/[/、，,]/g, ' ').split(/\s+/).filter(w => w.length >= 2);
+  kws.forEach(kw => {
+    if (pos.includes(kw)) score += 20;
+    else if (jd.includes(kw)) score += 10;
+  });
+  return Math.min(score, 100);
+}
+
+function scoreIndustry(c) {
+  if (!info.industryPref) return 50;
+  const prefs = info.industryPref.split(/[,，、]/).map(s => s.trim().toLowerCase());
+  const compInd = (c.industry || '').toLowerCase();
+  const tags = (c.tags || '').toLowerCase();
+  for (const p of prefs) {
+    if (!p) continue;
+    if (compInd.includes(p)) return 100;
+    if (tags.includes(p)) return 75;
+  }
+  const prefKws = prefs.join(' ').split(/\s+/).filter(w => w.length >= 2);
+  let partial = 0;
+  prefKws.forEach(kw => { if (compInd.includes(kw) || tags.includes(kw)) partial += 15; });
+  return Math.min(partial, 50);
+}
+
+function scoreSkills(c) {
+  if (!info.skills && !(c.skillKeywords)) return 50;
+  const userSkills = (info.skills || '').toLowerCase().split(/[,，、]/).map(s => s.trim()).filter(Boolean);
+  const compSkills = (c.skillKeywords || '').toLowerCase().split(/[,，、]/).map(s => s.trim()).filter(Boolean);
+  const jd = (c.jd || '').toLowerCase();
+  if (userSkills.length === 0) return 50;
+  let hits = 0, total = userSkills.length;
+  userSkills.forEach(sk => {
+    for (const ck of compSkills) {
+      if (ck.includes(sk) || sk.includes(ck)) { hits++; break; }
+    }
+    if (jd.includes(sk)) hits += 0.5;
+  });
+  return Math.min(Math.round(hits / total * 100), 100);
+}
+
+function scoreEducation(c) {
+  if (!info.education) return 50;
+  const edu = info.education.toLowerCase();
+  const req = (c.degreeReq || '').toLowerCase();
+  const jd = (c.jd || '').toLowerCase();
+  const hasMaster = edu.includes('硕士') || edu.includes('master');
+  const hasBachelor = edu.includes('本科') || edu.includes('bachelor');
+  if (req.includes('博士') && !edu.includes('博士')) return 30;
+  if (req.includes('硕士') && !hasMaster && hasBachelor) return 60;
+  if (req.includes('硕士') && hasMaster) return 100;
+  if (req.includes('本科') && (hasBachelor || hasMaster)) return 100;
+  // Fallback: check JD
+  if (jd.includes('硕士及以上') && hasMaster) return 100;
+  if (jd.includes('本科及以上') && (hasBachelor || hasMaster)) return 100;
+  if (jd.includes('硕士') && hasMaster) return 100;
+  return 70;
+}
+
+function scoreLanguage(c) {
+  if (!info.skills) return 50;
+  const skills = info.skills.toLowerCase();
+  const req = (c.langReq || '').toLowerCase();
+  const jd = (c.jd || '').toLowerCase();
+  const hasEnglish = skills.includes('英语') || skills.includes('english') || skills.includes('ielts');
+  const hasSmallLang = /法语|西语|葡语|俄语|日语|韩语|德语|阿拉伯语/.test(skills);
+  if (req.includes('小语种') && hasSmallLang) return 100;
+  if (req.includes('英语') && hasEnglish) return 100;
+  if (jd.includes('英语') && !hasEnglish) return 40;
+  if (jd.includes('小语种') && !hasSmallLang && hasEnglish) return 60;
+  if (hasEnglish && (jd.includes('英语') || jd.includes('english'))) return 100;
+  return 70;
+}
+
+function scoreLocation(c) {
+  if (!info.preferredCities) return 50;
+  const prefs = info.preferredCities.split(/[,，、]/).map(s => s.trim().toLowerCase()).filter(Boolean);
+  if (prefs.length === 0) return 50;
+  const compCities = (c.cities || '').toLowerCase();
+  for (const p of prefs) {
+    if (compCities.includes(p)) return 100;
+  }
+  if (compCities.includes('全国') || compCities.includes('多地')) return 80;
+  return 30;
+}
+
+// Resume analysis
+function openResumeAnalyzer() {
+  document.getElementById('resumeText').value = '';
+  document.getElementById('analysisResult').style.display = 'none';
+  document.getElementById('resumeModal').style.display = 'flex';
+}
+
+function analyzeResume() {
+  const text = document.getElementById('resumeText').value.trim();
+  if (!text) { showToast('请先粘贴简历内容'); return; }
+  
+  const extracted = {};
+  const t = text.toLowerCase();
+  
+  // Name: first line or "姓名" pattern
+  const nameMatch = text.match(/(?:姓名[：:]\s*)(\S+)/) || text.match(/^(\S{2,4})\s*$/m);
+  if (nameMatch) extracted.name = nameMatch[1];
+  
+  // Phone
+  const phoneMatch = text.match(/(?:电话|手机|Tel|Phone)[：:\s]*([+\d\s-]{8,18})/i);
+  if (phoneMatch) extracted.phone = phoneMatch[1].trim();
+  
+  // Email
+  const emailMatch = text.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/);
+  if (emailMatch) extracted.email = emailMatch[1];
+  
+  // Location
+  const locMatch = text.match(/(?:所在地|城市|地点|Location)[：:\s]*(\S+)/);
+  if (locMatch) extracted.location = locMatch[1];
+  
+  // Target position
+  const targetPatterns = ['求职意向', '意向岗位', '目标岗位', '求职目标', '应聘岗位', '期望职位'];
+  for (const p of targetPatterns) {
+    const m = text.match(new RegExp(p + '[：:\\s]*([^\\n]{3,40})'));
+    if (m) { extracted.target = m[1].trim(); break; }
+  }
+  
+  // Education
+  const eduMatch = text.match(/(?:教育背景|学历)[：:\s]*([^\n]{5,50})/) || 
+                   text.match(/((?:本科|硕士|博士|Bachelor|Master|PhD|MBA)[^\n]{0,30})/i);
+  if (eduMatch) extracted.education = eduMatch[1].trim();
+  
+  // Skills
+  const skillSection = text.match(/(?:技能|专业技能|技能证书|核心能力)[：:\s]*([\s\S]{0,300}?)(?:\n\n|\n[^\n]{0,3}$|$)/);
+  if (skillSection) {
+    const skills = skillSection[1].replace(/[【】\[\]]/g, '').split(/[，,、\n·•●]/).map(s => s.trim()).filter(s => s.length >= 2 && s.length <= 20).slice(0, 8);
+    extracted.skills = skills.join(',');
+  } else {
+    const skillKws = ['英语', 'Excel', 'Python', '数据分析', '商务谈判', '跨境', 'B2B', 'CRM', '外贸', '招投标', 'PPT', 'SQL', 'Java', 'C++', '项目管理', '市场营销', '财务分析'];
+    const found = skillKws.filter(kw => text.includes(kw));
+    if (found.length > 0) extracted.skills = found.join(',');
+  }
+  
+  // ★ NEW: Industry preference auto-detection
+  const industryKws = [
+    {kw: ['互联网','电商','temu','tiktok','shein','字节','腾讯','阿里','京东'], val: '互联网/电商'},
+    {kw: ['硬件','电子','智能','机器人','无人机','手机','iot','消费电子'], val: '智能硬件/消费电子'},
+    {kw: ['新能源','汽车','电动','电池','光伏','储能','蔚来','比亚迪'], val: '新能源汽车/能源'},
+    {kw: ['家电','白电','智屏','冰箱','洗衣机','空调'], val: '家电/智能家居'},
+    {kw: ['通信','5g','基站','ict','华为','中兴'], val: '通信/ICT'},
+    {kw: ['快消','日化','零售','宝洁','食品','饮料'], val: '快消/零售'},
+    {kw: ['金融','银行','证券','基金','投行','保险'], val: '金融'},
+    {kw: ['医疗','医药','制药','生物','医院'], val: '医疗/医药'},
+    {kw: ['咨询','顾问','四大','麦肯锡'], val: '咨询/专业服务'},
+    {kw: ['制造','工业','机械','自动化','仪器','传感器'], val: '制造业/工业'},
+  ];
+  const foundIndustries = [];
+  for (const ik of industryKws) {
+    if (ik.kw.some(k => t.includes(k))) foundIndustries.push(ik.val);
+  }
+  if (foundIndustries.length > 0) extracted.industryPref = foundIndustries.slice(0, 4).join(',');
+  
+  // ★ NEW: Preferred cities auto-detection
+  const cityKws = ['上海','北京','深圳','广州','杭州','成都','南京','武汉','苏州','合肥','厦门','西安','海外'];
+  const foundCities = cityKws.filter(c => t.includes(c));
+  if (foundCities.length > 0) extracted.preferredCities = foundCities.slice(0, 5).join(',');
+  else if (extracted.location) extracted.preferredCities = extracted.location;
+  
+  // Update info with extracted data
+  let updated = [];
+  if (extracted.name && !info.name) { info.name = extracted.name; updated.push('姓名'); }
+  if (extracted.phone && !info.phone) { info.phone = extracted.phone; updated.push('电话'); }
+  if (extracted.email && !info.email) { info.email = extracted.email; updated.push('邮箱'); }
+  if (extracted.location && !info.location) { info.location = extracted.location; updated.push('所在地'); }
+  if (extracted.target) { info.target = extracted.target; updated.push('求职意向'); }
+  if (extracted.education) { info.education = extracted.education; updated.push('教育背景'); }
+  if (extracted.skills) { info.skills = extracted.skills; updated.push('技能'); }
+  if (extracted.industryPref) { info.industryPref = extracted.industryPref; updated.push('行业偏好'); }
+  if (extracted.preferredCities) { info.preferredCities = extracted.preferredCities; updated.push('期望城市'); }
+  
+  persistAll();
+  renderBasicInfo();
+  
+  // Show analysis result
+  const resultDiv = document.getElementById('analysisResult');
+  resultDiv.style.display = 'block';
+  resultDiv.innerHTML = `
+    <strong>分析结果：</strong><br>
+    提取到：${updated.length > 0 ? updated.join('、') : '无新增信息'}<br>
+    ${extracted.target ? '意向岗位：<strong>' + extracted.target + '</strong><br>' : ''}
+    ${extracted.skills ? '关键技能：<strong>' + extracted.skills + '</strong><br>' : ''}
+    ${extracted.education ? '教育程度：<strong>' + extracted.education + '</strong><br>' : ''}
+    ${extracted.industryPref ? '偏好行业：<strong>' + extracted.industryPref + '</strong><br>' : ''}
+    ${extracted.preferredCities ? '期望城市：<strong>' + extracted.preferredCities + '</strong><br>' : ''}
+    <br>已按六维匹配度重新排序企业列表 ✅
+  `;
+  
+  // Sort by match and re-render
+  sortMode = 'match';
+  document.querySelectorAll('#sortBar .sort-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#sortBar .sort-btn').classList.add('active');
+  companies.sort((a, b) => calcMatchScore(b) - calcMatchScore(a));
+  renderCompanyList();
+  
+  setTimeout(() => document.getElementById('resumeModal').style.display = 'none', 3000);
+  showToast('简历分析完成，已更新信息并重排企业');
+}
+
+function openCompanyAdder() {
+  const bar = document.getElementById('addCompanyBar');
+  bar.style.display = bar.style.display === 'none' ? 'flex' : 'none';
+  if (bar.style.display === 'flex') bar.scrollIntoView({behavior:'smooth'});
+}
+
+function addCompany() {
+  const name = document.getElementById('caName').value.trim();
+  if (!name) { showToast('请输入企业名称'); return; }
+  
+  companies.push({
+    id: genId(),
+    name,
+    position: document.getElementById('caPosition').value.trim(),
+    status: document.getElementById('caStatus').value,
+    deadline: document.getElementById('caDeadline').value,
+    link: document.getElementById('caLink').value.trim(),
+    jd: document.getElementById('caJD').value.trim(),
+    tags: '',
+    industry: document.getElementById('caIndustry').value.trim() || '其他',
+    degreeReq: '本科及以上',
+    langReq: '英语流利',
+    skillKeywords: '',
+    cities: '全国/多地',
+    majors: '不限',
+    statusIdx: 0
+  });
+  
+  persistAll(); renderCompanyList();
+  document.getElementById('addCompanyBar').style.display = 'none';
+  ['caName','caPosition','caLink','caJD','caIndustry'].forEach(id => document.getElementById(id).value = '');
+  showToast('企业已添加');
+}
+
+function editCompany(id) {
+  const c = companies.find(x => x.id === id);
+  if (!c) return;
+  
+  document.getElementById('caName').value = c.name;
+  document.getElementById('caPosition').value = c.position || '';
+  document.getElementById('caStatus').value = c.status;
+  document.getElementById('caDeadline').value = c.deadline || '';
+  document.getElementById('caLink').value = c.link || '';
+  document.getElementById('caJD').value = c.jd || '';
+  document.getElementById('caIndustry').value = c.industry || '';
+  document.getElementById('addCompanyBar').style.display = 'flex';
+  document.getElementById('addCompanyBar').scrollIntoView({behavior:'smooth'});
+  
+  const addBtn = document.querySelector('#addCompanyBar .btn-success');
+  addBtn.textContent = '更新企业';
+  addBtn.onclick = function() {
+    c.name = document.getElementById('caName').value.trim();
+    c.position = document.getElementById('caPosition').value.trim();
+    c.status = document.getElementById('caStatus').value;
+    c.deadline = document.getElementById('caDeadline').value;
+    c.link = document.getElementById('caLink').value.trim();
+    c.jd = document.getElementById('caJD').value.trim();
+    c.industry = document.getElementById('caIndustry').value.trim() || c.industry;
+    persistAll(); renderCompanyList();
+    document.getElementById('addCompanyBar').style.display = 'none';
+    ['caName','caPosition','caLink','caJD','caIndustry'].forEach(id => document.getElementById(id).value = '');
+    addBtn.textContent = '确认添加';
+    addBtn.onclick = addCompany;
+    showToast('企业信息已更新');
+  };
+}
+
+function deleteCompany(id) {
+  showConfirm('删除企业', '确定要删除该企业吗？此操作不可撤销。', function() {
+    companies = companies.filter(c => c.id !== id);
+    if (expandedCompany === id) expandedCompany = null;
+    persistAll(); renderCompanyList();
+    showToast('企业已删除');
+  });
+}
+
+function refreshCompanies() {
+  // Shuffle and update some statuses
+  const statuses = ['已开启','进行中','即将开启'];
+  companies = companies.map(c => ({
+    ...c,
+    status: Math.random() < 0.4 ? statuses[Math.floor(Math.random()*3)] : c.status
+  }));
+  companies.sort(() => Math.random() - 0.5);
+  persistAll(); renderCompanyList();
+  showToast('列表已刷新 ✨');
+}
+
+// ★ 查询是否运行在本地服务器上
+const IS_LOCAL_SERVER = window.location.protocol === 'http:' && 
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+const API_URL = IS_LOCAL_SERVER ? '/api/data' : '秋招企业数据.json';
+
+// ★ 联网加载最新企业数据
+let autoRefreshTimer = null;
+let lastFetchTime = null;
+
+async function fetchLatestCompanies(silent) {
+  const hint = document.getElementById('backupHint');
+  const btn = document.getElementById('refreshBtn');
+  const status = document.getElementById('connStatus');
+  if (!silent) hint.textContent = '正在拉取最新数据...';
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ 更新中...'; }
+  try {
+    const resp = await fetch(API_URL + (API_URL.includes('?') ? '&' : '?') + 't=' + Date.now());
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (data.companies && Array.isArray(data.companies) && data.companies.length > 0) {
+      const existingIds = new Set(companies.map(c => c.id));
+      const merged = [...companies];
+      data.companies.forEach(nc => {
+        const idx = merged.findIndex(c => c.id === nc.id);
+        if (idx >= 0) {
+          merged[idx] = { ...merged[idx], ...nc, jd: merged[idx].jd || nc.jd, tags: merged[idx].tags || nc.tags };
+        } else if (!existingIds.has(nc.id)) {
+          merged.push(nc);
+        }
+      });
+      companies = merged;
+      autoCleanExpired();
+      persistAll(); renderCompanyList();
+      lastFetchTime = new Date();
+      const dt = data.lastUpdated || data.serverTime;
+      const dtStr = dt ? new Date(dt).toLocaleString('zh-CN') : '未知';
+      hint.textContent = '✅ 数据：' + dtStr + '  ·  ' + companies.length + '家企业';
+      if (status) { status.textContent = '🟢 在线'; status.style.color = '#22c55e'; }
+      if (!silent) showToast('已刷新 ' + companies.length + ' 家企业（' + dtStr + '）');
+    } else {
+      throw new Error('数据为空');
+    }
+  } catch(e) {
+    if (!silent) hint.textContent = '⚠️ 拉取失败（需要启动本地服务器：python server.py）';
+    if (status) { status.textContent = '🔴 离线'; status.style.color = '#ef4444'; }
+    console.log('fetchLatestCompanies error:', e.message);
+    if (!silent) showToast('数据拉取失败，请先启动 python server.py');
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '🔄 拉取最新数据'; }
+}
+
+function startAutoRefresh() {
+  stopAutoRefresh();
+  // 每5分钟自动检查数据更新
+  autoRefreshTimer = setInterval(() => {
+    fetchLatestCompanies(true).catch(() => {});
+  }, 5 * 60 * 1000);
+  // 页面上立刻拉一次
+  setTimeout(() => fetchLatestCompanies(true).catch(() => {}), 500);
+}
+
+function stopAutoRefresh() {
+  if (autoRefreshTimer) { clearInterval(autoRefreshTimer); autoRefreshTimer = null; }
+}
+
+// ===== CALENDAR =====
+function getNoteDates() {
+  const dates = {};
+  notes.forEach(n => { if (n.date) dates[n.date] = (dates[n.date]||0) + 1; });
+  return dates;
+}
+
+function renderCalendar() {
+  const noteDates = getNoteDates();
+  document.getElementById('calMonth').textContent = calYear + '年' + calMonth + '月';
+  
+  const firstDay = new Date(calYear, calMonth-1, 1);
+  const totalDays = new Date(calYear, calMonth, 0).getDate();
+  const startPad = (firstDay.getDay() + 6) % 7;
+  const prevLast = new Date(calYear, calMonth-1, 0).getDate();
+  
+  let html = '';
+  for (let i = startPad-1; i >= 0; i--) html += `<div class="cal-day other-month">${prevLast-i}</div>`;
+  
+  for (let d = 1; d <= totalDays; d++) {
+    const ds = formatDate(new Date(calYear, calMonth-1, d));
+    let cls = 'cal-day';
+    if (ds === todayStr) cls += ' today';
+    if (ds === selectedDate) cls += ' selected';
+    const dot = noteDates[ds] ? '<span class="day-dot has-notes"></span>' : '';
+    html += `<div class="${cls}" onclick="selectDate('${ds}')">${d}${dot}</div>`;
+  }
+  
+  const rem = 7 - ((startPad+totalDays)%7);
+  if (rem < 7) for (let d = 1; d <= rem; d++) html += `<div class="cal-day other-month">${d}</div>`;
+  
+  document.getElementById('calGrid').innerHTML = html;
+  updateCalInfo();
+}
+
+function selectDate(ds) { selectedDate = ds; noteFilterDate = ds; renderCalendar(); renderNoteList(); }
+function changeMonth(d) { calMonth += d; if (calMonth>12){calMonth=1;calYear++;} if (calMonth<1){calMonth=12;calYear--;} renderCalendar(); }
+function goToToday() {
+  const n = new Date(); calYear = n.getFullYear(); calMonth = n.getMonth()+1;
+  selectedDate = todayStr; noteFilterDate = todayStr; renderCalendar(); renderNoteList();
+}
+
+function updateCalInfo() {
+  const cnt = notes.filter(n => n.date === selectedDate && !n.done).length;
+  document.getElementById('calNoteInfo').textContent = cnt > 0 ? selectedDate + ' · ' + cnt + '条待办' : '';
+}
+
+// ===== NOTES =====
+function renderNoteList() {
+  const list = document.getElementById('noteList');
+  const fi = document.getElementById('noteFilterInfo');
+  let display = [...notes];
+  
+  if (noteFilterDate) {
+    display = display.filter(n => n.date === noteFilterDate);
+    fi.textContent = '筛选：' + noteFilterDate;
+  } else { fi.textContent = ''; }
+  
+  display.sort((a,b) => (a.done!==b.done ? (a.done?1:-1) : (b.date||'').localeCompare(a.date||'')));
+  
+  if (display.length === 0) {
+    list.innerHTML = '<div style="text-align:center;color:#94a3b8;padding:20px 0;font-size:11px">暂无笔记</div>';
+    return;
+  }
+  
+  const tm = {'网申':'sq','面试':'ms','笔试':'bs','截止':'jz','其他':'qt'};
+  list.innerHTML = display.map(n => `
+    <div class="note-item-c${n.date===selectedDate?' active':''}" onclick="filterByNoteDate('${n.date}')">
+      <div class="nic-check${n.done?' done':''}" onclick="event.stopPropagation();markNoteDone('${n.id}')">
+        ${n.done?'<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>':''}
+      </div>
+      <div class="nic-body">
+        <div class="nic-title${n.done?' done-text':''}">${n.title}</div>
+        <div class="nic-meta">
+          <span class="nic-tag ${tm[n.tag]||'qt'}">${n.tag}</span>
+          <span class="nic-date">${n.date||'无日期'}</span>
+        </div>
+      </div>
+      <button class="nic-del" onclick="event.stopPropagation();deleteNote('${n.id}')">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+      </button>
+    </div>`).join('');
+}
+
+function addNote() {
+  const title = document.getElementById('noteTitle').value.trim();
+  if (!title) { showToast('请输入标题'); return; }
+  notes.push({
+    id: genId(), title,
+    content: document.getElementById('noteContent').value.trim(),
+    date: document.getElementById('noteDate').value,
+    tag: document.getElementById('noteTag').value,
+    done: false, createdAt: new Date().toISOString()
+  });
+  persistAll(); renderNoteList(); renderCalendar(); renderTodayPanel();
+  document.getElementById('noteTitle').value = ''; document.getElementById('noteContent').value = '';
+  showToast('已保存');
+  checkBackupReminder();
+}
+
+function markNoteDone(id) {
+  const n = notes.find(x => x.id === id);
+  if (n) { n.done = !n.done; persistAll(); renderNoteList(); renderTodayPanel(); renderCalendar(); }
+}
+function deleteNote(id) {
+  notes = notes.filter(n => n.id !== id);
+  persistAll(); renderNoteList(); renderCalendar(); renderTodayPanel(); updateCalInfo();
+}
+function filterByNoteDate(ds) { selectedDate = ds; noteFilterDate = ds; renderCalendar(); renderNoteList(); }
+
+// ===== EXPORT / IMPORT / CLEAR =====
+function exportData() {
+  const blob = new Blob([JSON.stringify({info,companies,notes,exportTime:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = '秋招工作台_备份_'+todayStr+'.json'; a.click();
+  showToast('数据已导出');
+}
+
+function importData(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = function(ev) {
+    try {
+      const d = JSON.parse(ev.target.result);
+      if (d.info) info = d.info;
+      if (d.companies && Array.isArray(d.companies)) companies = d.companies;
+      if (d.notes && Array.isArray(d.notes)) notes = d.notes;
+      persistAll(); renderAll(); showToast('已恢复 ' + (d.notes?d.notes.length:0) + '条笔记');
+    } catch(err) { showToast('文件格式错误'); }
+  };
+  r.readAsText(f); e.target.value = '';
+}
+
+let confirmCb = null;
+function showConfirm(title, msg, cb) {
+  document.getElementById('confirmTitle').textContent = title;
+  document.getElementById('confirmMsg').textContent = msg;
+  document.getElementById('confirmModal').style.display = 'flex';
+  confirmCb = cb;
+  document.getElementById('confirmBtn').onclick = function() {
+    document.getElementById('confirmModal').style.display = 'none';
+    if (confirmCb) confirmCb(); confirmCb = null;
+  };
+}
+function closeConfirm() { document.getElementById('confirmModal').style.display = 'none'; confirmCb = null; }
+
+function clearSampleData() {
+  showConfirm('清空数据', '确定要清空所有企业数据和笔记吗？基本信息将保留。此操作不可撤销！', function() {
+    companies = []; notes = []; persistAll(); renderAll(); showToast('数据已清空');
+  });
+}
+
+function checkBackupReminder() {
+  if (notes.length >= 30 && !localStorage.getItem(STORAGE_KEY + 'backup_reminded')) {
+    document.getElementById('backupHint').textContent = '已积累' + notes.length + '条笔记，建议导出备份';
+    localStorage.setItem(STORAGE_KEY + 'backup_reminded', '1');
+  }
+}
+
+// ===== AUTO-CLEANUP: 自动删除已截止企业 =====
+function autoCleanExpired() {
+  const before = companies.length;
+  companies = companies.filter(c => {
+    if (!c.deadline) return true; // 没有截止日期的保留
+    return c.deadline >= todayStr; // 截止日期 >= 今天才保留
+  });
+  const removed = before - companies.length;
+  if (removed > 0) {
+    persistAll();
+    console.log('自动清理了 ' + removed + ' 家已截止企业');
+  }
+  return removed;
+}
+
+// ===== RENDER ALL =====
+function renderAll() {
+  autoCleanExpired();
+  renderTodayPanel();
+  renderBasicInfo();
+  renderCompanyList();
+  renderCalendar();
+  renderNoteList();
+  checkBackupReminder();
+}
+
+// ===== INIT =====
+document.getElementById('noteDate').value = todayStr;
+
+document.getElementById('infoModal').addEventListener('click', function(e) { if (e.target===this) this.style.display='none'; });
+document.getElementById('resumeModal').addEventListener('click', function(e) { if (e.target===this) this.style.display='none'; });
+document.getElementById('confirmModal').addEventListener('click', function(e) { if (e.target===this) closeConfirm(); });
+
+renderAll();
+
+// ★ 启动逻辑：本地服务器 → 自动刷新；file协议 → 手动点击按钮
+if (IS_LOCAL_SERVER) {
+  // 运行在本地服务器，自动拉取+定时刷新
+  startAutoRefresh();
+  document.getElementById('connStatus').textContent = '🟢 在线';
+  document.getElementById('connStatus').style.color = '#22c55e';
+} else {
+  // file:// 协议打开，提示启动服务器
+  document.getElementById('backupHint').textContent = '⚠️ 请用 python server.py 启动本地服务器，即可实时更新';
+  document.getElementById('connStatus').textContent = '🔴 离线';
+  document.getElementById('connStatus').style.color = '#ef4444';
+  // file:// 下 fetch JSON 大概率被 CORS 拦截，先试一次
+  setTimeout(function() {
+    fetchLatestCompanies(true).catch(() => {});
+  }, 1000);
+}
+
+// ===== 智能扫描：检测企业官网是否开启2027届秋招 =====
+async function runSmartScan() {
+  if (!IS_LOCAL_SERVER) {
+    showToast('智能扫描需要先启动本地服务器（python server.py）');
+    return;
+  }
+  const btn = document.getElementById('scanBtn');
+  btn.disabled = true;
+  btn.textContent = '🔍 扫描中...';
+  showToast('正在扫描11家企业官网，约30秒...');
+  
+  try {
+    const resp = await fetch('/api/scan');
+    const data = await resp.json();
+    
+    if (data.inProgress) {
+      showToast(data.message || '扫描进行中，5秒后自动刷新...');
+      // 5秒后轮询一次结果
+      setTimeout(async () => {
+        try {
+          const r2 = await fetch('/api/scan');
+          const d2 = await r2.json();
+          if (!d2.inProgress) showScanResults(d2);
+        } catch(e) {}
+        btn.disabled = false;
+        btn.textContent = '🔍 智能扫描';
+      }, 5000);
+      return;
+    }
+    
+    showScanResults(data);
+  } catch(e) {
+    showToast('扫描失败：' + e.message);
+  }
+  btn.disabled = false;
+  btn.textContent = '🔍 智能扫描';
+}
+
+function showScanResults(data) {
+  const results = data.results || [];
+  if (results.length === 0) {
+    showToast('暂无扫描结果');
+    return;
+  }
+  
+  const found = results.filter(r => r.found);
+  const miss = results.filter(r => !r.found);
+  
+  // 构建弹窗内容
+  let html = '<div style="max-height:70vh;overflow-y:auto">';
+  html += '<h3 style="margin:0 0 4px;font-size:16px">🔍 企业官网扫描结果</h3>';
+  html += '<p style="font-size:12px;color:#94a3b8;margin:0 0 12px">扫描时间：' + (data.time || '未知') + ' | 基于官网HTML关键词匹配</p>';
+  
+  if (found.length > 0) {
+    html += '<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px;margin-bottom:10px">';
+    html += '<strong style="color:#16a34a">✅ 检测到开启信号（' + found.length + '家）</strong><br>';
+    found.forEach(r => {
+      html += '<div style="margin:6px 0;font-size:13px">';
+      html += '<strong>' + r.name + '</strong>: 匹配到 ' + (r.keywords||[]).join(', ');
+      html += ' <a href="' + r.url + '" target="_blank" style="font-size:11px;color:#2563eb">[打开官网]</a>';
+      html += '</div>';
+      html += '<div style="font-size:12px;color:#64748b;margin-bottom:4px">' + r.suggestion + '</div>';
+    });
+    html += '</div>';
+  }
+  
+  if (miss.length > 0) {
+    html += '<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px">';
+    html += '<strong style="color:#d97706">❓ 暂未检测到信号（' + miss.length + '家）</strong><br>';
+    miss.forEach(r => {
+      html += '<div style="margin:4px 0;font-size:13px">';
+      html += r.name + ': ' + (r.error ? '无法访问' : '关键词不足');
+      html += ' <a href="' + r.url + '" target="_blank" style="font-size:11px;color:#2563eb">[手动查看]</a>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+  
+  html += '<p style="font-size:11px;color:#94a3b8;margin-top:12px">⚠️ 自动扫描仅供参考，关键词匹配不够精准。<br>建议告诉我"更新秋招数据"，我会做完整的互联网搜索验证。</p>';
+  html += '</div>';
+  
+  showConfirm('智能扫描结果', html, null, '知道了');
+}
+
+// Helper: 通用确认弹窗
+function showConfirm(title, contentHtml, onConfirm, confirmText) {
+  const modal = document.getElementById('confirmModal');
+  modal.querySelector('.modal-title').textContent = title;
+  modal.querySelector('.modal-body').innerHTML = contentHtml;
+  const btn = modal.querySelector('.btn-danger');
+  btn.textContent = confirmText || '确认';
+  btn.onclick = function() { closeConfirm(); if (onConfirm) onConfirm(); };
+  modal.querySelector('.btn-outline').style.display = 'none';
+  modal.style.display = 'flex';
+}
+</script>
+</body>
+</html>
