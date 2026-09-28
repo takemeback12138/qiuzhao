@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="zh-CN" data-page-node-id="9a091cjgDe2bKfZMsKBeAi">
+<head data-page-node-id="hrkuaoRsE6kRV7ydfAnbT7">
+<meta charset="UTF-8" data-page-node-id="ATePCAVJdr5sMQYBLZqGKe">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="CiuzX7THEFzBDpLiOmaSZI">
 <title>秋招工作台 - 李振宇</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -341,188 +341,188 @@ body{
 }
 </style>
 </head>
-<body>
+<body data-page-node-id="EamEv1YFEfsEzpCAGSwWiH">
 
-<div class="app">
+<div class="app" data-page-node-id="OMeV6G4gJxEKkkBfrgGtJS">
   <!-- ===== SIDEBAR ===== -->
-  <aside class="sidebar">
+  <aside class="sidebar" data-page-node-id="DQl1bB1y5IkTDoWOVBbbtp">
     <!-- Basic Info -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 00-16 0"/></svg>
+    <div class="card" data-page-node-id="nQEtG1z2AjPfA5xkjw1tuA">
+      <div class="card-header" data-page-node-id="CoygX6CLE7IVMXSZzjagAV">
+        <span class="card-title" data-page-node-id="e2MqkbNMQBoTZ8YMYoer3T">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="0FThZD7nEtDHzl1YRrubU8"><circle cx="12" cy="8" r="4" data-page-node-id="MnwBwbdk7e6cqhtA2uY7jm"/><path d="M20 21a8 8 0 00-16 0" data-page-node-id="eTwuq3iFCMBxdDEih9MFpE"/></svg>
           我的信息
         </span>
-        <div style="display:flex;gap:6px">
-          <button class="btn btn-outline btn-xs" onclick="openInfoEditor()">编辑</button>
-          <button class="btn btn-primary btn-xs" onclick="openResumeAnalyzer()">简历分析</button>
+        <div style="display:flex;gap:6px" data-page-node-id="Nyni3GRyt7BE3MKvU7qx7M">
+          <button class="btn btn-outline btn-xs" onclick="openInfoEditor()" data-page-node-id="EiJDIrl1IxpT4bQBkQRwIN">编辑</button>
+          <button class="btn btn-primary btn-xs" onclick="openResumeAnalyzer()" data-page-node-id="POVEE7xhmnpX8ycoFirEFt">简历分析</button>
         </div>
       </div>
-      <div class="info-grid" id="infoGrid"></div>
-      <div class="info-tags" id="infoTags"></div>
+      <div class="info-grid" id="infoGrid" data-page-node-id="T64BEDA5C42HarmNQaBaBy"></div>
+      <div class="info-tags" id="infoTags" data-page-node-id="oNKLwXfbbAiurhGpzZS2R1"></div>
     </div>
 
     <!-- Calendar -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <div class="card" data-page-node-id="FrSoxTuusTgBXYa72aU7SG">
+      <div class="card-header" data-page-node-id="AGNeSJ5UIoziSYZkWDDA5q">
+        <span class="card-title" data-page-node-id="eWkqUzx3zcPHrELwlEcJXs">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="gPygHpO3CVeUGhVtoC7OEy"><rect x="3" y="4" width="18" height="18" rx="2" data-page-node-id="iCiVBjtAjHS7HMt4ZOVjAy"/><line x1="16" y1="2" x2="16" y2="6" data-page-node-id="iShehNPB9PbBZo6vKAcOAq"/><line x1="8" y1="2" x2="8" y2="6" data-page-node-id="PbDo1Xsq1Qj9Zw0R1StvOR"/><line x1="3" y1="10" x2="21" y2="10" data-page-node-id="H02bcBF04r1kYGc3PbLgHo"/></svg>
           日历
         </span>
-        <button class="btn btn-outline btn-xs" onclick="goToToday()">今天</button>
+        <button class="btn btn-outline btn-xs" onclick="goToToday()" data-page-node-id="NmdIFOBVZbNVQ1vdDAxp4l">今天</button>
       </div>
-      <div class="cal-nav">
-        <button onclick="changeMonth(-1)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
-        <span class="cal-month" id="calMonth"></span>
-        <button onclick="changeMonth(1)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+      <div class="cal-nav" data-page-node-id="3ACJE4SHiXU8NsOb2R4N9k">
+        <button onclick="changeMonth(-1)" data-page-node-id="UiRIHZUXg3mLJAXrrBw3is"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="A4cAsXlx92RZkPoZWpc6oa"><polyline points="15 18 9 12 15 6" data-page-node-id="rZjOGzb6UqQsNqzxkw2sVN"/></svg></button>
+        <span class="cal-month" id="calMonth" data-page-node-id="miRBuWphRzwsGIpCIlYUJo"></span>
+        <button onclick="changeMonth(1)" data-page-node-id="yt1FL51nwqawNbnL7qFKDG"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="aUig8OmZfO7lKGqfjZH8uz"><polyline points="9 18 15 12 9 6" data-page-node-id="aOHJlSsVAMmnpXa7E5yZYh"/></svg></button>
       </div>
-      <div class="cal-weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
-      <div class="cal-grid" id="calGrid"></div>
-      <div style="margin-top:6px;font-size:11px;color:#94a3b8;min-height:16px;" id="calNoteInfo"></div>
+      <div class="cal-weekdays" data-page-node-id="M0MY5jZ4j7hxVq0uzonK8b"><span data-page-node-id="CsBVQ7do7XmkEX7HDpzhI6">一</span><span data-page-node-id="czrDrGljYPALL7ZiRSrAVI">二</span><span data-page-node-id="o6teKhMDCxXBPqirsTKG1l">三</span><span data-page-node-id="SJDIJPmQ0C6on1UuB91AEQ">四</span><span data-page-node-id="FlENHA801hYmHMPGB9Bc0e">五</span><span data-page-node-id="ciGhPN9Xd1zSb6YA9LM2BC">六</span><span data-page-node-id="WdislLEmQov9Y9UlsuY998">日</span></div>
+      <div class="cal-grid" id="calGrid" data-page-node-id="fSsd1wnH3mKF1ZhRpumcLE"></div>
+      <div style="margin-top:6px;font-size:11px;color:#94a3b8;min-height:16px;" id="calNoteInfo" data-page-node-id="6G0VRQR8gtg5ribzNwcMlH"></div>
     </div>
 
     <!-- Notes -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    <div class="card" data-page-node-id="xxrzo26M0TwZShoZqy6SON">
+      <div class="card-header" data-page-node-id="NOkkLxXo5G2G4G6GCOHdK9">
+        <span class="card-title" data-page-node-id="TrncERO6CqkrJ8BSTBXcIy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="PHswuCWmSdbakPaIS1Sp5e"><path d="M12 20h9" data-page-node-id="h8Y1H0MwIUA8hOrVcqJjxK"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" data-page-node-id="NpMIipgDtthyYpSoIeyOoU"/></svg>
           记事本
         </span>
-        <span style="font-size:11px;color:#94a3b8" id="noteFilterInfo"></span>
+        <span style="font-size:11px;color:#94a3b8" id="noteFilterInfo" data-page-node-id="gHtfVedBeRmvIlDFrmqBjH"></span>
       </div>
-      <div class="note-form-c">
-        <input type="text" id="noteTitle" placeholder="标题" maxlength="50">
+      <div class="note-form-c" data-page-node-id="KleDnz5UNuuYe3zp8tSVZl">
+        <input type="text" id="noteTitle" placeholder="标题" maxlength="50" data-page-node-id="6QDGSzSiI4fXgRWJ1Lp33A">
         <textarea id="noteContent" placeholder="内容..." rows="2"></textarea>
-        <div class="note-form-row">
-          <input type="date" id="noteDate">
-          <select id="noteTag">
-            <option value="网申">网申</option><option value="面试">面试</option>
-            <option value="笔试">笔试</option><option value="截止">截止</option>
-            <option value="其他">其他</option>
+        <div class="note-form-row" data-page-node-id="IAfEhnnaql3FjGx7Yjmzh9">
+          <input type="date" id="noteDate" data-page-node-id="5cY2mjGkkzLZajeZx2bn4Q">
+          <select id="noteTag" data-page-node-id="nhqOXFhKnLoBCqFzTB46VI">
+            <option value="网申" data-page-node-id="HnuBj43HKQcgoPJlMiyd9E">网申</option><option value="面试" data-page-node-id="EQ0KMBq1MCvhN71aKZTUaf">面试</option>
+            <option value="笔试" data-page-node-id="doBKyyA4HGsOXJSeEU0fD8">笔试</option><option value="截止" data-page-node-id="lFQF8z1C2uCUxADYsn5HJ7">截止</option>
+            <option value="其他" data-page-node-id="HbkcicF8xpvOGB5gGH3yCa">其他</option>
           </select>
         </div>
-        <button class="btn btn-primary btn-sm" onclick="addNote()" style="width:100%">保存笔记</button>
+        <button class="btn btn-primary btn-sm" onclick="addNote()" style="width:100%" data-page-node-id="eIclu2SnjUVYUcPCR3i5Cv">保存笔记</button>
       </div>
-      <div class="note-list-c" id="noteList"></div>
+      <div class="note-list-c" id="noteList" data-page-node-id="GGiYiylaolmqcNrH6KosxN"></div>
     </div>
   </aside>
 
   <!-- ===== MAIN AREA ===== -->
-  <main class="main">
+  <main class="main" data-page-node-id="N6UDiOnpquvC95OquEdxwm">
     <!-- Top bar -->
-    <div class="topbar">
-      <div>
-        <h1>秋招工作台 · 2027届</h1>
-        <span class="hint" style="display:block;margin-top:2px">李振宇 | 2026年11月毕业 | 匹配2027届秋招</span>
-        <span class="hint" id="backupHint"></span>
+    <div class="topbar" data-page-node-id="fa5kV5LYKxh12afzYr0ifh">
+      <div data-page-node-id="LgMBIDDQZN6mjitEkyJ2uF">
+        <h1 data-page-node-id="W8M9uz8CLDhRV87eBGUYCo">秋招工作台 · 2027届</h1>
+        <span class="hint" style="display:block;margin-top:2px" data-page-node-id="dvjSy1AW3AUaoEUBHEKWtz">李振宇 | 2026年11月毕业 | 匹配2027届秋招</span>
+        <span class="hint" id="backupHint" data-page-node-id="SLnmWe3P8isKkMngeT5Y1E"></span>
       </div>
-      <div class="topbar-actions">
-        <button class="btn btn-outline btn-sm" onclick="exportData()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <div class="topbar-actions" data-page-node-id="HVH3JouGGlF1vjYUrRGZKk">
+        <button class="btn btn-outline btn-sm" onclick="exportData()" data-page-node-id="5PEHA48uDOVqOTH2pSFIuI">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="ODqO45o6D9nv3AfgGJQY6Q"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" data-page-node-id="sceH1qmtx2num1B5Z9dfen"/><polyline points="7 10 12 15 17 10" data-page-node-id="nokILVPRZfF9zKGKOuSTxa"/><line x1="12" y1="15" x2="12" y2="3" data-page-node-id="lK3zQw2XBI9suGoZEnmC8b"/></svg>
           导出备份
         </button>
-        <button class="btn btn-outline btn-sm" onclick="document.getElementById('importFile').click()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <button class="btn btn-outline btn-sm" onclick="document.getElementById('importFile').click()" data-page-node-id="Ny7lTv42pSVfqJmbCOE3zG">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="nVLwHFrMTe09FVh9ziRNVA"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" data-page-node-id="Eh8GrqPyTIIXC1AfxIhJ8A"/><polyline points="17 8 12 3 7 8" data-page-node-id="98MgnCQqFHZZ1PZJlxSBnz"/><line x1="12" y1="3" x2="12" y2="15" data-page-node-id="TR3RPPKAfGab1m7KFjolQV"/></svg>
           导入恢复
         </button>
-        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
-        <button class="btn btn-outline btn-sm" onclick="exportStatus()" title="导出投递状态">导出状态</button>
-        <button class="btn btn-outline btn-sm" onclick="document.getElementById('importStatusFile').click()" title="导入投递状态">导入状态</button>
-        <input type="file" id="importStatusFile" accept=".json" style="display:none" onchange="importStatus(event)">
-        <button class="btn btn-outline btn-sm" onclick="clearSampleData()">清空示例</button>
-        <button class="btn btn-outline btn-sm" onclick="openCompanyAdder()">+ 添加企业</button>
-        <button class="btn btn-primary btn-sm" id="refreshBtn" onclick="fetchLatestCompanies()">🔄 拉取最新数据</button>
-        <button class="btn btn-outline btn-sm" id="scanBtn" onclick="runSmartScan()">🔍 智能扫描</button>
-        <button class="btn btn-outline btn-sm" onclick="refreshCompanies()">打乱排序</button>
-        <span id="connStatus" style="font-size:12px;color:#94a3b8;margin-left:4px"></span>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)" data-page-node-id="alyB0NX76vTDhxHW07s1AV">
+        <button class="btn btn-outline btn-sm" onclick="exportStatus()" title="导出投递状态" data-page-node-id="wyNgMjTWihrmFKi2wHGtn7">导出状态</button>
+        <button class="btn btn-outline btn-sm" onclick="document.getElementById('importStatusFile').click()" title="导入投递状态" data-page-node-id="PrSuTkHeOUq3wlsU0nqZn3">导入状态</button>
+        <input type="file" id="importStatusFile" accept=".json" style="display:none" onchange="importStatus(event)" data-page-node-id="0aoCBKSVwsa7w5Ee1p1aOU">
+        <button class="btn btn-outline btn-sm" onclick="clearSampleData()" data-page-node-id="mMXcG83rKYY1BGJD3sxp2Z">清空示例</button>
+        <button class="btn btn-outline btn-sm" onclick="openCompanyAdder()" data-page-node-id="QQQzmEA2HyH87saL4TQBis">+ 添加企业</button>
+        <button class="btn btn-primary btn-sm" id="refreshBtn" onclick="fetchLatestCompanies()" data-page-node-id="AVqTwpcO8WuoLagT4usxO2">🔄 拉取最新数据</button>
+        <button class="btn btn-outline btn-sm" id="scanBtn" onclick="runSmartScan()" data-page-node-id="bSn6z3O9XC1rZtZas342ra">🔍 智能扫描</button>
+        <button class="btn btn-outline btn-sm" onclick="refreshCompanies()" data-page-node-id="oRRPGjyZAnM5jWKDwBp5oo">打乱排序</button>
+        <span id="connStatus" style="font-size:12px;color:#94a3b8;margin-left:4px" data-page-node-id="HmGJ5V6RUGZtDY9cMbsHdW"></span>
       </div>
     </div>
 
     <!-- Today Panel -->
-    <div class="today-panel">
-      <div class="tp-header">
-        <span class="tp-title">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <div class="today-panel" data-page-node-id="dpOtVe85wmWCcn2Xtqf0he">
+      <div class="tp-header" data-page-node-id="ehK6pxaRe4apkkOXAp6YHA">
+        <span class="tp-title" data-page-node-id="imbwp5duSyAvzQMOmysDkL">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="RH0rsLIp9PAOrsBglt0FXj"><circle cx="12" cy="12" r="10" data-page-node-id="AHO2IfvsJlBA1raxmZAI6z"/><polyline points="12 6 12 12 16 14" data-page-node-id="GxQzGnD5ljAYDKaA8JO4jh"/></svg>
           今天要处理
         </span>
-        <span class="tp-count" id="todayCount">0条</span>
+        <span class="tp-count" id="todayCount" data-page-node-id="PWnCTbZkho5qRyW13NNIxg">0条</span>
       </div>
-      <div class="today-items" id="todayItems"></div>
-      <div class="today-empty" id="todayEmpty" style="display:none">今天暂无待处理，继续保持！</div>
+      <div class="today-items" id="todayItems" data-page-node-id="mjkHtZ508ZpZ1fWGVOA5FX"></div>
+      <div class="today-empty" id="todayEmpty" style="display:none" data-page-node-id="oYWUmJoiHTiON55mZyyb3m">今天暂无待处理，继续保持！</div>
     </div>
 
     <!-- Add company form (hidden by default) -->
-    <div class="add-company-bar" id="addCompanyBar" style="display:none">
-      <input type="text" id="caName" placeholder="企业名称 *" style="width:130px">
-      <input type="text" id="caPosition" placeholder="岗位名称" style="width:140px">
-      <select id="caStatus"><option value="已开启">已开启</option><option value="即将开启">即将开启</option><option value="进行中">进行中</option><option value="已截止">已截止</option></select>
-      <input type="date" id="caDeadline">
-      <input type="url" id="caLink" placeholder="投递链接" style="width:180px">
-      <input type="text" id="caIndustry" placeholder="行业(互联网/电商)" style="width:140px">
+    <div class="add-company-bar" id="addCompanyBar" style="display:none" data-page-node-id="dU1ZJgsYuQuwHpyw7nnbs3">
+      <input type="text" id="caName" placeholder="企业名称 *" style="width:130px" data-page-node-id="sNSJlXxuHLxJ30FBAqXQmi">
+      <input type="text" id="caPosition" placeholder="岗位名称" style="width:140px" data-page-node-id="IW6VJ7g2hbcFAylyh2uUVY">
+      <select id="caStatus" data-page-node-id="7iJGcxRKBRj8sGUBw8brTK"><option value="已开启" data-page-node-id="THdHwAAMLUcyey9iFsQU1F">已开启</option><option value="即将开启" data-page-node-id="cpjrZ6spK3FezxqC3bm2IM">即将开启</option><option value="进行中" data-page-node-id="JTQdIFIefsNhro6RmvIVIf">进行中</option><option value="已截止" data-page-node-id="WLAVXujkEcg3aENVnUSYrX">已截止</option></select>
+      <input type="date" id="caDeadline" data-page-node-id="3EfsdghhC4weoIrzlJt30b">
+      <input type="url" id="caLink" placeholder="投递链接" style="width:180px" data-page-node-id="hXKb3qWVuMjZz1cxxKtXmN">
+      <input type="text" id="caIndustry" placeholder="行业(互联网/电商)" style="width:140px" data-page-node-id="s3yNQINYsaM7XyCCC5UUmI">
       <textarea id="caJD" placeholder="JD/招聘详情..." rows="2" style="width:100%;min-width:200px"></textarea>
-      <button class="btn btn-success btn-sm" onclick="addCompany()">确认添加</button>
-      <button class="btn btn-outline btn-sm" onclick="document.getElementById('addCompanyBar').style.display='none'">取消</button>
+      <button class="btn btn-success btn-sm" onclick="addCompany()" data-page-node-id="4dh5pjQrLgy8h0nn1rHy5y">确认添加</button>
+      <button class="btn btn-outline btn-sm" onclick="document.getElementById('addCompanyBar').style.display='none'" data-page-node-id="JkZmWHO5e145uljZai8TEZ">取消</button>
     </div>
 
     <!-- ★ COMPANY LIST — THE STAR ★ -->
     <!-- Sort bar -->
-    <div class="match-sort-bar" id="sortBar">
-      <span>排序：</span>
-      <button class="sort-btn active" onclick="sortCompanies('match')">按匹配度</button>
-      <button class="sort-btn" onclick="sortCompanies('deadline')">按截止日期</button>
-      <button class="sort-btn" onclick="sortCompanies('name')">按企业名</button>
+    <div class="match-sort-bar" id="sortBar" data-page-node-id="nkwzGuFsy0LjRse0Dg9M0i">
+      <span data-page-node-id="ZvJLlvkqE9alTrYLuagOQH">排序：</span>
+      <button class="sort-btn active" onclick="sortCompanies('match')" data-page-node-id="zs4ElJWPmpRSCjvjGryyaF">按匹配度</button>
+      <button class="sort-btn" onclick="sortCompanies('deadline')" data-page-node-id="0GAy3nnaUMqFpjPHDpyGYf">按截止日期</button>
+      <button class="sort-btn" onclick="sortCompanies('name')" data-page-node-id="FD5kOQdtJvmuI1HvDPenE1">按企业名</button>
     </div>
-    <div class="company-list" id="companyList"></div>
+    <div class="company-list" id="companyList" data-page-node-id="qOq5C9BgFF6sEVHGnkAQZm"></div>
   </main>
 </div>
 
 <!-- Resume Analysis Modal -->
-<div class="modal-overlay" id="resumeModal" style="display:none">
-  <div class="modal" style="max-width:600px">
-    <h3>简历分析 — 智能匹配秋招岗位</h3>
-    <p style="font-size:12px;color:#94a3b8;margin-bottom:12px">粘贴简历全文，系统自动提取求职意向、技能关键词，并对企业列表进行匹配度评分</p>
+<div class="modal-overlay" id="resumeModal" style="display:none" data-page-node-id="EydwjfoQLqMQE6XkyquC7P">
+  <div class="modal" style="max-width:600px" data-page-node-id="YyzNSEH4fyHfiCFcnvCLsO">
+    <h3 data-page-node-id="pftics9u6KRuuGRKsxxHzR">简历分析 — 智能匹配秋招岗位</h3>
+    <p style="font-size:12px;color:#94a3b8;margin-bottom:12px" data-page-node-id="K9H6l6XdOuhZeDrjrQn7wC">粘贴简历全文，系统自动提取求职意向、技能关键词，并对企业列表进行匹配度评分</p>
     <textarea class="resume-textarea" id="resumeText" placeholder="在此粘贴你的简历全文...&#10;&#10;例如：&#10;张三&#10;电话：138xxxx&#10;求职意向：海外销售经理&#10;教育背景：XX大学 国际商务 硕士&#10;技能：英语工作语言、跨境商务、B2B销售..."></textarea>
-    <div class="analysis-result" id="analysisResult" style="display:none"></div>
-    <div class="modal-btns">
-      <button class="btn btn-outline" onclick="document.getElementById('resumeModal').style.display='none'">取消</button>
-      <button class="btn btn-primary" onclick="analyzeResume()">开始分析</button>
+    <div class="analysis-result" id="analysisResult" style="display:none" data-page-node-id="Sarn5iAPp5aT6lIw4barE7"></div>
+    <div class="modal-btns" data-page-node-id="OG1VlRlZwpfv65fzNiOdZc">
+      <button class="btn btn-outline" onclick="document.getElementById('resumeModal').style.display='none'" data-page-node-id="uTSZ9g79962TR3euhkkNiw">取消</button>
+      <button class="btn btn-primary" onclick="analyzeResume()" data-page-node-id="0tNJsfVdvqtbY65RGXXfJQ">开始分析</button>
     </div>
   </div>
 </div>
 
 <!-- Edit Info Modal -->
-<div class="modal-overlay" id="infoModal" style="display:none">
-  <div class="modal">
-    <h3>编辑基本信息</h3>
-    <div class="form-group"><label>姓名</label><input type="text" id="eName"></div>
-    <div class="form-group"><label>电话</label><input type="text" id="ePhone"></div>
-    <div class="form-group"><label>邮箱</label><input type="email" id="eEmail"></div>
-    <div class="form-group"><label>所在地</label><input type="text" id="eLocation"></div>
-    <div class="form-group"><label>求职意向</label><input type="text" id="eTarget"></div>
-    <div class="form-group"><label>教育背景</label><input type="text" id="eEducation"></div>
-    <div class="form-group"><label>核心技能（,分隔）</label><input type="text" id="eSkills"></div>
-    <div class="form-group"><label>行业偏好（,分隔）</label><input type="text" id="eIndustryPref" placeholder="互联网/电商,智能硬件,新能源汽车..."></div>
-    <div class="form-group"><label>期望城市（,分隔）</label><input type="text" id="eCities" placeholder="上海,深圳,海外..."></div>
-    <div class="modal-btns">
-      <button class="btn btn-outline" onclick="document.getElementById('infoModal').style.display='none'">取消</button>
-      <button class="btn btn-primary" onclick="saveInfo()">保存</button>
+<div class="modal-overlay" id="infoModal" style="display:none" data-page-node-id="hVaBiMmPxxULuGyWhhX3Xe">
+  <div class="modal" data-page-node-id="bY3EPw356DipCz7UmbNEUU">
+    <h3 data-page-node-id="FQGTacTORHIz13MV6GxRdj">编辑基本信息</h3>
+    <div class="form-group" data-page-node-id="rREGqSEKOm5Al5QRqmHFEL"><label data-page-node-id="JYawBriUZSL6EHAAxuVuDw">姓名</label><input type="text" id="eName" data-page-node-id="IckbtymadvdVhenHZzZAuK"></div>
+    <div class="form-group" data-page-node-id="OD06zEzYHs8qH0xSNFzpaq"><label data-page-node-id="n3pfHh9j2gIeXOR07GIGaI">电话</label><input type="text" id="ePhone" data-page-node-id="lGf4G9CB3qc6y8GHMSdNDt"></div>
+    <div class="form-group" data-page-node-id="BxCN5TqzLqVFsmyCnWlpPH"><label data-page-node-id="WAAwkEfv6MfMPRhfk9lNCZ">邮箱</label><input type="email" id="eEmail" data-page-node-id="MKpQTylUlRHcRLOA88c1Lr"></div>
+    <div class="form-group" data-page-node-id="UsDktAlHsUsCHLqvN1ID2e"><label data-page-node-id="7EyyxUhbFIfUBo3hFc4Ysn">所在地</label><input type="text" id="eLocation" data-page-node-id="rPHSVcezQxGq1toO0O7lZg"></div>
+    <div class="form-group" data-page-node-id="Chc0N9eJb3xVFifVHXJ424"><label data-page-node-id="gjcfjatWgwJt1Z00wj1GFe">求职意向</label><input type="text" id="eTarget" data-page-node-id="pkeHhpsdy8Oz7AjVASK4Z4"></div>
+    <div class="form-group" data-page-node-id="3Fd2L4Hw0c8ofphlPp2hJ9"><label data-page-node-id="5jlBKHmM6EpVU73UBZVbYG">教育背景</label><input type="text" id="eEducation" data-page-node-id="LXHtfv5XLgC46Ka1gLG9Lm"></div>
+    <div class="form-group" data-page-node-id="PO72Uax6AsqGgO1S8KiAZM"><label data-page-node-id="6Kxnn6kTnFU53COjPLvxYE">核心技能（,分隔）</label><input type="text" id="eSkills" data-page-node-id="q5gTRkm16Boy431fbjIUIo"></div>
+    <div class="form-group" data-page-node-id="QWbNiJbGbBbI0exlwOm9xS"><label data-page-node-id="PQ8li9HzSYTfmxVdUmvBSE">行业偏好（,分隔）</label><input type="text" id="eIndustryPref" placeholder="互联网/电商,智能硬件,新能源汽车..." data-page-node-id="ZiP3uBUg9vpYZRAaw4UTh1"></div>
+    <div class="form-group" data-page-node-id="i32D1ZLWQUA9tn7z3dD9nT"><label data-page-node-id="TuXdeQys4qraS0S1ZNNB4y">期望城市（,分隔）</label><input type="text" id="eCities" placeholder="上海,深圳,海外..." data-page-node-id="fsQsciLcyjsvdmnq6yN7JU"></div>
+    <div class="modal-btns" data-page-node-id="iFj5PnWqxSucjx14PTo3BG">
+      <button class="btn btn-outline" onclick="document.getElementById('infoModal').style.display='none'" data-page-node-id="CpVN3ZyFQyYOkoFTqQM1Yl">取消</button>
+      <button class="btn btn-primary" onclick="saveInfo()" data-page-node-id="hGNOIF7cG3HsaOYObAY6TS">保存</button>
     </div>
   </div>
 </div>
 
 <!-- Confirm Modal -->
-<div class="modal-overlay" id="confirmModal" style="display:none">
-  <div class="modal" style="max-width:500px">
-    <h3 id="confirmTitle" class="modal-title">确认操作</h3>
-    <div id="confirmMsg" class="modal-body" style="color:#64748b;font-size:14px;margin-bottom:16px;text-align:left;max-height:60vh;overflow-y:auto"></div>
-    <div class="modal-btns" style="justify-content:center">
-      <button class="btn btn-outline" onclick="closeConfirm()">取消</button>
-      <button class="btn btn-danger" id="confirmBtn">确认</button>
+<div class="modal-overlay" id="confirmModal" style="display:none" data-page-node-id="qVk8HsOhOS6R67uWqpreLa">
+  <div class="modal" style="max-width:500px" data-page-node-id="KRoXdAF7mfssqqJJ4bKFwR">
+    <h3 id="confirmTitle" class="modal-title" data-page-node-id="IsryBcUPc5hAvGx3K7GS4J">确认操作</h3>
+    <div id="confirmMsg" class="modal-body" style="color:#64748b;font-size:14px;margin-bottom:16px;text-align:left;max-height:60vh;overflow-y:auto" data-page-node-id="bCDDAIzV5IeBr6k0EEiS9i"></div>
+    <div class="modal-btns" style="justify-content:center" data-page-node-id="4NBxc4ocPxBS43QOCtFTNp">
+      <button class="btn btn-outline" onclick="closeConfirm()" data-page-node-id="xAOohwNMzqZQMKBB1fNFce">取消</button>
+      <button class="btn btn-danger" id="confirmBtn" data-page-node-id="5fY91aVV5BOBhuc1EqISPW">确认</button>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" data-page-node-id="rhkvycfkTQFBOJKhhgOgtN"></div>
 
 <script>
 // ===== DATA LAYER =====
@@ -678,30 +678,24 @@ const DEFAULT_COMPANIES = [
 - 勿轻信付费"机考考题""内推""简历优化"等虚假信息
 - "天才少年"计划同步进行（年薪制，最高档超200万元）
 - 顶尖AI人才专项行动进行中`,tags:'通信,海外销售,B2B,全球派遣,8.15正式启动,天才少年,顶尖AI专项',industry:'通信/ICT',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'客户开发,招投标,通信技术,市场推广,英语,项目管理',cities:'深圳,北京,上海,杭州,南京,武汉,西安,成都,东莞,苏州,海外',majors:'通信,电子,计算机,理工科,外语类'},
-  {id:'c13',name:'阿里巴巴集团（阿里国际）',position:'海外业务拓展/国际销售',status:'已开启',deadline:'2026-10-31',link:'https://campus-talent.alibaba.com/?lang=zh',jd:`【官宣时间】2026年8月5日，阿里巴巴2027届应届生招聘全球启动！网申截止2026-10-31。
+  {id:'c13',name:'阿里巴巴集团（阿里国际）',position:'全栈AI：AI应用研发/算法（CV/NLP/多模态/强化学习）/Agent Infra/AI Infra/芯片/产品/游戏/运营/商务拓展',status:'已开启',deadline:'2026-10-31（2027届应届生招聘已启动，人才库机制支持无限次重开）',link:'https://campus-talent.alibaba.com/?lang=zh',jd:`【项目名称】阿里巴巴2027届应届生招聘正式启动
 
-【招聘对象】
-2026.11-2027.10毕业的海内外应届毕业生
+【招聘对象】2026年11月1日-2027年10月31日期间毕业（中国内地以毕业证为准，非中国内地以学位证为准）
 
-【岗位类型】
-算法类、研发类、芯片类、产品类、游戏类、运营类、商务拓展类、其他类（八大职类）
-AI相关岗位占比高达80%（淘天集团AI技术岗占比超九成），16个业务集团/公司同时开放。
-商务拓展类是海外销售/BD的直接对口方向！
+【亮点】一站投递（统一校招官网一站投递阿里多个业务）；全栈AI（海量AI岗位全面开放，从底层算力到前沿应用）；多线并行（应聘流程多业务并行互不影响）；无限重开（「人才库」机制助你开启无限次面试机会）
 
-【阿里国际数字商业集团 - 海外相关】
-- 阿里国际站(Alibaba.com)卖家/买家拓展
-- 全球速卖通运营
-- 跨境贸易解决方案（支付/物流/金融）
-- 市场营销、客户体验、物流等方向
-- Bravo Star顶尖人才计划持续热招（薪酬不设上限）
+【岗位方向】算法、研发、芯片、产品、游戏、运营、商务拓展、其他
 
-【招聘流程】
-网申/内推 8月5日开始 → 测评/笔试 8月中旬 → 面试 8月中旬 → Offer 9月下旬
-亮点：AI Coding新题型，多业务并行投递不冲突，人才库机制无限面试机会
+【热招岗位】AI应用研发工程师、AI应用算法工程师、Agent Infra工程师、AI Infra工程师、AI数据工程师、AI Agent优化工程师（训练/数据/评测）、JAVA研发工程师、C++研发工程师、计算机视觉算法、机器学习算法、NLP自然语言处理、多模态算法、强化学习算法、计算机体系结构工程师、芯片性能分析优化工程师
 
-【投递渠道】
-官网：https://campus-talent.alibaba.com/?lang=zh
-热线：0571-28285927`,tags:'电商,跨境,B2B平台,8月5日官宣,AI岗位占比80%,商务拓展,阿里国际',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'品牌营销,客户开发,招投标,跨境电商,内容运营,市场推广',cities:'海外',majors:'市场营销,财务/会计'},
+【业务集团】阿里云、平头哥半导体、通义实验室、淘天集团、高德、钉钉等16大核心业务集团
+
+【投递规则】每位同学可投递多个业务集团/公司，流程可并行；每个业务集团/公司只有一次投递机会，且最多可选择2个意向投递（含阿里星职位），按意向顺序流转；投递成功后不可修改意向职位及部门
+
+【笔试特点】同一职类方向只需完成一次笔试，各业务集团共享成绩；笔试新增AI Coding题型，可在限定环境下调用AI工具完成项目开发任务
+
+【工作地点】北京、上海、杭州、广州、深圳、成都及海内外其他城市
+【渠道】阿里巴巴校园招聘官网「2027届应届生」；或「阿里巴巴集团招聘」公众号-集团校招`,tags:'互联网,全栈AI,通义大模型,平头哥芯片,人才库,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'大模型算法,Agent,AI Infra,芯片设计,后端研发,多模态',cities:'海外',majors:'市场营销,财务/会计'},
   {id:'c14',name:'腾讯',position:'技术/产品/设计/市场/职能（五大类，AI方向大量招录）',status:'已开启',deadline:'招满即止',link:'https://join.qq.com',jd:`【官宣时间】2026年8月11日，腾讯2027校园招聘全面开启！
 
 【招聘对象】
@@ -6279,7 +6273,7 @@ Java/C++开发、前端、测试、运维、大数据、AI算法、产品经理�
   {id:'c466',name:'国芯微电子',position:'数字IC设计/模拟IC设计/射频IC设计/AI算法',status:'已开启',deadline:'招满即止',link:'https://nationalchip.zhiye.com',jd:`国芯微电子2027届校园招聘火热开启，开放数字IC设计、IC设计验证、数字后端设计、射频IC设计、硬件工程师、模拟IC设计、模拟版图设计、AI算法、嵌入式软件、销售工程师等岗位，工作地杭州/广州/深圳。面向电子、计算机、通信等相关专业。`,tags:'芯片,IC设计,杭州,半导体,2027届',industry:'智能硬件/消费电子',degreeReq:'本科及以上',langReq:'不限',skillKeywords:'数字IC设计,模拟IC,射频,嵌入式,AI算法',cities:'杭州,广州,深圳',majors:'电子,计算机,通信'},
   {id:'c467',name:'玫德集团',position:'海外营销（驻外/非驻外）·控制算法工程师',status:'已开启',deadline:'招满即止',link:'https://app.mokahr.com/campus-recruitment/meidegroup/142830',jd:`玫德集团2027届秋季全球校园招聘，流体输送产品与智能制造龙头。开放海外营销（驻外和非驻外）、国内营销、控制算法工程师（水泵/炉温）、运筹优化算法、机理建模、计算机视觉、故障诊断、时频分析、机器视觉算法、价格管理专员、采购开发经理等岗位，工作地济南/临沂/全国/海外。专业涵盖机械、材料、自动化、环境、计算机、国际贸易、外语等。`,tags:'海外营销,驻外,智能制造,济南,2027届',industry:'制造业/工业',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'海外营销,渠道管理,客户开发,控制算法,英语',cities:'济南,临沂,海外',majors:'国际贸易,外语,机械,自动化'},
   {id:'c468',name:'鼎匠创新（TOPDON）',position:'海外销售工程师/C++开发/运营管培生/产品经理',status:'已开启',deadline:'招满即止',link:'https://topdon.zhiye.com/campus/jobs',jd:`鼎匠创新（TOPDON）2027届校园招聘，汽车诊断与新能源智能硬件品牌。开放C++开发工程师、运营管培生、技术支持工程师、产品经理、海外服务工程师、海外销售等岗位，工作地深圳/长沙。面向计算机、理工科、商科、英语/小语种、车辆工程、市场营销等专业，英语口语优先。`,tags:'海外销售,汽车诊断,智能硬件,深圳,2027届',industry:'智能硬件/消费电子',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'海外销售,技术支持,产品经理,跨境电商,客户开发,英语',cities:'深圳,长沙',majors:'计算机,车辆工程,市场营销,外语类'},
-  {id:'c469',name:'三一集团',position:'2027届校招（研发/营销/供应链/职能等全岗位）',status:'已开启',deadline:'招满即止（正式批9月启动，宣讲会9月23日）',link:'https://sany.zhiye.com/campus/jobs',jd:`【正式批启动】三一集团2027届秋季校园招聘正式启动！全球领先高端装备制造企业，旗下三一重工、三一国际、三一重能三家上市公司，业务覆盖工程机械、港口机械、煤炭机械、风电设备、新能源及储能、重型卡车等领域，遍及180多个国家/地区。
+  {id:'c469',name:'三一集团',position:'2027届校招（研发/营销/供应链/职能等全岗位）',status:'已开启',deadline:'招满即止（正式批9月启动，需求约970人，宣讲会9月23日已举行，滚动面试）',link:'https://sany.zhiye.com/campus/jobs',jd:`【正式批启动】三一集团2027届秋季校园招聘正式启动！全球领先高端装备制造企业，旗下三一重工、三一国际、三一重能三家上市公司，业务覆盖工程机械、港口机械、煤炭机械、风电设备、新能源及储能、重型卡车等领域，遍及180多个国家/地区。
 
 【招聘规模】需求约970人，本科/硕士/博士，专业不限。
 
@@ -7554,7 +7548,234 @@ ADC是贝壳校招生代号，面向全球优秀毕业生，为居住产业互�
 【招聘流程】简历投递→简历筛选→初试→复试→在线测评→线上笔试→Offer面谈→录用签约（特别优秀毕业生可免笔试录用）；线上+线下同步开展
 【薪酬福利】五险一金、企业年金、补充医疗保险、员工公寓、福利食堂、年度体检
 【简历邮箱】xjzp@xj.cee-group.cn
-【工作城市】郑州（许继集团本部）、许昌（许继电气本部）、北京、上海、西安、哈尔滨、珠海、福州、厦门、济南、成都、随州、乌鲁木齐`,tags:'央企,中国电气装备,电力装备,国际营销,小语种,上市公司,2027届',industry:'制造业/工业',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'电气设计,嵌入式开发,电力系统算法,项目管理,国际营销,物资采购',cities:'郑州,许昌,北京,上海,西安,哈尔滨,珠海,福州,厦门,济南,成都,随州,乌鲁木齐',majors:'电气类,计算机类,电子信息,自动化,机械,控制类,财会类,西班牙语,葡萄牙语,俄语'}
+【工作城市】郑州（许继集团本部）、许昌（许继电气本部）、北京、上海、西安、哈尔滨、珠海、福州、厦门、济南、成都、随州、乌鲁木齐`,tags:'央企,中国电气装备,电力装备,国际营销,小语种,上市公司,2027届',industry:'制造业/工业',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'电气设计,嵌入式开发,电力系统算法,项目管理,国际营销,物资采购',cities:'郑州,许昌,北京,上海,西安,哈尔滨,珠海,福州,厦门,济南,成都,随州,乌鲁木齐',majors:'电气类,计算机类,电子信息,自动化,机械,控制类,财会类,西班牙语,葡萄牙语,俄语'},
+  {id:'c565',name:'后摩智能（Houmo.AI）',position:'大模型压缩算法工程师 / 编译器开发工程师 / NPU芯片应用工程师 / 系统软件开发工程师 / AI芯片设计工程师',status:'已开启',deadline:'招满即止（2027届校招已启动，宣讲9月起）',link:'https://www.houmoai.com/',jd:`【项目名称】后摩智能2027届校园招聘
+
+【企业实力】存算一体AI芯片头部企业，通过存算一体技术与大模型深度融合，推动AI大模型在端边侧落地，构建「低功耗、高安全、好体验」端边智能新生态
+
+【招聘对象】2027届本硕博毕业生（毕业时间2026年9月-2027年7月）
+
+【招聘岗位】
+■ 大模型压缩算法工程师
+■ 编译器开发工程师
+■ NPU芯片应用工程师
+■ 系统软件开发工程师
+■ AI芯片设计工程师
+
+【培养体系】双导师1对1带教（技术导师资深IC/算法/软件骨干 + 成长导师HR/部门负责人）；入职集训+在岗实践，覆盖芯片研发流程、软硬协同技术栈；深度参与端侧AI芯片核心项目
+
+【薪酬福利】富有竞争力薪资、年终奖、期权激励；弹性工作时间、10天带薪假、服务假；餐补、交通补贴、租房补贴、年度体检；五险一金、补充商业保险、补充公积金
+
+【工作地点】北京、上海、南京、深圳
+【投递方式】官网 www.houmoai.com「加入我们」-校园招聘；或微信公众号「后摩智能」-加入后摩`,tags:'AI芯片,存算一体,端侧大模型,2027届,期权激励',industry:'人工智能/软件',degreeReq:'本科及以上（本硕博）',langReq:'不限',skillKeywords:'存算一体,模型压缩,编译器,NPU,AI芯片设计,系统软件',cities:'北京,上海,南京,深圳',majors:'集成电路,微电子,计算机,电子工程,人工智能,软件工程'},
+  {id:'c566',name:'墨芯人工智能（MOFFETT AI）',position:'ASIC设计工程师 / SoC设计工程师 / 芯片验证工程师 / 高效大模型算法工程师 / AI编译器工程师 / 算子开发工程师',status:'已开启',deadline:'招满即止（9月启动网申）',link:'https://app.mokahr.com/campus-recruitment/moffettai/47288',jd:`【项目名称】墨芯人工智能2027届校园招聘（墨守初心，芯稀未来）
+
+【企业实力】国内专注AI芯片和大模型算力解决方案的头部企业，稀疏计算架构AI芯片业内知名，市场估值超百亿；主打「双稀疏计算」技术方向
+
+【招聘岗位】
+■ ASIC设计工程师
+■ SoC设计工程师
+■ 芯片验证工程师
+■ 高效大模型算法工程师
+■ 大模型训练与评测工程师
+■ 编译器开发-GPU方向 / 数字IC设计-GPU方向 / 大模型AI编译器工程师
+■ 算子开发工程师 / 系统软件开发工程师 / AI软件开发工程师 / AI平台研发工程师 / 测试开发工程师
+
+【专业方向】电子工程、计算机科学、人工智能、集成电路、微电子、自动化等
+
+【薪酬福利】股权激励、年度体检、有竞争力薪资
+
+【工作地点】北京、上海、深圳
+【投递方式】官方公众号扫码投递；或 mokahr 校招系统`,tags:'AI芯片,稀疏计算,GPU编译器,2027届,大模型算力',industry:'人工智能/软件',degreeReq:'本科及以上',langReq:'不限',skillKeywords:'ASIC设计,SoC验证,芯片验证,大模型算法,算子开发,AI编译器',cities:'北京,上海,深圳',majors:'集成电路,微电子,计算机,人工智能,电子工程,自动化'},
+  {id:'c567',name:'东风汽车集团有限公司',position:'研发类 / 乘用车类 / 商用车军车类 / 零部件类 / 水平事业类（含中国东风汽车工业进出口有限公司）',status:'已开启',deadline:'招满即止（2027届秋季全球校园招聘已启动，宣讲9月起）',link:'https://www.dfmc.com.cn',jd:`【项目名称】东风汽车集团有限公司2027届秋季全球校园招聘
+
+【企业实力】中央直管特大型汽车企业，自主掌控「三电」、燃料电池、电子电气架构、车规级芯片、智能驾驶等核心技术，打造「天元智能」技术品牌；累计有效专利2.8万余件，新能源与智能网联技术行业领先
+
+【参加子公司（部分）】
+■ 研发类：东风汽车集团研发总院、东风商用车技术中心、国家汽车质量检验检测中心（襄阳）
+■ 乘用车类：岚图汽车、东风奕派、猛士科技、东风柳州汽车、神龙汽车、东风本田
+■ 商用车/军车类：东风商用车、东风特种商用车、东风汽车股份、郑州日产、东风越野车
+■ 零部件类：东风跃创科技（智新科技）、东风电子科技、东风本田零部件
+■ 水平事业类：**中国东风汽车工业进出口有限公司**、东风卓联汽车服务、东风汽车贸易、东风畅行科技、东风汽车财务、东风汽车金融、深圳联友科技
+
+【需求专业】计算机类、电子信息类、电气类、车辆类、机械类、自动化类、数学类、**营销类**、能动类、材料类、**语言类**、管理类等
+
+【投递规则】最多投递5家单位，每家单位限1个岗位；简历状态「待处理」时可修改
+
+【网申方式】PC端 www.dfmc.com.cn →「人才招聘」-「校园招聘」；或关注「东风汽车招聘」公众号`,tags:'央企,整车厂,岚图,东风进出口,海外业务,2027届',industry:'汽车/出行',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'三电技术,智能驾驶,车辆工程,市场营销,国际贸易,机械设计',cities:'武汉,十堰,襄阳,广州,柳州,郑州,深圳',majors:'车辆工程,机械,自动化,电气,计算机,电子信息,市场营销,国际经济与贸易,语言类'},
+  {id:'c568',name:'九牧集团（JOMOO）',position:'国际类：海外销售（印尼语/越南语/泰语/俄语/阿语/西语/日语/英语）、产品企划（东南亚/泛俄/中东澳新）；研发类/营销类/职能类/制造类',status:'已开启',deadline:'招满即止（9月陆续启动，宣讲覆盖福建/广西/湖北/湖南/西安/广州/江西/东北）',link:'https://www.jomoo.com.cn/',jd:`【项目名称】九牧集团2027届校园招聘
+
+【企业实力】「中国第一 世界前三」全球卫浴领先品牌，战略定位「单聚焦、多品牌、多赛道、新场景、国际化」，扎根福建、立足中国、走向全球
+
+【招聘岗位】
+■ 研发类：材料研发、结构设计、硬件、软件研发、项目管理、专利
+■ 营销类：策划推广、产品企划、产品设计、电商运营、订单管理、空间设计、培训、AI训练、渠道运营、市场营销、视觉设计、新媒体运营
+■ **国际类：海外销售（印尼语、越南语、泰语、俄语、阿语、西语、日语、英语）、产品企划（东南亚、泛俄、中东澳新）**
+■ 职能类：IT、财务、采购、环保、人力资源、商务、项目管理、质量
+■ 制造类：材料研发、采购、订单管理、工艺、机械设计、结构设计、模具设计、生产计划、硬件
+
+【薪酬福利】行业高竞争力基本薪酬+各项奖金；研究生单身公寓、本科生标准双人公寓（仅限入职工厂区域）；免费班车周末往返南安/泉州/厦门；政府人才补贴
+
+【招聘流程】宣讲→笔试/综合面试→专业面试→Offer
+【工作地点】全国、上海、深圳、厦门、泉州·南安`,tags:'卫浴龙头,海外销售,多语种,国际化,2027届',industry:'制造业/工业',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'海外销售,渠道运营,电商运营,产品企划,结构设计,供应链',cities:'泉州,厦门,上海,深圳,全国',majors:'国际经济与贸易,英语,小语种（印尼语/越南语/泰语/俄语/阿语/西语/日语）,机械,材料,市场营销,电子商务'},
+  {id:'c569',name:'飞科电器（603868）',position:'管培生：区域经理（国际贸易/英语及小语种，全球）/ 省区经理 / 督导 / 运营助理 / 文案策划 / 总裁办经理助理',status:'已开启',deadline:'招满即止（9月24日发布，全国巡回宣讲）',link:'https://www.flyco.com/',jd:`【项目名称】飞科电器2027届校园招聘（飞你莫属 科创未来）
+
+【企业实力】创立于1999年，A股首家个人护理电器上市企业（603868）；连续15年入围上海制造业企业100强、上海民营企业100强；国家级工业设计中心、国家级实验室；2025年被弗若斯特沙利文认定为「连续五年电动剃须刀全球销量第一」；已形成上海总部为中心，浙江、安徽两翼为产业基地，面向全球的发展格局
+
+【招聘岗位（管培生）】
+■ 职能类｜总裁办经理助理：汉语言文学、新闻学、播音与主持｜2人｜12-15K｜上海
+■ 营销类｜文案策划：新闻/广告/新媒体运营｜2人｜10-12K｜上海
+■ 营销类｜运营助理：电子商务、市场营销｜2人｜10-12K｜上海
+■ 营销类｜督导：专业不限，市场营销优先｜5人｜10-11K｜全国
+■ 营销类｜省区经理：专业不限，市场营销优先｜5人｜10-11K｜全国
+■ **营销类｜区域经理：国际贸易、英语及小语种相关专业｜12人｜11-14K｜全球**
+
+【任职要求】2027届本科及以上毕业生；具有国际视野和格局；逻辑清晰、沟通能力强
+【工作地点】上海 / 全国 / 全球`,tags:'家电,个护电器,小语种,全球外派,管培生,2027届',industry:'家电/智能家居',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'区域管理,渠道运营,国际贸易,市场营销,电商运营,文案策划',cities:'上海,全国,全球',majors:'国际经济与贸易,英语,小语种,市场营销,电子商务,新闻传播,汉语言文学'},
+  {id:'c570',name:'孚能科技（688567.SH）',position:'电芯研发（固态/液态/储能方向）/ 算法工程师 / 数据分析工程师 / 工艺工程师 / 设备管培生 / 销售管培生 / 市场策略管培生 / 财务管培生 / 采购管培生',status:'已开启',deadline:'2026-11-23（芯生无畏·敢造不凡）',link:'https://campus.farasisenergy.com/',jd:`【项目名称】孚能科技2027届校园招聘（芯生无畏·敢造不凡）
+
+【企业实力】全球领先的软包动力电池生产商及综合能源解决方案供应商；2009年成立，2020年科创板上市（688567.SH），国有控股；源自1997年电池研发初心，2002年始于硅谷的能源创新征程；源自信谷、立足中国、放眼全球
+
+【招聘对象】2027届应届毕业生（本科/硕士/博士）
+
+【招聘岗位】
+■ 博士专区：电芯研发（固态电池方向）、电芯研发（液态电池方向）、算法工程方向
+■ 技术研发类：算法工程师、电芯材料研发工程师、电芯平台研发工程师、电芯产品研发工程师、电芯研发（储能方向）工程师、电芯研发（固态方向）工程师、数据分析工程师、系统工程师
+■ 智能制造类：工艺工程师、设备管培生、电气/机械工程师
+■ 营销类：销售管培生、市场策略管培生、项目管理管培生
+■ 职能类：财务管培生、采购管培生
+
+【培养项目】「芯光计划」——面向全球优秀应届生的系统化人才项目：轮岗历练（研发/制造/营销核心业务线）+ 项目实战 + 导师带教 + 文化浸润
+
+【薪酬福利】行业竞争力薪酬+年终奖+职工餐补+免费住宿/人才住房；六险一金、年度体检、带薪年假、生日会、节日活动、运动协会
+
+【工作地点】江西赣州、广东广州、江苏镇江、海外（部分岗位）
+【投递】campus.farasisenergy.com；邮箱 hr@farasisenergy.com.cn`,tags:'动力电池,软包电池,固态电池,科创板,2027届,海外岗位',industry:'新能源汽车/能源',degreeReq:'本科及以上（含硕博）',langReq:'不限',skillKeywords:'电芯研发,固态电池,储能,算法,工艺工程,数据分析',cities:'赣州,广州,镇江,海外',majors:'材料科学,化学工程,电化学,机械,电气,自动化,计算机,数据分析,财务,供应链'},
+  {id:'c571',name:'因湃电池科技有限公司',position:'2027届校园招聘（机械/自动化/电气/计算机/软件/大数据/电子信息/人工智能/材料/安全工程）',status:'已开启',deadline:'招满即止（9月23日发布，20人）',link:'https://www.gac-inpai.com/',jd:`【项目名称】因湃电池科技有限公司2027届校园招聘
+
+【企业实力】由广汽集团（世界500强）出资成立的电池企业，地处广东省广州市；项目总投资109亿，规划产能36GWh，年产值超150亿；承袭广汽精益生产基因，融合锂电特性，实现从电芯到系统层级全栈自研自产，覆盖动力及储能两大领域；2024年入选工信部首批卓越级智能工厂，2025年入选中国汽车动力电池产业创新联盟「最具成长力企业」，2026年通过CMMM四级评估
+
+【核心技术】弹匣电池系统安全技术、海绵硅负极片电池技术、微晶超能铁锂技术
+
+【招聘岗位】2027届校园招聘 20人｜10000-12500元/月
+【需求专业】机械类、自动化与电气类、自动化、计算机科学与技术、软件工程、数据科学与大数据技术、电子信息工程、人工智能、材料科学与工程、安全工程
+【工作地点】广东省广州市
+【招聘性质】全职（国有企业）`,tags:'广汽集团,动力电池,储能,广州,国企,2027届',industry:'新能源汽车/能源',degreeReq:'本科及以上',langReq:'不限',skillKeywords:'锂电智造,电芯工艺,设备工程,自动化,数据分析,材料工程',cities:'广州',majors:'机械类,自动化,电气,计算机,软件工程,大数据,电子信息,人工智能,材料科学与工程,安全工程'},
+  {id:'c572',name:'启源芯动力（国家电投系）',position:'研产销服供 / 电池银行&充换电场站运营 / 市场与创新业务（100+岗位）',status:'已开启',deadline:'招满即止（2027届校招已启动）',link:'https://spicqyxdl.zhiye.com/campus/jobs',jd:`【项目名称】启源芯动力2027届校园招聘
+
+【企业实力】新能源商用车先进技术开发和能源服务商；国家交通强国建设试点任务牵头实施单位；国家电投（SPIC）体系企业；聚焦电动重卡及工程机械等设备研发、车储共用电池系统研发制造、充换电设施运营与源网荷储一体化项目建设，推动交通与可再生能源高质量融合发展，市场占有率行业领先
+
+【招聘方向（100+岗位）】
+■ 研产销服供：参与产品研发、制造交付、供应保障和客户技术服务
+■ 电池银行&充换电场站运营：管理电池资产，保障充换电站高效运行与客户车辆稳定补能
+■ 市场与创新业务：拓展绿色交通能源服务客户与场景
+
+【薪酬福利】具有竞争力的薪酬体系、完善福利保障、绩效激励与成长奖励、多元职业发展通道
+【投递方式】spicqyxdl.zhiye.com/campus/jobs（推荐码 EVVM9B）`,tags:'国家电投,新能源商用车,换电,储能,央企,2027届',industry:'新能源汽车/能源',degreeReq:'本科及以上',langReq:'不限',skillKeywords:'充换电,储能系统,电池资产管理,电气工程,市场拓展,运营管理',cities:'上海,全国',majors:'电气工程,能源动力,机械,自动化,车辆工程,市场营销,工商管理'},
+  {id:'c573',name:'VeSync集团（深圳晨北科技/重庆晓道信息）',position:'27届校招-跨境运营管培生（Amazon/TikTok/GTM 全渠道操盘，17人）',status:'已开启',deadline:'2027-09-18（长期开放，滚动面试）',link:'https://www.vesync.com/',jd:`【项目名称】VeSync集团2027届校园招聘 - 跨境运营管培生
+
+【企业实力】VeSync集团创立于2011年，在美国安纳海姆，中国深圳、重庆、香港、澳门，德国杜塞尔多夫，日本东京，新加坡等地设立公司，旗下含深圳市晨北科技有限公司、重庆晓道信息科技有限公司等；依托VeSync云平台与人工智能技术，通过硬件产品与服务打造以用户为中心的综合健康解决方案平台，涵盖环境健康、饮食健康、身心健康和宠物健康领域；已成为美国智能家居与健康产品领域领先企业之一；2023年提出「Consumer-centric Shift」战略，全新口号「Unlock Your Everyday Wellness」
+
+【工作职责】通过对公司业务全链条（营销、运营、产品、供应链等多专业模块）学习和实践，成长为所辖产品线/品牌的全渠道（如Amazon、TikTok等）、GTM等独当一面的「业务操盘手」
+
+【任职资格】
+■ 2026年9月至2027年7月毕业的海内外本科及以上应届毕业生
+■ 专业不限，需对跨境电商、智能家电、健康科技领域及市场/营销/运营类工作有强烈兴趣
+■ 语言：可跨文化协作；英语市场需 CET-6（或CET4-500+）同等及以上水平；日本市场需日语N1同等及以上水平
+■ 加分项：有AI实践、商业项目比赛、互联网/智能产品行业相关经历优先
+
+【薪资】8-13K·13薪｜招聘17人｜工作地点：重庆 或 深圳
+【你将获得】直面行业前沿业务实战+全球化发展通道；高管导师制培养；有竞争力激励方案`,tags:'跨境电商,智能家居,健康科技,出海,管培生,2027届',industry:'智能硬件/消费电子',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'跨境电商运营,Amazon,TikTok,GTM,供应链,市场洞察',cities:'重庆,深圳',majors:'不限（市场营销、电子商务、国际贸易、外语类优先）'},
+  {id:'c574',name:'蓝深科技（广州蓝深科技）',position:'跨境电商运营 / 海外渠道销售 / 运营管培生（日语方向）/ 乐器产品经理 / 音乐工程师 / 供应链管理 / 品牌营销 / 财务管理',status:'已开启',deadline:'招满即止（2027新声·新生校园招聘季已启动）',link:'https://www.blue-deep.com/',jd:`【项目名称】蓝深科技2027「新声·新生」校园招聘季
+
+【企业实力】深耕音乐科技的创新型企业；出海乐器品牌TOP级企业；中国乐器协会理事单位；国家文化出口重点企业；广州拟上市高新技术企业百强；广东省「专精特新」中小企业
+
+【招聘对象】2027届海内外应届毕业生（毕业时间2027年1月-2027年7月，中国大陆以毕业证为准，港澳台及海外以学位证为准）
+
+【开放岗位】
+■ 销售运营类：**跨境电商运营、海外渠道销售、运营管培生（日语方向）**
+■ 产品类：乐器产品经理（键盘/打击乐/音频设备/弦乐器方向）
+■ 研发技术类：项目经理、音乐工程师
+■ 职能支持类：供应链管理、品牌营销、品质管理、财务管理
+
+【投递提示】**专业不限，欢迎跨专业投递**
+【工作地点】广州
+【招聘画像】适合2027届本科应届生，对音乐科技、乐器出海、跨境电商有真实兴趣，愿意从执行做起、用数据或产品说话的同学`,tags:'乐器出海,跨境电商,文化出口,日语方向,专业不限,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语+小语种',skillKeywords:'跨境电商运营,海外渠道,日语,品牌营销,供应链,产品管理',cities:'广州',majors:'不限（跨境电商、国际贸易、日语、市场营销优先）'},
+  {id:'c575',name:'深圳雷特网络科技有限公司（Morningfast）',position:'跨境电商运营管培生 / 产品开发管培生 / 供应链管培生 / 人力资源管培生 / 跨境电商运营专员 / 海外社媒运营 / 渠道运营 / Java开发 / 数据分析',status:'已开启',deadline:'招满即止（2027届校园招聘已启动，宣讲进行中）',link:'https://morningfast.zhiye.com/campus',jd:`【项目名称】深圳雷特网络科技有限公司（Morningfast）2027届校园招聘（不雷同·特出众）
+
+【企业实力】跨境电商企业，业务覆盖广告投放、独立站与多平台运营；长沙办公区（岳麓区麓谷企业广场F2栋10楼）、深圳办公区（龙华区渡创数字创新中心B座3楼）
+
+【招聘对象】2027届应届毕业生（毕业时间2026年9月-2027年7月）
+
+【招聘岗位与薪资】
+■ 管培生类
+  · 跨境电商运营管培生｜长沙｜本科10-12K，研究生11-16K（提成不设上限）｜不限专业
+  · 产品开发管培生｜长沙｜同上｜不限专业
+  · 供应链管培生｜深圳｜本科9-11K，研究生11-13K｜物流/供应链及相关专业
+  · 人力资源管培生｜深圳｜不限专业
+■ 业务类
+  · 跨境电商运营专员｜长沙/深圳｜本科8-10K，研究生10-15K｜不限专业
+  · 产品开发专员｜长沙｜不限专业
+  · 海外社媒运营专员｜长沙｜本科5-10K，研究生7-14K
+  · 渠道运营专员 / 商城运营专员 / 邮件营销专员｜长沙｜不限专业
+■ 设计类：视频剪辑、视觉设计师｜长沙
+■ 职能类：财务专员（长沙/深圳）、会计专员、资金专员、法务专员（侵权方向）、数据分析专员（深圳，本科8-16K/研究生10-18K）
+■ 研发类：Java开发工程师、前端开发工程师｜深圳
+
+【招聘流程】投递→笔试→HR初步沟通→专业面→测评→综合面→Offer→签约
+【投递】morningfast.zhiye.com/campus；或公众号「深圳雷特网络科技有限公司」-校园招聘`,tags:'跨境电商,广告投放,Facebook,管培生,专业不限,2027届',industry:'互联网/电商',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'跨境电商运营,广告投放,ROI优化,产品开发,供应链,数据分析',cities:'长沙,深圳',majors:'不限（电子商务、国际贸易、市场营销、物流供应链、计算机、财务、法学）'},
+  {id:'c576',name:'费森尤斯卡比中国（Fresenius Kabi）',position:'医学信息沟通实习生 / 数字营销实习生 / 渠道招商助理实习生',status:'已开启',deadline:'2026-11-21（网申2026-09-21起开放）',link:'https://www.fresenius-kabi.com/zh-cn',jd:`【项目名称】费森尤斯卡比中国2027届秋季校园招聘
+
+【企业实力】百年传承、源自德国，深耕中国四十余载；杰出雇主（Top Employer China 2026）；全球领先的输液治疗、临床营养与医疗技术企业
+
+【招聘对象】2027届海内外高校本科及以上学历应届毕业生（含2026年毕业但未就业的往届生）
+【网申开启】2026年9月21日起正式开放
+
+【开放职位（以实习岗为主）】
+■ 医学信息沟通实习生
+■ 数字营销实习生
+■ 渠道招商助理实习生
+
+【培养体系】资深导师1V1带教、全方位培训体系、真实项目历练、跨部门协作机会
+【工作城市】上海市、北京市、南京市、南宁市、南昌市、厦门市、宁波市、合肥市、天津市、山西省、广州市、杭州市（全国多地）
+【投递提示】早投递，早锁定面试机会`,tags:'外企,医疗医药,临床营养,实习生,全国多地,2027届',industry:'医疗/医药',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'医学信息沟通,数字营销,渠道招商,市场推广,医药营销,客户管理',cities:'上海,北京,南京,南宁,南昌,厦门,宁波,合肥,天津,山西,广州,杭州',majors:'医药学,药学,生物医学工程,市场营销,国际经济与贸易,工商管理'},
+  {id:'c577',name:'大信会计师事务所',position:'审计类 / 风控审计类 / IT审计类 / 咨询类',status:'已开启',deadline:'2026-12月（在线申请9-12月）',link:'https://www.daxincpa.com.cn/',jd:`【项目名称】大信会计师事务所2027届校园招聘
+
+【企业实力】本土大型会计师事务所，全国百强所；2027届校园招聘即刻启航
+
+【招聘岗位】
+■ 审计类
+■ 风控审计类
+■ IT审计类
+■ 咨询类
+
+【在线申请时间】2026年9月 - 12月
+【学历专业】本科及以上学历，专业不限，财会类、统计学、计算机或信息管理相关专业优先
+【能力要求】较强的学习意识、承压抗压能力、沟通能力和团队协作能力，有财务基础知识更佳
+【工作城市】北京、上海、深圳、广州、杭州、成都、重庆、武汉等一线及新一线城市
+【招聘流程】简历筛选→在线测评→面试评估→发放offer→实习考核→正式入职`,tags:'会计师事务所,审计,IT审计,咨询,财会,2027届',industry:'咨询/专业服务',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'审计,风控,IT审计,财务咨询,CPA,数据分析',cities:'北京,上海,深圳,广州,杭州,成都,重庆,武汉',majors:'会计学,审计学,财务管理,统计学,计算机,信息管理,金融学'},
+  {id:'c578',name:'广东司农会计师事务所（HLB中国成员所）',position:'审计员 / 税审员（税前月薪7-10K）',status:'已开启',deadline:'招满即止（2027届校园招聘已启动）',link:'https://www.sinongcpa.cn/',jd:`【项目名称】广东司农会计师事务所2027届校园招聘
+
+【企业实力】成立于2020年，总部位于广州，是享誉全球的HLB全球会计网络联盟在中国大陆的重要成员所及华南地区唯一代表机构；已在东莞、苏州、佛山、太原、厦门、深圳、杭州、南京、成都、韶关、济南、福州等城市设立十二家分所，并于香港设立司农香港会计师事务所；2024年度全国会计师事务所综合评价排名第64位，2024年广东省及广州市同类评价分别第14位和第9位
+
+【招聘岗位】
+■ 审计员｜税前月薪7-10K｜执行基础审计程序、协助编制审计工作底稿、学习应用会计准则与审计准则
+■ 税审员｜税前月薪7-10K｜代理纳税申报、企业所得税汇算清缴、土地增值税清算、参与税务咨询项目
+
+【岗位要求】2027届财税、会计、审计、金融等相关专业本科及以上学历；通过CPA或CTA部分科目者优先
+【工作地点】广州（总部），覆盖粤港澳大湾区及全国十二家分所`,tags:'会计师事务所,HLB,审计,税务,粤港澳大湾区,2027届',industry:'咨询/专业服务',degreeReq:'本科及以上',langReq:'不限',skillKeywords:'审计程序,工作底稿,会计准则,纳税申报,税务咨询,CPA',cities:'广州,东莞,苏州,佛山,太原,厦门,深圳,杭州,南京,成都,韶关,济南,福州',majors:'会计学,审计学,财务管理,税务,金融学,财政学'},
+  {id:'c579',name:'热联集团（杭州热联集团）',position:'国际业务管培生（外派，5人）｜大宗商品贸易/黑色金属/化工/农产品方向',status:'已开启',deadline:'2027-01-31（招5人，9月24日更新）',link:'https://www.reliance-group.com/',jd:`【项目名称】热联集团国际业务管培生（外派）2027届校园招聘
+
+【企业实力】杭州热联集团股份有限公司成立于2001年3月，注册资本33.87亿元，隶属杭州市实业投资集团的国有控股公司；专业从事大宗商品贸易及产业服务，坚持专业化、产业化、全球化道路；2024年实现销售总量11169万吨、销售收入2706亿元；2016-2024年连续九年荣膺中国钢贸企业百强榜综合榜前三；入选国务院「双百行动」企业名单及浙江省「凤凰行动」计划、浙江省首批内外贸一体化「领跑者」培育企业；网点遍及国内41个城市及海外14个地区，业务覆盖超全球80个国家和地区
+
+【培养路径】
+■ 入职培训（第1个月）：新人入职培训与专项课题，掌握大宗商品入门知识
+■ 业务入门（第2-8个月）：商务、物流、研究岗位学习与实践，掌握国际贸易流程
+■ 业务实战（第8-18个月）：深入海外属地业务场景，协助业务报价、客户开拓与维护、信息收集与分析，成长为具备独立盈利能力的业务员
+
+【职位要求】本科及以上，2027届毕业生或毕业1年内；国贸、理工科（冶金、矿业工程、化工、材料）等相关专业，专业排名前30%；**英语CET-6及以上，英文可作为工作语言，具备小语种能力优先**；接受在集团总部学习实践6-12个月后**外派至非洲、中东等区域**
+
+【薪资】10-16K·18薪｜招聘5人｜工作地点：杭州（总部）→ 海外外派`,tags:'央企控股,大宗商品,国际贸易,外派非洲中东,小语种优先,2027届',industry:'制造业/工业',degreeReq:'本科及以上',langReq:'英语流利',skillKeywords:'国际贸易,大宗商品,客户开拓,商务谈判,供应链,市场研究',cities:'杭州,海外（非洲/中东）',majors:'国际经济与贸易,冶金工程,矿业工程,化学工程,材料科学,理工科'}
 ];
 
 const DEFAULT_NOTES = [
